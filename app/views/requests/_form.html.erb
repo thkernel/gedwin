@@ -1,0 +1,82 @@
+<%= form_with(model: request, local: true) do |form| %>
+  <% if request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :request_type_id %>
+    <%= form.text_field :request_type_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gender %>
+    <%= form.text_field :gender %>
+  </div>
+
+  <div class="field">
+    <%= form.label :born_date %>
+    <%= form.datetime_select :born_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :born_place %>
+    <%= form.text_field :born_place %>
+  </div>
+
+  <div class="field">
+    <%= form.label :academic_year %>
+    <%= form.text_field :academic_year %>
+  </div>
+
+  <div class="field">
+    <%= form.label :grade %>
+    <%= form.text_field :grade %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialty %>
+    <%= form.text_field :specialty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :request_date %>
+    <%= form.datetime_select :request_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

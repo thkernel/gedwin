@@ -8,6 +8,7 @@
 #  description    :text
 #  start_date     :datetime
 #  end_date       :datetime
+#  closing_date   :datetime
 #  task_status_id :bigint
 #  imputation_id  :bigint
 #  user_id        :bigint

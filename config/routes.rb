@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :requests do   
+    get "delete"
+  end
+  resources :request_types do   
+    get "delete"
+  end
   #root 'home#index'
   resources :tenants do   
     get "delete"

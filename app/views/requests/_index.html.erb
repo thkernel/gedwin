@@ -1,0 +1,24 @@
+ <% @requests.each do |request| %>
+    <tr>
+    <td><%= request.request_type_id %></td>
+    <td><%= request.first_name %></td>
+    <td><%= request.last_name %></td>
+    <td><%= request.gender %></td>
+    <td><%= request.academic_year %></td>
+    <td><%= request.grade %></td>
+    <td><%= request.specialty %></td>
+    <td><%= request.request_date %></td>
+    <td>
+	    <div class="action-buttons">
+			<%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
+'),  edit_request_path(request), title: "Modifier", remote: true %>
+
+
+
+
+<%= link_to raw('<i class="fa fa-trash-o" aria-hidden="true"></i>
+'), request_delete_path(request), remote: true, title: "Supprimer", class: "delete" %>
+</div>
+</td>
+   
+<% end %>

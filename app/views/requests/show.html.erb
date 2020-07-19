@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Request type:</strong>
+  <%= @request.request_type %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @request.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @request.last_name %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @request.gender %>
+</p>
+
+<p>
+  <strong>Born date:</strong>
+  <%= @request.born_date %>
+</p>
+
+<p>
+  <strong>Born place:</strong>
+  <%= @request.born_place %>
+</p>
+
+<p>
+  <strong>Academic year:</strong>
+  <%= @request.academic_year %>
+</p>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @request.grade %>
+</p>
+
+<p>
+  <strong>Specialty:</strong>
+  <%= @request.specialty %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @request.request_date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @request.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @request.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @request.user %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

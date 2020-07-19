@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_144504) do
+ActiveRecord::Schema.define(version: 2020_07_19_131047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -290,6 +290,36 @@ ActiveRecord::Schema.define(version: 2019_11_06_144504) do
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
+  create_table "request_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_request_types_on_user_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.bigint "request_type_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "gender"
+    t.datetime "born_date"
+    t.string "born_place"
+    t.string "academic_year"
+    t.string "grade"
+    t.string "specialty"
+    t.datetime "request_date"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_type_id"], name: "index_requests_on_request_type_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -299,7 +329,7 @@ ActiveRecord::Schema.define(version: 2019_11_06_144504) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.string "parent_service"
+    t.integer "parent_service_id"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -413,6 +443,9 @@ ActiveRecord::Schema.define(version: 2019_11_06_144504) do
   add_foreign_key "register_types", "users"
   add_foreign_key "registers", "register_types"
   add_foreign_key "registers", "users"
+  add_foreign_key "request_types", "users"
+  add_foreign_key "requests", "request_types"
+  add_foreign_key "requests", "users"
   add_foreign_key "services", "users"
   add_foreign_key "supports", "users"
   add_foreign_key "task_statuses", "users"

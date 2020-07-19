@@ -17,6 +17,7 @@ class ServicesController < ApplicationController
 
   # GET /services/new
   def new
+    @services = Service.all
     @service = Service.new
   end
 
@@ -86,6 +87,6 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
-      params.require(:service).permit(:name, :description)
+      params.require(:service).permit(:name, :parent_service_id, :description)
     end
 end

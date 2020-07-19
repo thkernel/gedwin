@@ -1,7 +1,6 @@
-class CreateServices < ActiveRecord::Migration[5.2]
+class CreateRequestTypes < ActiveRecord::Migration[5.2]
   def change
-    create_table :services do |t|
-      t.integer :parent_service_id
+    create_table :request_types do |t|
       t.string :name
       t.text :description
       t.string :status
