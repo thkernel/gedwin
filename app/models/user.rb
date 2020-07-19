@@ -23,6 +23,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
+		 include SharedUtils::Generate
+
+		 before_save :generate_uid
 
   # Relationships
 	belongs_to :role

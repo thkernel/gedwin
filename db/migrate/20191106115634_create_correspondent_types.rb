@@ -1,6 +1,7 @@
 class CreateCorrespondentTypes < ActiveRecord::Migration[5.2]
   def change
     create_table :correspondent_types do |t|
+      t.string :uid
       t.string :name
       t.text :description
       t.string :status

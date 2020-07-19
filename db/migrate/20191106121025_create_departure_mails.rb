@@ -1,6 +1,7 @@
 class CreateDepartureMails < ActiveRecord::Migration[5.2]
   def change
     create_table :departure_mails do |t|
+      t.string :uid
       t.references :register, foreign_key: true
       t.string :internal_reference, unique: true
       #t.string :external_reference

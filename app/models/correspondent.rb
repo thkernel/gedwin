@@ -20,6 +20,10 @@
 #
 
 class Correspondent < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
+
   belongs_to :correspondent_type
   belongs_to :user
 

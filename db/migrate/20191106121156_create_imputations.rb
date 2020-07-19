@@ -1,6 +1,7 @@
 class CreateImputations < ActiveRecord::Migration[5.2]
   def change
     create_table :imputations do |t|
+      t.string :uid
       #t.references :imputation_reason, foreign_key: true
       #t.string :reference, unique: true
       t.references :service, foreign_key: true

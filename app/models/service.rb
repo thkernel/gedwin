@@ -13,6 +13,9 @@
 #
 
 class Service < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
   belongs_to :user
   has_many :profiles, dependent: :destroy
   # Validations

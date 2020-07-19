@@ -11,4 +11,7 @@
 #
 
 class Permission < ApplicationRecord
+    include SharedUtils::Generate
+
+  before_save :generate_uid
 end

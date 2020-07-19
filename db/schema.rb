@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "arrival_mails", force: :cascade do |t|
+    t.string "uid"
     t.bigint "register_id"
     t.string "internal_reference"
     t.string "external_reference"
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "binders", force: :cascade do |t|
+    t.string "uid"
     t.bigint "folder_id"
     t.string "name"
     t.text "description"
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "correspondent_types", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -89,6 +92,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "correspondents", force: :cascade do |t|
+    t.string "uid"
     t.bigint "correspondent_type_id"
     t.string "organization_name"
     t.string "first_name"
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "departure_mails", force: :cascade do |t|
+    t.string "uid"
     t.bigint "register_id"
     t.string "internal_reference"
     t.datetime "departure_date"
@@ -135,6 +140,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "features", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.bigint "role_id"
     t.bigint "permission_id"
@@ -149,6 +155,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "folders", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -159,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "imputation_items", force: :cascade do |t|
+    t.string "uid"
     t.bigint "imputation_id"
     t.bigint "imputation_reason_id"
     t.datetime "created_at", null: false
@@ -168,6 +176,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "imputation_reasons", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -178,6 +187,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "imputations", force: :cascade do |t|
+    t.string "uid"
     t.bigint "service_id"
     t.bigint "recipient_id"
     t.bigint "arrival_mail_id"
@@ -192,6 +202,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "natures", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -202,6 +213,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "organization_types", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -212,6 +224,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "organizations", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.bigint "organization_type_id"
     t.string "slogan"
@@ -232,6 +245,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "permission_roles", force: :cascade do |t|
+    t.string "uid"
     t.bigint "permission_id"
     t.bigint "role_id"
     t.string "status"
@@ -242,6 +256,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "permissions", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -250,6 +265,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "profiles", force: :cascade do |t|
+    t.string "uid"
     t.string "civility"
     t.string "first_name"
     t.string "last_name"
@@ -266,6 +282,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "register_types", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -276,6 +293,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "registers", force: :cascade do |t|
+    t.string "uid"
     t.bigint "register_type_id"
     t.string "name"
     t.datetime "start_date"
@@ -291,6 +309,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "request_imputation_tasks", force: :cascade do |t|
+    t.string "uid"
     t.bigint "task_type_id"
     t.string "title"
     t.text "description"
@@ -309,6 +328,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "request_imputations", force: :cascade do |t|
+    t.string "uid"
     t.bigint "service_id"
     t.bigint "receiver_id"
     t.bigint "request_id"
@@ -323,6 +343,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "request_types", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -333,6 +354,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "requests", force: :cascade do |t|
+    t.string "uid"
     t.bigint "request_type_id"
     t.string "first_name"
     t.string "last_name"
@@ -354,6 +376,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "roles", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -362,6 +385,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "services", force: :cascade do |t|
+    t.string "uid"
     t.integer "parent_service_id"
     t.string "name"
     t.text "description"
@@ -373,6 +397,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "supports", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -383,6 +408,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "task_statuses", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -393,6 +419,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "task_types", force: :cascade do |t|
+    t.string "uid"
     t.string "name"
     t.text "description"
     t.string "status"
@@ -403,6 +430,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "tasks", force: :cascade do |t|
+    t.string "uid"
     t.bigint "task_type_id"
     t.string "title"
     t.text "description"
@@ -421,6 +449,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "uid"
     t.string "login"
     t.string "slug"
     t.bigint "role_id", null: false

@@ -210,7 +210,7 @@ unless Register.all.present?
             {register_type_id: register_types.last.id, name: "COURRIER DEPART 2020", user_id: users.first.id}
         ])
 else    
-    registers =  Registers.all
+    registers =  Register.all
 
 end
 
@@ -223,5 +223,17 @@ unless TaskType.all.present?
         ])
 else    
     task_types =  TaskType.all
+
+end
+
+# Request type.
+unless RequestType.all.present?
+    request_types = RequestType.create(
+        [
+            {name: "Demande d'attestation d'admissibilité", user_id: users.first.id},
+            {name: "Demande d'authentification de bulletin", user_id: users.first.id}
+        ])
+else    
+    request_types =  RequestType.all
 
 end

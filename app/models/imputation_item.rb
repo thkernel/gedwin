@@ -10,6 +10,10 @@
 #
 
 class ImputationItem < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
+
   belongs_to :imputation
   belongs_to :imputation_reason
 end

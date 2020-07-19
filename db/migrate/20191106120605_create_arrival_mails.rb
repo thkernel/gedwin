@@ -1,6 +1,7 @@
 class CreateArrivalMails < ActiveRecord::Migration[5.2]
   def change
     create_table :arrival_mails do |t|
+      t.string :uid
       t.references :register, foreign_key: true
 
       t.string :internal_reference

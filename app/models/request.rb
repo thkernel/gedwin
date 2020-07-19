@@ -21,6 +21,9 @@
 #
 
 class Request < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
   before_save :set_default_status
   
   belongs_to :request_type

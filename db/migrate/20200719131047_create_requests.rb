@@ -1,6 +1,7 @@
 class CreateRequests < ActiveRecord::Migration[5.2]
   def change
     create_table :requests do |t|
+      t.string :uid
       t.references :request_type, foreign_key: true
       t.string :first_name
       t.string :last_name

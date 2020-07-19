@@ -13,6 +13,9 @@
 #
 
 class Binder < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
   belongs_to :folder
   belongs_to :user
 

@@ -12,6 +12,10 @@
 #
 
 class TaskType < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
+
   belongs_to :user
 
   # Validations

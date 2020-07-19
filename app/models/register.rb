@@ -16,6 +16,10 @@
 #
 
 class Register < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
+
   belongs_to :register_type
   belongs_to :user
 

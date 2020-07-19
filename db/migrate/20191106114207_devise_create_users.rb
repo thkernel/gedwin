@@ -5,6 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
     create_table :users do |t|
 
       ## Add
+      t.string :uid
       t.string :login
       t.string :slug
       t.references :role, foreign_key: true, null: false

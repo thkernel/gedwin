@@ -1,6 +1,7 @@
 class CreateBinders < ActiveRecord::Migration[5.2]
   def change
     create_table :binders do |t|
+      t.string :uid
       t.references :folder, foreign_key: true
       t.string :name
       t.text :description

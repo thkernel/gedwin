@@ -11,6 +11,10 @@
 #
 
 class PermissionRole < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
+
   belongs_to :permission
   belongs_to :role
 end

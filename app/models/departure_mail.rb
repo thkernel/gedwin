@@ -24,6 +24,9 @@
 #
 
 class DepartureMail < ApplicationRecord
+  include SharedUtils::Generate
+
+  before_save :generate_uid
   belongs_to :user
 
   has_many_attached :files
