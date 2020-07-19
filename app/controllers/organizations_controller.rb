@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
-
+  layout "dashboard"
   # GET /organizations
   # GET /organizations.json
   def index
@@ -14,17 +15,19 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/new
   def new
+    @organization_types = OrganizationType.all
     @organization = Organization.new
   end
 
   # GET /organizations/1/edit
   def edit
+    @organization_types = OrganizationType.all
   end
 
   # POST /organizations
   # POST /organizations.json
   def create
-    @organization = Organization.new(organization_params)
+    @organization = current_user.organization.build(organization_params)
 
     respond_to do |format|
       if @organization.save
@@ -69,6 +72,6 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name, :organization_type_id, :slogan, :address,  :city,  :country, :phone)
+      params.require(:organization).permit(:name, :organization_type_id, :slogan, :address,  :city,  :country, :phone, :web_site, :zip_code, :fax, :logo)
     end
 end

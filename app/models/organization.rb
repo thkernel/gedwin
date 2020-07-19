@@ -22,4 +22,7 @@
 
 class Organization < ApplicationRecord
   belongs_to :user
+
+   # For active storage
+   has_one_attached :logo
 end

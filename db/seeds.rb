@@ -202,6 +202,19 @@ else
 
 end
 
+unless Register.all.present?
+    registers = Register.create(
+        [
+
+            {register_type_id: register_types.first.id, name: "COURRIER D'ARRIVÉE 2020",  user_id: users.first.id},
+            {register_type_id: register_types.last.id, name: "COURRIER DEPART 2020", user_id: users.first.id}
+        ])
+else    
+    registers =  Registers.all
+
+end
+
+# Task type.
 unless TaskType.all.present?
     task_types = TaskType.create(
         [

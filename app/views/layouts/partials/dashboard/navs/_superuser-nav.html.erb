@@ -84,7 +84,13 @@
                 <%= link_to  "Utilisateurs", all_users_path, class: "sub-link" %>
             </li>
 
-            
+            <li class="sub-item">
+               
+              <% if current_organization.present? %>
+                <%= link_to "Mon organisation", show_organization_path(current_organization) , class: "sub-link" %>
+              <% end %>
+							
+            </li>
 
             <li class="sub-item">
                 <%= link_to  "Services", services_path, class: "sub-link" %>

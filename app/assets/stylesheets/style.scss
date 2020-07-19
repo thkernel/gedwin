@@ -292,3 +292,8 @@
     width: 230px;
     padding: 10px;
 }
+
+.required:after { 
+    content:" *"; 
+    color: red;
+}

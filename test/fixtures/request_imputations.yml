@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service: one
+  receiver: one
+  request: one
+  status: MyString
+  user: one
+
+two:
+  service: two
+  receiver: two
+  request: two
+  status: MyString
+  user: two

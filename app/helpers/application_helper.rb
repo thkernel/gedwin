@@ -52,5 +52,15 @@ module ApplicationHelper
 			t(:application_home_page)
 		end
 	end
+
+	def current_organization
+	
+		organization = current_user.organization
+		if organization.present?
+			organization
+		end
+		
+	end
+	
 	
 end

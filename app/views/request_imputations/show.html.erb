@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Service:</strong>
+  <%= @request_imputation.service %>
+</p>
+
+<p>
+  <strong>Receiver:</strong>
+  <%= @request_imputation.receiver %>
+</p>
+
+<p>
+  <strong>Request:</strong>
+  <%= @request_imputation.request %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @request_imputation.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @request_imputation.user %>
+</p>
+
+<%= link_to 'Edit', edit_request_imputation_path(@request_imputation) %> |
+<%= link_to 'Back', request_imputations_path %>

@@ -21,6 +21,7 @@ class RequestsController < ApplicationController
 
   # GET /requests/1/edit
   def edit
+    @request_types = RequestType.all
   end
 
   # POST /requests
@@ -82,6 +83,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:request_type_id, :first_name, :last_name, :gender, :born_date, :born_place, :academic_year, :grade, :specialty, :request_date, :description, :status)
+      params.require(:request).permit(:request_type_id, :first_name, :last_name, :gender, :born_date, :born_place, :academic_year, :grade, :specialty, :request_date, :kairos_id, :description, :status)
     end
 end

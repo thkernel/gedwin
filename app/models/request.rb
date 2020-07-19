@@ -21,6 +21,16 @@
 #
 
 class Request < ApplicationRecord
+  before_save :set_default_status
+  
   belongs_to :request_type
   belongs_to :user
+
+  private
+
+  def set_default_status
+    unless self.status.present?
+      self.status = "In progress"
+    end
+  end
 end

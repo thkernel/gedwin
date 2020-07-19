@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Request Imputations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Receiver</th>
+      <th>Request</th>
+      <th>Status</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_imputations.each do |request_imputation| %>
+      <tr>
+        <td><%= request_imputation.service %></td>
+        <td><%= request_imputation.receiver %></td>
+        <td><%= request_imputation.request %></td>
+        <td><%= request_imputation.status %></td>
+        <td><%= request_imputation.user %></td>
+        <td><%= link_to 'Show', request_imputation %></td>
+        <td><%= link_to 'Edit', edit_request_imputation_path(request_imputation) %></td>
+        <td><%= link_to 'Destroy', request_imputation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request Imputation', new_request_imputation_path %>

@@ -1,82 +1,108 @@
-<%= form_with(model: request, local: true) do |form| %>
-  <% if request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+<%= form_with(model: request, local: false) do |form| %>
+ <div class="modal-body">
+    <ul class="errors">
+    </ul>
 
-      <ul>
-      <% request.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.label :request_type_id, "Type de demande", class: "required" %>
+        <%= form.collection_select(:request_type_id, @request_types, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :request_type_id %>
-    <%= form.text_field :request_type_id %>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.label :request_date, "Date de la demande", class: "required" %>
+        <%= form.date_field :request_date, class: "form-control", required: true %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :first_name , "Prénom", class: "required" %>
+        <%= form.text_field :first_name, class: "form-control", placeholder: "Prénom", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :last_name, "Nom", class: "required" %>
+        <%= form.text_field :last_name, class: "form-control", placeholder: "Nom", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :gender, "Genre", class: "required" %>
+        <%= form.select :gender , GENDERS, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :born_date, "Date de naissance", class: "required" %>
+        <%= form.date_field :born_date, class: "form-control", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+
+      <div class="form-group">
+        <%= form.label :born_place, "Lieu de naissance", class: "required" %>
+        <%= form.text_field :born_place, class: "form-control", placeholder: "Lieu de naissance", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :academic_year , "Année académique", class: "required"%>
+        <%= form.text_field :academic_year, class: "form-control", placeholder: "Année académique", required: true %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :gender %>
-    <%= form.text_field :gender %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :grade, "Classe", class: "required" %>
+        <%= form.text_field :grade, class: "form-control", placeholder: "Classe", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= form.label :specialty , "Spécialité", class: "required"%>
+        <%= form.text_field :specialty, class: "form-control", placeholder: "Spécialité", required: true %>
+      </div>
+    </div>
+   
+    <div class="col-md-4">
+     <div class="form-group">
+        <%= form.label :kairos_id %>
+        <%= form.text_field :kairos_id, class: "form-control", placeholder: "Code Kairos" %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :born_date %>
-    <%= form.datetime_select :born_date %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= form.label :description, "Description" %>
+        <%= form.text_area :description, class: "form-control", placeholder: "Description" %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :born_place %>
-    <%= form.text_field :born_place %>
-  </div>
+ 
 
-  <div class="field">
-    <%= form.label :academic_year %>
-    <%= form.text_field :academic_year %>
-  </div>
-
-  <div class="field">
-    <%= form.label :grade %>
-    <%= form.text_field :grade %>
-  </div>
-
-  <div class="field">
-    <%= form.label :specialty %>
-    <%= form.text_field :specialty %>
-  </div>
-
-  <div class="field">
-    <%= form.label :request_date %>
-    <%= form.datetime_select :request_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+ </div><!-- modal body -->
+  <div class="modal-footer">
+    <%= link_to "Annuler", "#", class: "btn btn-secondary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", data: {dismiss: "modal"} %>
+    <%= form.submit  class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1",  "data-loading-text"=>"Loading...", autocomplete: "off" %>
   </div>
 <% end %>

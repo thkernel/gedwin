@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_131047) do
+ActiveRecord::Schema.define(version: 2020_07_19_162035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -290,6 +290,38 @@ ActiveRecord::Schema.define(version: 2020_07_19_131047) do
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
+  create_table "request_imputation_tasks", force: :cascade do |t|
+    t.bigint "task_type_id"
+    t.string "title"
+    t.text "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "closing_date"
+    t.bigint "task_status_id"
+    t.bigint "request_imputation_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_imputation_id"], name: "index_request_imputation_tasks_on_request_imputation_id"
+    t.index ["task_status_id"], name: "index_request_imputation_tasks_on_task_status_id"
+    t.index ["task_type_id"], name: "index_request_imputation_tasks_on_task_type_id"
+    t.index ["user_id"], name: "index_request_imputation_tasks_on_user_id"
+  end
+
+  create_table "request_imputations", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "receiver_id"
+    t.bigint "request_id"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_request_imputations_on_receiver_id"
+    t.index ["request_id"], name: "index_request_imputations_on_request_id"
+    t.index ["service_id"], name: "index_request_imputations_on_service_id"
+    t.index ["user_id"], name: "index_request_imputations_on_user_id"
+  end
+
   create_table "request_types", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -312,6 +344,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_131047) do
     t.string "specialty"
     t.datetime "request_date"
     t.text "description"
+    t.text "kairos_id"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -443,6 +476,13 @@ ActiveRecord::Schema.define(version: 2020_07_19_131047) do
   add_foreign_key "register_types", "users"
   add_foreign_key "registers", "register_types"
   add_foreign_key "registers", "users"
+  add_foreign_key "request_imputation_tasks", "request_imputations"
+  add_foreign_key "request_imputation_tasks", "task_statuses"
+  add_foreign_key "request_imputation_tasks", "task_types"
+  add_foreign_key "request_imputation_tasks", "users"
+  add_foreign_key "request_imputations", "requests"
+  add_foreign_key "request_imputations", "services"
+  add_foreign_key "request_imputations", "users"
   add_foreign_key "request_types", "users"
   add_foreign_key "requests", "request_types"
   add_foreign_key "requests", "users"

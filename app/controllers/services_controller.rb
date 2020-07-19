@@ -23,6 +23,7 @@ class ServicesController < ApplicationController
 
   # GET /services/1/edit
   def edit
+    @services = Service.all
   end
 
   # POST /services

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :request_imputation_tasks
+  resources :request_imputations
   resources :requests do   
     get "delete"
   end
@@ -111,6 +113,17 @@ Rails.application.routes.draw do
   resources :organization_types do     
     get "delete"
   end
+
+  resources :organizations do     
+    get "delete"
+  end
+
+  #get "/companies/index" => "companies#index" , as: :companies
+	#post "/companies/new/" => "companies#create", as: :create_company
+	#get "/companies/new/" => "companies#new", as: :new_company
+	get "/organization/:id" => "organizations#show", as: :show_organization
+	#get "/companies/edit/:id" => "companies#edit", as: :edit_company
+	#patch "/companies/:id"  => "companies#update", as: :company
 
   resources :natures do     
     get "delete"

@@ -1,69 +1,54 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card ">
+                <div class="card-header align-items-center">
+                    <div class="card-header-title-text">
+                        <h1 class="uppercase">Société</h1>
+                    </div>
+                    <div class="card-header-subtitle-text">
+                        <p>Informations de votre société</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="profile">
+                        <!-- Start section -->
+                        <div class="profile-section-bacic-infos">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="profile-section-title">
+                                        <div class="pull-left">
+                                            <span>
+                                                <i class="fa fa-home" aria-hidden="true"></i>
+                                            </span>
+                                            <span><h3>Informations du compte</h3></span>
+                                        </div>
+                                        <div class="pull-right">
+                                            <span>
+                                                <%= link_to "Mettre à jour", edit_company_path(current_company()), title: "Modifier", remote: true %>
+                                            </span>
+                                        </div>
+                                    </div><!-- end section title -->
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="profile-section-body">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end section -->
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-  <strong>Activity field:</strong>
-  <%= @company.activity_field %>
-</p>
-
-<p>
-  <strong>Slogan:</strong>
-  <%= @company.slogan %>
-</p>
-
-<p>
-  <strong>Address one:</strong>
-  <%= @company.address_one %>
-</p>
-
-<p>
-  <strong>Address two:</strong>
-  <%= @company.address_two %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @company.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @company.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @company.country %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @company.phone %>
-</p>
-
-<p>
-  <strong>Fax:</strong>
-  <%= @company.fax %>
-</p>
-
-<p>
-  <strong>Zip code:</strong>
-  <%= @company.zip_code %>
-</p>
-
-<p>
-  <strong>Brand:</strong>
-  <%= @company.brand %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @company.user %>
-</p>
-
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<div id="company-modal" class="modal fade"></div>

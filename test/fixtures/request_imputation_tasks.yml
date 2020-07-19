@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_type: one
+  title: MyString
+  description: MyText
+  start_date: 2020-07-19 16:20:35
+  end_date: 2020-07-19 16:20:35
+  closing_date: 2020-07-19 16:20:35
+  task_status: one
+  request_imputation: one
+  user: one
+
+two:
+  task_type: two
+  title: MyString
+  description: MyText
+  start_date: 2020-07-19 16:20:35
+  end_date: 2020-07-19 16:20:35
+  closing_date: 2020-07-19 16:20:35
+  task_status: two
+  request_imputation: two
+  user: two
