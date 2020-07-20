@@ -3,6 +3,7 @@
 # Table name: departure_mails
 #
 #  id                    :bigint           not null, primary key
+#  uid                   :string
 #  register_id           :bigint
 #  internal_reference    :string
 #  departure_date        :datetime

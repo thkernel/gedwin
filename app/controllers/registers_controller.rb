@@ -32,16 +32,17 @@ class RegistersController < ApplicationController
     @register = current_user.registers.build(register_params)
     
     # Set all olders registers status to "close"
-    arrival_register = RegisterType.find_by(name: "Courrier d'arrivée".upcase)
-    departure_register = RegisterType.find_by(name: "Courrier départ".upcase)
+    register_type = RegisterType.find(@register.register_type_id)
 
-    if @register.register_type_id == arrival_register.id
+  
+
+    if register_type.present? && register_type.id == @register.register_type_id
     
-      Register.where(register_type_id: arrival_register.id).update_all(status: "Close")
-    elsif @register.register_type_id == departure_register.id
-      Register.where(register_type_id: departure_register.id).update_all(status: "Close")
+      Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
+      puts 
     end
-      @register.status = "Open"
+    
+    #@register.status = "Ouvert"
 
     respond_to do |format|
       if @register.save
@@ -61,6 +62,15 @@ class RegistersController < ApplicationController
   # PATCH/PUT /registers/1
   # PATCH/PUT /registers/1.json
   def update
+    register_type = RegisterType.find(@register.register_type_id)
+    
+
+
+    if register_type.present? && register_type.id == @register.register_type_id
+    
+      Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
+      puts 
+    end
     respond_to do |format|
       if @register.update(register_params)
         @registers = Register.all
@@ -102,6 +112,6 @@ class RegistersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def register_params
-      params.require(:register).permit(:reference, :start_date, :end_date, :name, :register_type_id)
+      params.require(:register).permit(:reference, :start_date, :end_date, :name, :register_type_id, :status)
     end
 end

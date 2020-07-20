@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id             :bigint           not null, primary key
+#  uid            :string
 #  task_type_id   :bigint
 #  title          :string
 #  description    :text

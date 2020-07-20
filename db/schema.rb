@@ -15,6 +15,19 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "abilities", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "feature_id"
+    t.bigint "permission_id"
+    t.bigint "role_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_id"], name: "index_abilities_on_feature_id"
+    t.index ["permission_id"], name: "index_abilities_on_permission_id"
+    t.index ["role_id"], name: "index_abilities_on_role_id"
+  end
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -142,16 +155,10 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   create_table "features", force: :cascade do |t|
     t.string "uid"
     t.string "name"
-    t.bigint "role_id"
-    t.bigint "permission_id"
     t.text "description"
     t.string "status"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["permission_id"], name: "index_features_on_permission_id"
-    t.index ["role_id"], name: "index_features_on_role_id"
-    t.index ["user_id"], name: "index_features_on_user_id"
   end
 
   create_table "folders", force: :cascade do |t|
@@ -167,23 +174,19 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
 
   create_table "imputation_items", force: :cascade do |t|
     t.string "uid"
+    t.bigint "task_id"
+    t.string "title"
+    t.text "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "closing_date"
+    t.bigint "task_status_id"
     t.bigint "imputation_id"
-    t.bigint "imputation_reason_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imputation_id"], name: "index_imputation_items_on_imputation_id"
-    t.index ["imputation_reason_id"], name: "index_imputation_items_on_imputation_reason_id"
-  end
-
-  create_table "imputation_reasons", force: :cascade do |t|
-    t.string "uid"
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_imputation_reasons_on_user_id"
+    t.index ["task_id"], name: "index_imputation_items_on_task_id"
+    t.index ["task_status_id"], name: "index_imputation_items_on_task_status_id"
   end
 
   create_table "imputations", force: :cascade do |t|
@@ -244,17 +247,6 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
-  create_table "permission_roles", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "permission_id"
-    t.bigint "role_id"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["permission_id"], name: "index_permission_roles_on_permission_id"
-    t.index ["role_id"], name: "index_permission_roles_on_role_id"
-  end
-
   create_table "permissions", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -308,9 +300,9 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
-  create_table "request_imputation_tasks", force: :cascade do |t|
+  create_table "request_imputation_items", force: :cascade do |t|
     t.string "uid"
-    t.bigint "task_type_id"
+    t.bigint "task_id"
     t.string "title"
     t.text "description"
     t.datetime "start_date"
@@ -318,13 +310,11 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.datetime "closing_date"
     t.bigint "task_status_id"
     t.bigint "request_imputation_id"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["request_imputation_id"], name: "index_request_imputation_tasks_on_request_imputation_id"
-    t.index ["task_status_id"], name: "index_request_imputation_tasks_on_task_status_id"
-    t.index ["task_type_id"], name: "index_request_imputation_tasks_on_task_type_id"
-    t.index ["user_id"], name: "index_request_imputation_tasks_on_user_id"
+    t.index ["request_imputation_id"], name: "index_request_imputation_items_on_request_imputation_id"
+    t.index ["task_id"], name: "index_request_imputation_items_on_task_id"
+    t.index ["task_status_id"], name: "index_request_imputation_items_on_task_status_id"
   end
 
   create_table "request_imputations", force: :cascade do |t|
@@ -434,16 +424,9 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.bigint "task_type_id"
     t.string "title"
     t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "closing_date"
-    t.bigint "task_status_id"
-    t.bigint "imputation_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["imputation_id"], name: "index_tasks_on_imputation_id"
-    t.index ["task_status_id"], name: "index_tasks_on_task_status_id"
     t.index ["task_type_id"], name: "index_tasks_on_task_type_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -466,6 +449,9 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "abilities", "features"
+  add_foreign_key "abilities", "permissions"
+  add_foreign_key "abilities", "roles"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "arrival_mails", "binders"
   add_foreign_key "arrival_mails", "correspondents"
@@ -484,13 +470,10 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   add_foreign_key "departure_mails", "registers"
   add_foreign_key "departure_mails", "supports"
   add_foreign_key "departure_mails", "users"
-  add_foreign_key "features", "permissions"
-  add_foreign_key "features", "roles"
-  add_foreign_key "features", "users"
   add_foreign_key "folders", "users"
-  add_foreign_key "imputation_items", "imputation_reasons"
   add_foreign_key "imputation_items", "imputations"
-  add_foreign_key "imputation_reasons", "users"
+  add_foreign_key "imputation_items", "task_statuses"
+  add_foreign_key "imputation_items", "tasks"
   add_foreign_key "imputations", "arrival_mails"
   add_foreign_key "imputations", "services"
   add_foreign_key "imputations", "users"
@@ -498,17 +481,14 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   add_foreign_key "organization_types", "users"
   add_foreign_key "organizations", "organization_types"
   add_foreign_key "organizations", "users"
-  add_foreign_key "permission_roles", "permissions"
-  add_foreign_key "permission_roles", "roles"
   add_foreign_key "profiles", "services"
   add_foreign_key "profiles", "users"
   add_foreign_key "register_types", "users"
   add_foreign_key "registers", "register_types"
   add_foreign_key "registers", "users"
-  add_foreign_key "request_imputation_tasks", "request_imputations"
-  add_foreign_key "request_imputation_tasks", "task_statuses"
-  add_foreign_key "request_imputation_tasks", "task_types"
-  add_foreign_key "request_imputation_tasks", "users"
+  add_foreign_key "request_imputation_items", "request_imputations"
+  add_foreign_key "request_imputation_items", "task_statuses"
+  add_foreign_key "request_imputation_items", "tasks"
   add_foreign_key "request_imputations", "requests"
   add_foreign_key "request_imputations", "services"
   add_foreign_key "request_imputations", "users"
@@ -519,8 +499,6 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   add_foreign_key "supports", "users"
   add_foreign_key "task_statuses", "users"
   add_foreign_key "task_types", "users"
-  add_foreign_key "tasks", "imputations"
-  add_foreign_key "tasks", "task_statuses"
   add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "users"
   add_foreign_key "users", "roles"

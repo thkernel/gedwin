@@ -1,35 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="br-pageheader">
+      <nav class="breadcrumb pd-0 mg-0 tx-12">
+        
+        <span class="breadcrumb-item active"><h5>Imputations de demandes > Demande N°<%= @request.id %></h5></span>
+      </nav>
+    </div><!-- br-pageheader -->
+<div class="br-pagebody">
+  <div class="br-section-wrapper">
+    <div class="headers mg-b-20">
+        <div class="left-content">
+        </div>
 
-<h1>Request Imputations</h1>
+        <div class="text-right">
+            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Nouvelle imputation'), new_request_imputation_path(ruid: @request.uid), class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: false %>
 
-<table>
+        </div>
+
+    </div>
+
+
+<table id="datatable1" class="table display responsive nowrap">
+
+
   <thead>
     <tr>
       <th>Service</th>
-      <th>Receiver</th>
-      <th>Request</th>
-      <th>Status</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th>Destinataire</th>
+      <th>Réf. demande</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
-  <tbody>
-    <% @request_imputations.each do |request_imputation| %>
-      <tr>
-        <td><%= request_imputation.service %></td>
-        <td><%= request_imputation.receiver %></td>
-        <td><%= request_imputation.request %></td>
-        <td><%= request_imputation.status %></td>
-        <td><%= request_imputation.user %></td>
-        <td><%= link_to 'Show', request_imputation %></td>
-        <td><%= link_to 'Edit', edit_request_imputation_path(request_imputation) %></td>
-        <td><%= link_to 'Destroy', request_imputation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <tbody class="imputation-requests">
+   <%= render "index" %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Request Imputation', new_request_imputation_path %>
+</div>
+</div>
+<div id="imputation-request-modal" class="c-modal modal fade" data-backdrop="static"></div>

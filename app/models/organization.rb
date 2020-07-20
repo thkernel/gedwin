@@ -3,6 +3,7 @@
 # Table name: organizations
 #
 #  id                   :bigint           not null, primary key
+#  uid                  :string
 #  name                 :string
 #  organization_type_id :bigint
 #  slogan               :string

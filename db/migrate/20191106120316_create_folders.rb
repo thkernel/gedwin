@@ -3,6 +3,7 @@ class CreateFolders < ActiveRecord::Migration[5.2]
     create_table :folders do |t|
       t.string :uid
       t.string :name
+      t.string :path
       t.text :description
       t.string :status
       t.references :user, foreign_key: true

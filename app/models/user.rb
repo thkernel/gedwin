@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  uid                    :string
 #  login                  :string
 #  slug                   :string
 #  role_id                :bigint           not null
@@ -43,8 +44,9 @@ class User < ApplicationRecord
 	has_many :departure_mails, dependent: :destroy
 	has_one  :profile, dependent: :destroy
 	has_one  :organization, dependent: :destroy
-	has_many :imputation_reasons, dependent: :destroy
 	has_many :imputations, dependent: :destroy
+	has_many :request_imputations, dependent: :destroy
+	has_many :request_imputation_items, dependent: :destroy
 	has_many :task_types, dependent: :destroy
 	has_many :task_statuses, dependent: :destroy
 	has_many :request_types, dependent: :destroy
@@ -52,6 +54,7 @@ class User < ApplicationRecord
 
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
+	has_many :receiver_request_imputations, :class_name => "RequestImputation", :foreign_key => :receiver_id
 
 
 	has_many :tasks, dependent: :destroy

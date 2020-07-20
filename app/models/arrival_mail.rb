@@ -3,6 +3,7 @@
 # Table name: arrival_mails
 #
 #  id                    :bigint           not null, primary key
+#  uid                   :string
 #  register_id           :bigint
 #  internal_reference    :string
 #  external_reference    :string

@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
-            <%= form.label :register, "Registre" %>
+            <%= form.label :register, "Registre", class: "required" %>
             <%= form.collection_select(:register_id, @registers, :id, :name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
           </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="col-md-3">
 
         <div class="form-group">
-            <%= form.label :nature_id %>
+            <%= form.label :nature_id, "Nature", class: "required"%>
             <%= form.collection_select(:nature_id, @natures, :id, :name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
 
         </div>
@@ -41,7 +41,7 @@
         <div class="col-md-3">
 
           <div class="form-group">
-            <%= form.label :support_id %>
+            <%= form.label :support_id, class: "required" %>
             <%= form.collection_select(:support_id, @supports, :id, :name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
 
           </div>
@@ -73,14 +73,14 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= form.label :departure_date , "Date départ"%>
+            <%= form.label :departure_date , "Date départ" , class: "required"%>
             <%= form.date_field :departure_date, id: :arrival_mail_departure_date, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <%= form.label :receipt_date, "Date réception" %>
+            <%= form.label :receipt_date, "Date réception", class: "required" %>
             <%= form.date_field :receipt_date, id: :arrival_mail_receipt_date, class: "form-control" %>
           </div>
  
@@ -91,7 +91,7 @@
 
         <div class="col-md-4">
           <div class="form-group">
-            <%= form.label :to_answer, "A répondre?" %>
+            <%= form.label :to_answer, "A répondre?", class: "required" %>
             <%= form.select :to_answer, [["Oui"], ["Non"]], {prompt: "Sélectionner"},  class: "form-control", required: true %>
           </div>
         </div>
@@ -124,7 +124,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <%= form.label :correspondent_id, "Expéditeur" %>
+              <%= form.label :correspondent_id, "Expéditeur", class: "required" %>
               <%= form.collection_select(:correspondent_id, @correspondents, :id, :organization_name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
 
             </div>
@@ -138,7 +138,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= form.label :object, "Objet" %>
+            <%= form.label :object, "Objet" , class: "required"%>
             <%= form.text_field :object, id: :arrival_mail_object, class: "form-control", placeholder: "Objet" , required: true %>
           </div>
 
@@ -152,7 +152,7 @@
          <div class="col-md-6">
          
           <div class="form-group">
-            <%= form.label :binder_id , "Classeur" %>
+            <%= form.label :binder_id , "Classeur", class: "required" %>
             <%= form.collection_select(:binder_id, @binders, :id,:name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
 
           </div>

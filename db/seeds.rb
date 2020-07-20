@@ -38,6 +38,24 @@ else
 
 end
 
+unless Permission.all.present?
+    permissions = Permission.create(
+        [
+            {name: "create"},
+            {name: "edit"},
+            {name: "update"},
+            {name: "delete"},
+            {name: "search"},
+            {name: "show"},
+            {name: "denied"}
+ 
+
+        ])
+else
+    permissions = Permission.all
+
+end
+
 
 
 # Users
@@ -225,6 +243,33 @@ else
     task_types =  TaskType.all
 
 end
+
+# Task.
+unless Task.all.present?
+    tasks = Task.create(
+        [
+            {task_type_id: task_types.first.id, title: "Attente reponse", user_id: users.first.id},
+            {task_type_id: task_types.last.id, title: "Tâche réparation", user_id: users.first.id}
+        ])
+else    
+    tasks =  Task.all
+
+end
+
+# Task statuses.
+unless TaskStatus.all.present?
+    task_statuses = TaskStatus.create(
+        [
+            {name: "Encours", user_id: users.first.id},
+            {name: "Annulée", user_id: users.first.id},
+            {name: "Clôturée", user_id: users.first.id}
+        ])
+else    
+    task_statuses =  TaskStatus.all
+
+end
+
+
 
 # Request type.
 unless RequestType.all.present?

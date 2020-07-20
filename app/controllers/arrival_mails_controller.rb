@@ -89,7 +89,7 @@ class ArrivalMailsController < ApplicationController
     @arrival_mail = ArrivalMail.new
     
     register_type = RegisterType.where("lower(name) = ?",  "Courrier d'arrivée".downcase).take
-    @registers = Register.where(["status = ? AND register_type_id = ?", "Open", register_type.id ])
+    @registers = Register.where(["status = ? AND register_type_id = ?", "Ouvert", register_type.id ])
     
     @natures = Nature.all 
     @supports = Support.all

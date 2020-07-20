@@ -3,6 +3,7 @@
 # Table name: imputations
 #
 #  id              :bigint           not null, primary key
+#  uid             :string
 #  service_id      :bigint
 #  recipient_id    :bigint
 #  arrival_mail_id :bigint
@@ -23,7 +24,7 @@ class Imputation < ApplicationRecord
 
 
   has_many :imputation_items, dependent: :destroy
-  has_many :imputation_reasons, :through => :imputation_items, dependent: :destroy
+  #has_many :imputation_reasons, :through => :imputation_items, dependent: :destroy
 
-  has_many :tasks, dependent: :destroy
+  #has_many :tasks, dependent: :destroy
 end

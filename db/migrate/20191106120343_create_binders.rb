@@ -6,6 +6,7 @@ class CreateBinders < ActiveRecord::Migration[5.2]
       t.string :name
       t.text :description
       t.string :status
+      t.string :path
       t.references :user, foreign_key: true
 
       t.timestamps

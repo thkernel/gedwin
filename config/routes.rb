@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :request_imputation_tasks
-  resources :request_imputations
+  resources :request_imputation_items do   
+    get "delete"
+  end
+  resources :request_imputations do   
+    get "delete"
+  end
   resources :requests do   
     get "delete"
   end

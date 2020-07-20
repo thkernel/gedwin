@@ -17,26 +17,14 @@
 #  updated_at            :datetime         not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+class RequestImputationItem < ApplicationRecord
+  include SharedUtils::Generate
 
-one:
-  task_type: one
-  title: MyString
-  description: MyText
-  start_date: 2020-07-19 16:20:35
-  end_date: 2020-07-19 16:20:35
-  closing_date: 2020-07-19 16:20:35
-  task_status: one
-  request_imputation: one
-  user: one
+  before_save :generate_uid
 
-two:
-  task_type: two
-  title: MyString
-  description: MyText
-  start_date: 2020-07-19 16:20:35
-  end_date: 2020-07-19 16:20:35
-  closing_date: 2020-07-19 16:20:35
-  task_status: two
-  request_imputation: two
-  user: two
+  
+  belongs_to :task
+  belongs_to :task_status
+  belongs_to :request_imputation
+ 
+end

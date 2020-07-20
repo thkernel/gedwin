@@ -11,32 +11,60 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :service_id %>
-    <%= form.text_field :service_id %>
+  <div class="form-group">
+    <%= form.label :service_id , "Service"%>
+    <%= form.collection_select(:service_id, @services, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
+
   </div>
 
-  <div class="field">
-    <%= form.label :receiver_id %>
-    <%= form.text_field :receiver_id %>
+  <div class="form-group">
+    <%= form.label :receiver_id, "Destinataire" %>
+    <%= form.collection_select(:receiver_id, @receivers, :id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
+
   </div>
 
-  <div class="field">
-    <%= form.label :request_id %>
-    <%= form.text_field :request_id %>
-  </div>
+  <!-- Fieldset informations -->
+  <fieldset>
+    <legend>Tâches</legend>
+    <div class="row">
+      <div class="prescription-items">
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
+        <table class="table  responsive ">
+          <thead>
+            <tr role="row">
+              <th>Tâche</th>
+              <th>Description</th>
+              <th>Date début</th>
+              <th>Date fin</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody class="items">
+            <%= form.fields_for :request_imputation_items do |item| %>
+                <%= render 'request_imputation_item_fields', f: item %>
+            <% end %>
+          </tbody>
+        </table>  
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= link_to_add_association raw('<i class="fa fa-plus" aria-hidden="true"></i> Ajouter'), form, :request_imputation_items, class: 'btn btn-primary', data: { association_insertion_node: '.items', association_insertion_method: :append } %>
+        </div>
+      </div>
+    </div>
+    
+  </fieldset>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  
+    
+    <%= form.hidden_field :request_id, value: (request_imputation.request_id.present? ? request_imputation.request_id : @request.id) %>
+ 
 
-  <div class="actions">
-    <%= form.submit %>
+ 
+
+  <div class="form-group pull-right">
+    <%= form.submit class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1" %>
   </div>
 <% end %>

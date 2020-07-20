@@ -40,8 +40,9 @@ include  FoldersHelper
 
     respond_to do |format|
       if @binder.save
-        create_folder( OutinStorage.configuration.path + Apartment::Tenant.current + "/" + folder_name(@binder.folder_id).downcase + "/" + @binder.name.downcase)
-
+        #create_folder( OutinStorage.configuration.path + Apartment::Tenant.current + "/" + folder_name(@binder.folder_id).downcase + "/" + @binder.name.downcase)
+        create_folder(Folder.find(@binder.folder_id).path + "/" + @binder.name.downcase)
+        @binder.path  = Folder.find(@binder.folder_id).path + "/" + @binder.name.downcase
         @binders = Binder.all
 
         format.html { redirect_to @binder, notice: 'Binder was successfully created.' }

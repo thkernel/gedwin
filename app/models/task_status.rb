@@ -3,6 +3,7 @@
 # Table name: task_statuses
 #
 #  id          :bigint           not null, primary key
+#  uid         :string
 #  name        :string
 #  description :text
 #  status      :string

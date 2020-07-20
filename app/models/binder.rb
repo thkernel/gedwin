@@ -3,6 +3,7 @@
 # Table name: binders
 #
 #  id          :bigint           not null, primary key
+#  uid         :string
 #  folder_id   :bigint
 #  name        :string
 #  description :text

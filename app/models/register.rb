@@ -3,6 +3,7 @@
 # Table name: registers
 #
 #  id               :bigint           not null, primary key
+#  uid              :string
 #  register_type_id :bigint
 #  name             :string
 #  start_date       :datetime

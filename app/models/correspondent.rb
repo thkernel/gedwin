@@ -3,6 +3,7 @@
 # Table name: correspondents
 #
 #  id                    :bigint           not null, primary key
+#  uid                   :string
 #  correspondent_type_id :bigint
 #  organization_name     :string
 #  first_name            :string

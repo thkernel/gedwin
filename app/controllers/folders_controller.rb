@@ -37,7 +37,9 @@ class FoldersController < ApplicationController
 
     respond_to do |format|
       if @folder.save
-        create_folder( OutinStorage.configuration.path + Apartment::Tenant.current + "/" + @folder.name.downcase)
+        #create_folder( OutinStorage.configuration.path + Apartment::Tenant.current + "/" + @folder.name.downcase)
+        create_folder(ENV["HOME"] + "/" + @folder.name.downcase)
+        @folder.path = ENV["HOME"] + "/" + @folder.name.downcase
 
         @folders = Folder.all
 

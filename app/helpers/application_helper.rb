@@ -61,6 +61,10 @@ module ApplicationHelper
 		end
 		
 	end
+
+	def get_user(user_id)
+		user = User.find(user_id)
+	end
 	
 	
 end

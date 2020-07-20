@@ -3,6 +3,7 @@
 # Table name: features
 #
 #  id            :bigint           not null, primary key
+#  uid           :string
 #  name          :string
 #  role_id       :bigint
 #  permission_id :bigint

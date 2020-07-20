@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  uid                    :string
 #  login                  :string
 #  slug                   :string
 #  role_id                :bigint           not null

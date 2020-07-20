@@ -3,6 +3,7 @@
 # Table name: profiles
 #
 #  id          :bigint           not null, primary key
+#  uid         :string
 #  civility    :string
 #  first_name  :string
 #  last_name   :string

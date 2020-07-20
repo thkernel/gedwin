@@ -6,7 +6,7 @@
   <div class="row">
    <div class="col-md-6">
     <div class="form-group">
-      <%= form.label :register_type, "Type de registre" %>
+      <%= form.label :register_type, "Type de registre", class: "required" %>
       <%= form.collection_select(:register_type_id, @register_types, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%;",  required: true) %> 
 
     </div>
@@ -15,7 +15,7 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <%= form.label :name, "Nom" %>
+        <%= form.label :name, "Nom", class: "required" %>
         <%= form.text_field :name, class: "form-control", id: :register_name , placeholder: "Nom", required: true %>
       </div>
     </div>
@@ -24,18 +24,27 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <%= form.label :start_date, "Date début" %>
+        <%= form.label :start_date, "Date début", class: "required" %>
         <%= form.date_field :start_date, class: "form-control", id: :register_start_date , required: true %>
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <%= form.label :end_date, "Date fin" %>
+        <%= form.label :end_date, "Date fin", class: "required" %>
         <%= form.date_field :end_date, class: "form-control", id: :register_end_date, required: true %>
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.label :status, "Statut", class: "required" %>
+        <%= form.select  :status, REGISTER_STATUSES, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %> 
+      </div>
+    </div>
   </div>
 
   

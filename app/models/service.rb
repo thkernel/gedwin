@@ -3,6 +3,7 @@
 # Table name: services
 #
 #  id                :bigint           not null, primary key
+#  uid               :string
 #  parent_service_id :integer
 #  name              :string
 #  description       :text
