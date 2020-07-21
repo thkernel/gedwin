@@ -24,7 +24,7 @@ class Imputation < ApplicationRecord
 
 
   has_many :imputation_items, dependent: :destroy
-  #has_many :imputation_reasons, :through => :imputation_items, dependent: :destroy
-
-  #has_many :tasks, dependent: :destroy
+ 
+  accepts_nested_attributes_for :imputation_items ,  allow_destroy: true
+ 
 end

@@ -10,7 +10,7 @@ class ImputationsController < ApplicationController
   # GET /imputations
   # GET /imputations.json
   def index
-    @imputations = Imputation.where(arrival_mail_id: @arrival_mail.id)
+    @imputations = @arrival_mail.imputations
   end
 
   # GET /imputations/1
@@ -32,9 +32,13 @@ class ImputationsController < ApplicationController
   def new
    
     @services = Service.all
-    @recipients = Profile.all
-    puts "RECIPIENTS ON NEW: #{@recipients}"
-    @imputation_reasons = ImputationReason.all
+    @tasks = Task.all
+    @task_statuses = TaskStatus.all
+    @services = Service.all
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    @recipients = User.where("role_id NOT IN (?)", role_ids).map {|user| user.profile}
+    
+  
 
     @imputation = Imputation.new
 
@@ -43,12 +47,12 @@ class ImputationsController < ApplicationController
   # GET /imputations/1/edit
   def edit
     @services = Service.all
-    @recipients = Profile.all
+    @tasks = Task.all
+    @task_statuses = TaskStatus.all
+    @services = Service.all
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    @recipients = User.where("role_id NOT IN (?)", role_ids).map {|user| user.profile}
     
-    @imputation_reasons = ImputationReason.all
-    imputation_items = @imputation.imputation_items 
-
-    @selected_imputation_reasons = imputation_items   unless imputation_items.blank?
   end
 
   # POST /imputations
@@ -58,17 +62,13 @@ class ImputationsController < ApplicationController
     @imputation = current_user.imputations.build(imputation_params)
     @imputation.arrival_mail_id = @@arrival_mail.id
 
-    params[:imputation_reasons][:id].each do |imputation_reason|
-      unless imputation_reason.empty?
-        @imputation.imputation_items.build(imputation_reason_id: imputation_reason)
-      end
-    end
+   
 
     respond_to do |format|
       if @imputation.save
         @imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
 
-        format.html { redirect_to @imputation, notice: 'Imputation was successfully created.' }
+        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully created.' }
         format.json { render :show, status: :created, location: @imputation }
         format.js
       else
@@ -83,18 +83,13 @@ class ImputationsController < ApplicationController
   # PATCH/PUT /imputations/1.json
   def update
 
-    @imputation.imputation_items.delete_all
 
-    params[:imputation_reasons][:id].each do |imputation_reason|
-      unless imputation_reason.empty?
-        @imputation.imputation_items.build(imputation_reason_id: imputation_reason)
-      end
-    end
+   
 
     respond_to do |format|
       if @imputation.update(imputation_params)
         @imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
-        format.html { redirect_to @imputation, notice: 'Imputation was successfully updated.' }
+        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully updated.' }
         format.json { render :show, status: :ok, location: @imputation }
         format.js
       else
@@ -116,7 +111,7 @@ class ImputationsController < ApplicationController
   def destroy
     @imputation.destroy
     respond_to do |format|
-      format.html { redirect_to arrival_mail_imputations_path(@imputation.arrival_mail_id), notice: 'Imputation was successfully destroyed.' }
+      format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -128,7 +123,7 @@ class ImputationsController < ApplicationController
     end
 
     def set_arrival_mail
-      @arrival_mail ||= ArrivalMail.find(params[:id])
+      @arrival_mail ||= ArrivalMail.find_by(uid: params[:amuid])
       @@arrival_mail = @arrival_mail
     end
 
@@ -136,6 +131,6 @@ class ImputationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params
-      params.require(:imputation).permit(:service_id, :recipient_id)
+      params.require(:imputation).permit(:service_id, :recipient_id,  imputation_items_attributes: [:id, :task_id, :start_date, :end_date, :description, :task_status_id, :_destroy])
     end
 end

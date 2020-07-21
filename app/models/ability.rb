@@ -1,9 +1,10 @@
 # == Schema Information
 #
-# Table name: permission_roles
+# Table name: abilities
 #
 #  id            :bigint           not null, primary key
 #  uid           :string
+#  feature_id    :bigint
 #  permission_id :bigint
 #  role_id       :bigint
 #  status        :string

@@ -213,7 +213,7 @@ unless RegisterType.all.present?
     register_types = RegisterType.create(
         [
             {name: "COURRIER D'ARRIVÉE", user_id: users.first.id},
-            {name: "COURRIER DEPART", user_id: users.first.id}
+            {name: "COURRIER DÉPART", user_id: users.first.id}
         ])
 else    
     register_types =  RegisterType.all
@@ -280,5 +280,28 @@ unless RequestType.all.present?
         ])
 else    
     request_types =  RequestType.all
+
+end
+
+unless Folder.all.present?
+    folders = Folder.create(
+        [
+            {name: "FACTURES", user_id: users.first.id},
+            {name: "LETTRRES", user_id: users.first.id}
+        ])
+else    
+    folders =  Folder.all
+
+end
+
+
+unless Binder.all.present?
+    binders = Binder.create(
+        [
+            {name: "FACTURES 2020", folder_id: folders.first.id, user_id: users.first.id},
+            {name: "LETTRRES 2020", folder_id: folders.last.id, user_id: users.first.id}
+        ])
+else    
+    binders =  Binder.all
 
 end

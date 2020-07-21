@@ -23,7 +23,7 @@
             </li>
 
           
-
+            <!--
             <li class="sub-item">
                 <%= link_to  "Recherche tâches", search_tasks_path, class: "sub-link" %>
             </li>
@@ -32,7 +32,7 @@
                 <%= link_to  "Tâches non soldées", root_path, class: "sub-link" %>
             </li>
 
-           
+           -->
 
 
           </ul>
@@ -108,9 +108,15 @@
                 <%= link_to  "Types de tâches", task_types_path, class: "sub-link" %>
             </li>
 
-            <li class="sub-item">
+              <li class="sub-item">
                 <%= link_to  "Statuts de tâches", task_statuses_path, class: "sub-link" %>
             </li>
+
+            <li class="sub-item">
+                <%= link_to  "Tâches", tasks_path, class: "sub-link" %>
+            </li>
+
+          
 
             <li class="sub-item">
                 <%= link_to  "Type de correspondants", correspondent_types_path, class: "sub-link" %>
@@ -119,9 +125,7 @@
             <li class="sub-item">
                 <%= link_to  "Correspondants", correspondents_path, class: "sub-link" %>
             </li>
-            <li class="sub-item">
-                <%= link_to  "Motifs d'imputation", imputation_reasons_path, class: "sub-link" %>
-            </li>
+          
 
             <li class="sub-item">
                 <%= link_to  "Dossiers", folders_path, class: "sub-link" %>

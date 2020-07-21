@@ -16,5 +16,5 @@ class ImputationItem < ApplicationRecord
   before_save :generate_uid
 
   belongs_to :imputation
- 
+  belongs_to :task
 end

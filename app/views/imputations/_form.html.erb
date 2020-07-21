@@ -1,33 +1,70 @@
-<%= form_with(model: imputation, local: false) do |form| %>
- <div class="modal-body">
-    <ul class="errors">
-    </ul>
+<%= form_with(model: imputation, local: true) do |form| %>
+ <% if imputation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(imputation.errors.count, "error") %> prohibited this imputation from being saved:</h2>
 
+      <ul>
+      <% imputation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="form-group">
-    <%= form.label :service_id %>
-    <%= form.collection_select(:service_id, @services, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true) %> 
+    <%= form.label :service_id , "Service"%>
+    <%= form.collection_select(:service_id, @services, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
 
   </div>
 
   <div class="form-group">
     <%= form.label :recipient_id, "Destinataire" %>
-    <%= form.collection_select(:recipient_id, @recipients, :id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true) %> 
+    <%= form.collection_select(:recipient_id, @recipients, :id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
 
   </div>
-  <div class="form-group">
-    <%= fields_for :imputation_reasons do |f| %>
-      <%= f.label "Motifs" %>
-      <%= collection_select(:imputation_reasons, :id,  @imputation_reasons, :id, :name, {selected: (@selected_imputation_reasons.map(&:imputation_reason_id) unless @selected_imputation_reasons.nil?)}, {class: "form-control", style: "width: 100%",  multiple: true, placeholder: "Motifs"}) %>
-    <% end %>
-  </div><!-- end nested -->
+
+  <!-- Fieldset informations -->
+  <fieldset>
+    <legend>Tâches</legend>
+    <div class="row">
+      <div class="prescription-items">
+
+        <table class="table  responsive ">
+          <thead>
+            <tr role="row">
+              <th>Tâche</th>
+              <th>Description</th>
+              <th>Date début</th>
+              <th>Date fin</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody class="items">
+            <%= form.fields_for :imputation_items do |item| %>
+                <%= render 'imputation_item_fields', f: item %>
+            <% end %>
+          </tbody>
+        </table>  
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= link_to_add_association raw('<i class="fa fa-plus" aria-hidden="true"></i> Ajouter'), form, :imputation_items, class: 'btn btn-primary', data: { association_insertion_node: '.items', association_insertion_method: :append } %>
+        </div>
+      </div>
+    </div>
+    
+  </fieldset>
+
   
+    
+    <%= form.hidden_field :arrival_mail_id, value: (imputation.arrival_mail_id.present? ? imputation.arrival_mail_id : @arrival_mail.id) %>
  
 
- </div><!-- modal body -->
-  <div class="modal-footer">
-    <%= link_to "Annuler", "#", class: "btn btn-secondary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", data: {dismiss: "modal"} %>
-    <%= form.submit  class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1",  "data-loading-text"=>"Loading...", autocomplete: "off" %>
-  </div>
+ 
 
+  <div class="form-group pull-right">
+    <%= form.submit class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1" %>
+  </div>
 <% end %>

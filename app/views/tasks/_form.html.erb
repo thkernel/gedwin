@@ -4,41 +4,22 @@
     </ul>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
 
       <div class="form-group">
         <%= form.label :task_type_id, "Type"%>
         <%= form.collection_select(:task_type_id, @task_types, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%;", required: true) %>
       </div>
+    </div>
 
+    <div class="col-md-12">
       <div class="form-group">
-        <%= form.label :title, "Titre" %>
+        <%= form.label :title, "Nom" %>
         <%= form.text_field :title,  class: "form-control", placeholder: "#{t(:title)}", id: :task_title, required: true %>
       </div>
 
-      <div class="form-group">
-        <%= form.label :start_date, "Date début" %>
-        <%= form.date_field :start_date,  class: "form-control", id: :task_start_date, required: true %>
-      </div>
-
-
-
-
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <%= form.label :end_date, "Date fin" %>
-        <%= form.date_field :end_date,  class: "form-control",  id: :task_end_date, required: true %>
-      </div>
-      <div class="form-group">
-        <%= form.label :closing_date, "Date clôture" %>
-        <%= form.date_field :closing_date,  class: "form-control",  id: :task_closing_date %>
-      </div>
-      <div class="form-group">
-        <%= form.label :task_status_id, "Statut"%>
-        <%= form.collection_select(:task_status_id, @task_statuses, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%;", required: true) %>
-      </div>
-    </div>
+    
 
   </div>
 

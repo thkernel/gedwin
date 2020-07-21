@@ -1,11 +1,21 @@
 Rails.application.routes.draw do
 
+  resources :imputation_items do   
+    get "delete"
+  end
+
+  resources :imputations do   
+    get "delete"
+  end
+
   resources :request_imputation_items do   
     get "delete"
   end
   resources :request_imputations do   
     get "delete"
   end
+
+ 
   resources :requests do   
     get "delete"
   end
@@ -38,15 +48,7 @@ Rails.application.routes.draw do
   end
 
   
-  resources :imputations do    
-    get "delete"
-
-    collection do    
-      get "get_profiles" => "imputations#get_profiles"
-    end
-
-
-  end
+  
   
   resources :departure_mails do     
     get "delete"
@@ -109,10 +111,7 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :imputation_reasons do   
-    get "delete"
-  end
-
+  
   
   resources :organization_types do     
     get "delete"
@@ -173,9 +172,9 @@ Rails.application.routes.draw do
   get "arrival_mail/to_archive/:id" => "arrival_mails#to_archive", as: :arrival_mail_to_archive
   get "departure_mail/to_archive/:id" => "departure_mails#to_archive", as: :departure_mail_to_archive
 
-  get "arrival/mail/:id/imputations" => "imputations#index" , as: :arrival_mail_imputations
+  #get "arrival/mail/:id/imputations" => "imputations#index" , as: :arrival_mail_imputations
   get "arrival/mail/:id/tasks" => "tasks#index" , as: :arrival_mail_tasks
-  get "imputation/:id/tasks" => "tasks#index" , as: :imputation_tasks
+  #get "imputation/:id/tasks" => "tasks#index" , as: :imputation_tasks
   get "taks/all" => "tasks#search_tasks", as: :search_tasks
 
   get "/users"     => "custom_users#index", as: :all_users 

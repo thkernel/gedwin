@@ -5,6 +5,7 @@
 #  id          :bigint           not null, primary key
 #  uid         :string
 #  name        :string
+#  path        :string
 #  description :text
 #  status      :string
 #  user_id     :bigint
@@ -17,6 +18,8 @@ class Folder < ApplicationRecord
 
   before_save :generate_uid
   belongs_to :user
+
+  has_many :binders, dependent: :destroy
 
   # Validations
 	validates :name, presence: true, uniqueness: true

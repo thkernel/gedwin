@@ -1,6 +1,6 @@
 <div class="br-pageheader">
   <nav class="breadcrumb pd-0 mg-0 tx-12">
-    <span class="breadcrumb-item active"><h5>Réf. imputation: <%= @imputation.id %></h5></span>
+    <span class="breadcrumb-item active"><h5>Tâches</h5></span>
   </nav>
 </div><!-- br-pageheader -->
 <div class="br-pagebody">
@@ -10,7 +10,7 @@
         </div>
 
         <div class="text-right">
-            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Ajouter'), new_task_path(id: @imputation.id), class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: true %>
+            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Ajouter'), new_task_path(), class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: true %>
         </div>
       </div>
 
@@ -20,10 +20,7 @@
   <thead>
     <tr>
       <th>Type</th>
-      <th>Titre</th>
-      <th>Date début</th>
-      <th>Date fin</th>
-      <th>Status</th>
+      <th>Nom</th>
       <th>Actions</th>
     </tr>
   </thead>

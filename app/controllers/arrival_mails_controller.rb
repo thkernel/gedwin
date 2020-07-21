@@ -17,21 +17,7 @@ class ArrivalMailsController < ApplicationController
   def show
   end
 
-  def get_reference
-    data = params[:data]
-    
-    if data.present?
-      register = Register.find(data)
-      last_arrival_mail = ArrivalMail.last(1)
-      if last_arrival_mail.present?
-        puts "ARRIVAL MAIL: #{last_arrival_mail.inspect}"
-        @reference = "#{last_arrival_mail[0].id}-#{register.name}"
-      else
-        @reference = "#{1}-#{register.name}"
-
-      end
-    end
-  end
+  
 
   def archive
     @arrival_mail = ArrivalMail.find(params[:arrival_mail_id])
@@ -86,6 +72,7 @@ class ArrivalMailsController < ApplicationController
   
   # GET /arrival_mails/new
   def new
+   
     @arrival_mail = ArrivalMail.new
     
     register_type = RegisterType.where("lower(name) = ?",  "Courrier d'arrivée".downcase).take
@@ -95,12 +82,13 @@ class ArrivalMailsController < ApplicationController
     @supports = Support.all
     @binders = Binder.all
     @correspondents = Correspondent.all
+    @last_arrival_mail = ArrivalMail.last(1)
   end
 
   # GET /arrival_mails/1/edit
   def edit
     register_type = RegisterType.find_by(name: "Courrier d'arrivée".upcase)
-    @registers = Register.where(["status = ? AND register_type_id = ?", "Open", register_type.id ])
+    @registers = Register.where(["status = ? AND register_type_id = ?", "Ouvert", register_type.id ])
     
     @natures = Nature.all 
     @supports = Support.all
@@ -174,6 +162,6 @@ class ArrivalMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def arrival_mail_params
-      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :binder_id,   files: [])
+      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :binder_id,   :files)
     end
 end

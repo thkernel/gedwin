@@ -1,6 +1,6 @@
 <div class="br-pageheader">
   <nav class="breadcrumb pd-0 mg-0 tx-12">
-    <span class="breadcrumb-item active"><h5>Courrier d'arrivée: <%= @arrival_mail.internal_reference %></h5></span>
+    <span class="breadcrumb-item active"><h5>Imputations | Courrier d'arrivée: <%= @arrival_mail.id %></h5></span>
   </nav>
 </div><!-- br-pageheader -->
 <div class="br-pagebody">
@@ -10,7 +10,7 @@
         </div>
 
         <div class="text-right">
-            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Ajouter'), new_imputation_path(id: @arrival_mail.id), class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: true %>
+            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Nouvelle imputation'), new_imputation_path(amuid: @arrival_mail.uid), class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: false %>
         </div>
       </div>
 
@@ -21,9 +21,9 @@
     <tr>
     
       <th>Service</th>
-      <th>Recipient</th>
+      <th>Bénéficiaire</th>
       <th>Nbr. Tâches</th>
-      <th>Status</th>
+     
       <th>Actions</th>
     </tr>
   </thead>

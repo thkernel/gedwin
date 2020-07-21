@@ -13,5 +13,8 @@ class CreateImputationItems < ActiveRecord::Migration[5.2]
       
       t.timestamps
     end
+
+    #add_index(:arrival_mail_imputation_items, :arrival_mail_imputation_id , :name => 'arrival_imputation_items_on_arrival_imputation_id')
+  
   end
 end

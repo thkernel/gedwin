@@ -2,7 +2,7 @@ $(document).on('turbolinks:load', function(){
 
 
     // Get doctor by service
-    ajaxFilterPost("#arrival_mail_register_id", "/arrival_mails/get_reference", "GET");
+    //ajaxFilterPost("#arrival_mail_register_id", "/arrival_mails/get_reference", "GET");
     displayArrivalMailLinkedMail();
     displayArrivalMailAnswerDates();
 

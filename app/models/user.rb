@@ -46,7 +46,6 @@ class User < ApplicationRecord
 	has_one  :organization, dependent: :destroy
 	has_many :imputations, dependent: :destroy
 	has_many :request_imputations, dependent: :destroy
-	has_many :request_imputation_items, dependent: :destroy
 	has_many :task_types, dependent: :destroy
 	has_many :task_statuses, dependent: :destroy
 	has_many :request_types, dependent: :destroy

@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.string "name"
     t.text "description"
     t.string "status"
+    t.string "path"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   create_table "folders", force: :cascade do |t|
     t.string "uid"
     t.string "name"
+    t.string "path"
     t.text "description"
     t.string "status"
     t.bigint "user_id"

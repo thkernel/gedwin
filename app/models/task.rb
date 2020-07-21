@@ -2,19 +2,14 @@
 #
 # Table name: tasks
 #
-#  id             :bigint           not null, primary key
-#  uid            :string
-#  task_type_id   :bigint
-#  title          :string
-#  description    :text
-#  start_date     :datetime
-#  end_date       :datetime
-#  closing_date   :datetime
-#  task_status_id :bigint
-#  imputation_id  :bigint
-#  user_id        :bigint
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id           :bigint           not null, primary key
+#  uid          :string
+#  task_type_id :bigint
+#  title        :string
+#  description  :text
+#  user_id      :bigint
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 
 class Task < ApplicationRecord
@@ -23,4 +18,6 @@ class Task < ApplicationRecord
   before_save :generate_uid
 
   belongs_to :user
+  has_many :imputation_items, dependent: :destroy
+  
 end
