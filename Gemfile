@@ -94,7 +94,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'social-share-button', '~> 1.2', '>= 1.2.1'
 gem 'sanitize', '~> 5.1'
 gem 'creek', '~> 2.2'
-gem 'acts-as-taggable-on', '~> 6.5'
+
 
 # This gem causes db:create to fail
 # You can enable it for tests as long as the db has been created
