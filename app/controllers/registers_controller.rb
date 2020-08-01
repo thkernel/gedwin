@@ -39,10 +39,10 @@ class RegistersController < ApplicationController
     if register_type.present? && register_type.id == @register.register_type_id
     
       Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
-      puts 
+     
     end
     
-    #@register.status = "Ouvert"
+    @register.status = "Ouvert"
 
     respond_to do |format|
       if @register.save
@@ -69,7 +69,7 @@ class RegistersController < ApplicationController
     if register_type.present? && register_type.id == @register.register_type_id
     
       Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
-      puts 
+      
     end
     respond_to do |format|
       if @register.update(register_params)

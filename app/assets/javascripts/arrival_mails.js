@@ -49,3 +49,16 @@ function displayArrivalMailAnswerDates(){
 
     }
 }
+
+
+$(document).on('turbolinks:load', function(){
+
+
+   
+        // Get doctor by service
+        ajaxRefresh("#arrival_mail_nature_id", "/arrival_mails/get_natures", "GET");
+        ajaxRefresh("#arrival_mail_support_id", "/arrival_mails/get_supports", "GET");
+        ajaxRefresh("#arrival_mail_correspondent_id", "/arrival_mails/get_correspondents", "GET");
+        ajaxRefresh("#arrival_mail_binder_id", "/arrival_mails/get_correspondents", "GET");
+
+});

@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :task_time_trackings do   
+    get "delete"
+  end
+  resources :divisions do   
+    get "delete"
+  end
+  resources :directions do   
+    get "delete"
+  end
   resources :imputation_items do   
     get "delete"
   end
@@ -70,6 +79,13 @@ Rails.application.routes.draw do
     collection do    
       get "get_reference" => "arrival_mails#get_reference"
     end
+
+    collection do    
+      get "get_natures" => "arrival_mails#get_natures"
+      get "get_binders" => "arrival_mails#get_binders"
+      get "get_supports" => "arrival_mails#get_supports"
+      get "get_correspondents" => "arrival_mails#get_correspondents"
+    end
   end
 
   
@@ -121,7 +137,8 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  #get "/companies/index" => "companies#index" , as: :companies
+  get "request/new" => "requests#new_front_request" , as: :new_front_request
+  get "request-success" => "requests#front_request_success" , as: :front_request_success
 	#post "/companies/new/" => "companies#create", as: :create_company
 	#get "/companies/new/" => "companies#new", as: :new_company
 	get "/organization/:id" => "organizations#show", as: :show_organization
@@ -130,6 +147,8 @@ Rails.application.routes.draw do
 
   resources :natures do     
     get "delete"
+
+    
   end
   
   resources :supports do      

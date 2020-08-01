@@ -21,6 +21,13 @@
 
   <div class="row">
     <div class="col-md-4">
+     <div class="form-group">
+        <%= form.label :identification_number, "N°Matricule", class: "required" %>
+        <%= form.text_field :identification_number, class: "form-control", placeholder: "N°Matricule", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
       <div class="form-group">
         <%= form.label :first_name , "Prénom", class: "required" %>
         <%= form.text_field :first_name, class: "form-control", placeholder: "Prénom", required: true %>
@@ -34,15 +41,17 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+   
+  </div>
+
+  <div class="row">
+     <div class="col-md-4">
       <div class="form-group">
         <%= form.label :gender, "Genre", class: "required" %>
         <%= form.select :gender , GENDERS, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %>
       </div>
     </div>
-  </div>
 
-  <div class="row">
     <div class="col-md-4">
       <div class="form-group">
         <%= form.label :born_date, "Date de naissance", class: "required" %>
@@ -58,15 +67,17 @@
       </div>
     </div>
 
+    
+  </div>
+
+  <div class="row">
     <div class="col-md-4">
       <div class="form-group">
         <%= form.label :academic_year , "Année académique", class: "required"%>
         <%= form.text_field :academic_year, class: "form-control", placeholder: "Année académique", required: true %>
       </div>
     </div>
-  </div>
 
-  <div class="row">
     <div class="col-md-4">
       <div class="form-group">
         <%= form.label :grade, "Classe", class: "required" %>
@@ -81,12 +92,7 @@
       </div>
     </div>
    
-    <div class="col-md-4">
-     <div class="form-group">
-        <%= form.label :kairos_id %>
-        <%= form.text_field :kairos_id, class: "form-control", placeholder: "Code Kairos" %>
-      </div>
-    </div>
+    
   </div>
 
   <div class="row">

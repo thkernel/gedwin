@@ -2,12 +2,18 @@
 #
 # Table name: imputation_items
 #
-#  id                   :bigint           not null, primary key
-#  uid                  :string
-#  imputation_id        :bigint
-#  imputation_reason_id :bigint
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  id             :bigint           not null, primary key
+#  uid            :string
+#  task_id        :bigint
+#  title          :string
+#  description    :text
+#  start_date     :datetime
+#  end_date       :datetime
+#  closing_date   :datetime
+#  task_status_id :bigint
+#  imputation_id  :bigint
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 
 class ImputationItem < ApplicationRecord

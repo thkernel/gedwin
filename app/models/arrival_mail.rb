@@ -42,7 +42,7 @@ class ArrivalMail < ApplicationRecord
   belongs_to :correspondent
   belongs_to :binder
 
-  has_many :imputations, dependent: :destroy
+  has_many :imputations, as: :imputable,  dependent: :destroy
 
 
 

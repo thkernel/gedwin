@@ -122,8 +122,40 @@ $(document).on('turbolinks:load', function() {
 
   });
 
+  $(document).on('turbolinks:load', function() {  
 
+    $(this).find('.customSelect select').each(function() {
+      var dropdownParent = $(document.body);
+
+        $(this).select2({
+          dropdownParent: dropdownParent,
+          width: 'auto' ,
+          dropdownAutoWidth: true,
+        });
+    });
+
+  });
+
+
+  
+  
   // Ajax call.
+
+  function ajaxRefresh(source, route, verb){
+    console.log("Source: ", source);
+    $(source).on('select2:opening', function() {
+        $.ajax({
+            type: verb,
+            headers: {
+                'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+                },
+            dataType: 'script',
+            cache: false,
+            url: route
+            
+        });
+    });
+  };
 
   function ajaxFilterPost(source, route, verb){
     console.log("Source: ", source);

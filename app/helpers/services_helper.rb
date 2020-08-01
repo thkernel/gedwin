@@ -1,10 +1,12 @@
 module ServicesHelper
 
-    def service_name(id)
+    def division(id)
         if id.present?
-            Service.find(id).name
+            Division.find(id)
         end
     end
+
+
 
 
 end

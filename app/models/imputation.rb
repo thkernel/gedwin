@@ -2,15 +2,16 @@
 #
 # Table name: imputations
 #
-#  id              :bigint           not null, primary key
-#  uid             :string
-#  service_id      :bigint
-#  recipient_id    :bigint
-#  arrival_mail_id :bigint
-#  status          :string
-#  user_id         :bigint
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id             :bigint           not null, primary key
+#  uid            :string
+#  imputable_type :string
+#  imputable_id   :bigint
+#  service_id     :bigint
+#  recipient_id   :bigint
+#  status         :string
+#  user_id        :bigint
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 
 class Imputation < ApplicationRecord
@@ -22,6 +23,7 @@ class Imputation < ApplicationRecord
   belongs_to :user
   belongs_to :user, :foreign_key => "recipient_id", :class_name => "User"
 
+  belongs_to :imputable, polymorphic: true
 
   has_many :imputation_items, dependent: :destroy
  

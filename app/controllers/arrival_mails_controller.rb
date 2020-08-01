@@ -17,7 +17,21 @@ class ArrivalMailsController < ApplicationController
   def show
   end
 
-  
+  def get_natures
+    @natures = Nature.all.map { |nature| [nature.name, nature.id] } 
+  end
+
+  def get_supports
+    @supports = Support.all.map { |support| [support.name, support.id] } 
+  end
+
+  def get_binders
+    @binders = Binder.all.map { |binder| [binder.name, binder.id] } 
+  end
+
+  def get_correspondents
+    @correspondents = Correspondent.all.map { |correspondent| [correspondent.correspondent_name, correspondent.id] } 
+  end
 
   def archive
     @arrival_mail = ArrivalMail.find(params[:arrival_mail_id])

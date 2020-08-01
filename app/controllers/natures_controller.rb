@@ -20,6 +20,8 @@ class NaturesController < ApplicationController
     @nature = Nature.new
   end
 
+  
+
   # GET /natures/1/edit
   def edit
   end

@@ -1,7 +1,7 @@
 <div class="br-pageheader">
       <nav class="breadcrumb pd-0 mg-0 tx-12">
         
-        <span class="breadcrumb-item active">Services</span>
+        <span class="breadcrumb-item active"><h5>Services</h5></span>
       </nav>
     </div><!-- br-pageheader -->
 <div class="br-pagebody">
@@ -21,15 +21,15 @@
 <table id="datatable1" class="table display responsive nowrap">
   <thead>
     <tr>
-      <th><%= t(:name)%></th>
-      <th>Description</th>
-      <th>Status</th>
+     <th>Division</th>
+      <th>Nom</th>
+    
      
       <th>Actions</th>
     </tr>
   </thead>
 
-  <tbody class="services-index">
+  <tbody class="services">
     <%= render "index" %>
   </tbody>
 </table>

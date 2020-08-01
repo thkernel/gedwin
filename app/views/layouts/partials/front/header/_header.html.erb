@@ -7,17 +7,12 @@
             <img src="./assets/img/brand.svg" class="navbar-brand-img" alt="...">
           </a> -->
           <div class= "navbar-brand">
-            <% if user_signed_in? %>
-              <%= link_to dashobard_path do %>
-                <%= image_tag "logo/logo.png", class: "navbar-brand-img" %> 
-              <% end %>
+           
 
-            <% else %>
-
-              <%= link_to root_url, class: "navbar-brand" do %>
+             <div class= "navbar-brand">
                 <%= image_tag "logo/logo.png", class: "navbar-brand-img" %> 
-              <% end %>
-            <% end %>
+              </div>
+            
           </div>
 
           <!-- Toggler -->
@@ -40,13 +35,9 @@
 
             <ul class="navbar-nav ml-auto"> 
               <!-- Button -->
-              <a class="navbar-btn btn btn-default lift " href="#">
-                Connexion
-              </a>
+             
 
-              <li>
-                <%= link_to "Essai gratuit", new_user_registration_path,  class:"navbar-btn btn  btn-primary lift" %>
-              </li>
+             
             </div>
 
           </div>

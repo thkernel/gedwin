@@ -50,13 +50,13 @@ class User < ApplicationRecord
 	has_many :task_statuses, dependent: :destroy
 	has_many :request_types, dependent: :destroy
 	has_many :requests, dependent: :destroy
-
+	has_many :tasks, dependent: :destroy
+	has_many :directions, dependent: :destroy
+	has_many :divisions, dependent: :destroy
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
-	has_many :receiver_request_imputations, :class_name => "RequestImputation", :foreign_key => :receiver_id
-
-
-	has_many :tasks, dependent: :destroy
+	
+	
 	#has_many :tenants, dependent: :destroy
 
 	# Add nested attributes for profile.

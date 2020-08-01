@@ -6,14 +6,17 @@
 #  uid                   :string
 #  correspondent_type_id :bigint
 #  organization_name     :string
-#  first_name            :string
-#  last_name             :string
-#  civility              :string
+#  contact_first_name    :string
+#  contact_last_name     :string
+#  contact_civility      :string
 #  address               :string
+#  contact_phone         :string
 #  phone                 :string
 #  city                  :string
 #  country               :string
 #  zip_code              :string
+#  email                 :string
+#  contact_email         :string
 #  status                :string
 #  user_id               :bigint
 #  created_at            :datetime         not null
@@ -29,5 +32,14 @@ class Correspondent < ApplicationRecord
   belongs_to :user
 
   # Validations
-	validates :organization_name,  uniqueness: true
+  validates :organization_name,  uniqueness: true
+  
+
+  def correspondent_name
+    if self.organization_name.present?
+      "#{organization_name}"
+    else
+      "#{contact_last_name} #{contact_first_name}"
+    end
+  end
 end

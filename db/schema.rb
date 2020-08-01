@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_162035) do
+ActiveRecord::Schema.define(version: 2020_07_31_152643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,14 +109,17 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.string "uid"
     t.bigint "correspondent_type_id"
     t.string "organization_name"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "civility"
+    t.string "contact_first_name"
+    t.string "contact_last_name"
+    t.string "contact_civility"
     t.string "address"
+    t.string "contact_phone"
     t.string "phone"
     t.string "city"
     t.string "country"
     t.string "zip_code"
+    t.string "email"
+    t.string "contact_email"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -151,6 +154,28 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.index ["register_id"], name: "index_departure_mails_on_register_id"
     t.index ["support_id"], name: "index_departure_mails_on_support_id"
     t.index ["user_id"], name: "index_departure_mails_on_user_id"
+  end
+
+  create_table "directions", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_directions_on_user_id"
+  end
+
+  create_table "divisions", force: :cascade do |t|
+    t.bigint "direction_id"
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["direction_id"], name: "index_divisions_on_direction_id"
+    t.index ["user_id"], name: "index_divisions_on_user_id"
   end
 
   create_table "features", force: :cascade do |t|
@@ -193,14 +218,15 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
 
   create_table "imputations", force: :cascade do |t|
     t.string "uid"
+    t.string "imputable_type"
+    t.bigint "imputable_id"
     t.bigint "service_id"
     t.bigint "recipient_id"
-    t.bigint "arrival_mail_id"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["arrival_mail_id"], name: "index_imputations_on_arrival_mail_id"
+    t.index ["imputable_type", "imputable_id"], name: "index_imputations_on_imputable_type_and_imputable_id"
     t.index ["recipient_id"], name: "index_imputations_on_recipient_id"
     t.index ["service_id"], name: "index_imputations_on_service_id"
     t.index ["user_id"], name: "index_imputations_on_user_id"
@@ -302,38 +328,6 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
-  create_table "request_imputation_items", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "task_id"
-    t.string "title"
-    t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "closing_date"
-    t.bigint "task_status_id"
-    t.bigint "request_imputation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["request_imputation_id"], name: "index_request_imputation_items_on_request_imputation_id"
-    t.index ["task_id"], name: "index_request_imputation_items_on_task_id"
-    t.index ["task_status_id"], name: "index_request_imputation_items_on_task_status_id"
-  end
-
-  create_table "request_imputations", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "service_id"
-    t.bigint "receiver_id"
-    t.bigint "request_id"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["receiver_id"], name: "index_request_imputations_on_receiver_id"
-    t.index ["request_id"], name: "index_request_imputations_on_request_id"
-    t.index ["service_id"], name: "index_request_imputations_on_service_id"
-    t.index ["user_id"], name: "index_request_imputations_on_user_id"
-  end
-
   create_table "request_types", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -358,7 +352,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.string "specialty"
     t.datetime "request_date"
     t.text "description"
-    t.text "kairos_id"
+    t.text "identification_number"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -378,13 +372,14 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
 
   create_table "services", force: :cascade do |t|
     t.string "uid"
-    t.integer "parent_service_id"
+    t.bigint "division_id"
     t.string "name"
     t.text "description"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["division_id"], name: "index_services_on_division_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
@@ -408,6 +403,16 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_task_statuses_on_user_id"
+  end
+
+  create_table "task_time_trackings", force: :cascade do |t|
+    t.bigint "imputation_item_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imputation_item_id"], name: "index_task_time_trackings_on_imputation_item_id"
   end
 
   create_table "task_types", force: :cascade do |t|
@@ -472,11 +477,13 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   add_foreign_key "departure_mails", "registers"
   add_foreign_key "departure_mails", "supports"
   add_foreign_key "departure_mails", "users"
+  add_foreign_key "directions", "users"
+  add_foreign_key "divisions", "directions"
+  add_foreign_key "divisions", "users"
   add_foreign_key "folders", "users"
   add_foreign_key "imputation_items", "imputations"
   add_foreign_key "imputation_items", "task_statuses"
   add_foreign_key "imputation_items", "tasks"
-  add_foreign_key "imputations", "arrival_mails"
   add_foreign_key "imputations", "services"
   add_foreign_key "imputations", "users"
   add_foreign_key "natures", "users"
@@ -488,18 +495,13 @@ ActiveRecord::Schema.define(version: 2020_07_19_162035) do
   add_foreign_key "register_types", "users"
   add_foreign_key "registers", "register_types"
   add_foreign_key "registers", "users"
-  add_foreign_key "request_imputation_items", "request_imputations"
-  add_foreign_key "request_imputation_items", "task_statuses"
-  add_foreign_key "request_imputation_items", "tasks"
-  add_foreign_key "request_imputations", "requests"
-  add_foreign_key "request_imputations", "services"
-  add_foreign_key "request_imputations", "users"
   add_foreign_key "request_types", "users"
   add_foreign_key "requests", "request_types"
   add_foreign_key "requests", "users"
   add_foreign_key "services", "users"
   add_foreign_key "supports", "users"
   add_foreign_key "task_statuses", "users"
+  add_foreign_key "task_time_trackings", "imputation_items"
   add_foreign_key "task_types", "users"
   add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "users"

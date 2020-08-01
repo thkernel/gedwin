@@ -94,6 +94,8 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'social-share-button', '~> 1.2', '>= 1.2.1'
 gem 'sanitize', '~> 5.1'
 gem 'creek', '~> 2.2'
+gem 'recaptcha', '~> 5.5'
+gem 'dotenv-rails', '~> 2.7', '>= 2.7.6',  :groups => [:development, :test, :production]
 
 
 # This gem causes db:create to fail
@@ -105,7 +107,6 @@ end
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'dotenv-rails', '~> 2.7', '>= 2.7.2'
   gem 'annotate', '~> 2.7', '>= 2.7.5'
   gem 'faker', '~> 1.9', '>= 1.9.3'
   gem 'capistrano', '~> 3.10', '>= 3.10.2'

@@ -13,7 +13,7 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.string :specialty
       t.datetime :request_date
       t.text :description
-      t.text :kairos_id
+      t.text :identification_number
       t.string :status
       t.references :user, foreign_key: true
 
