@@ -87,6 +87,24 @@ class ArrivalMailsController < ApplicationController
   # GET /arrival_mails/new
   def new
    
+    last_arrival_mail = ArrivalMail.last(1)
+    if last_arrival_mail.present? 
+      id_str = last_arrival_mail[0].id.to_s
+      
+      if id_str.size == 1
+        @internal_reference = "000#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str.size == 2
+        @internal_reference = "00#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str.size == 3
+        @internal_reference = "0#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str == 4
+        @internal_reference = "#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      end
+    else
+      
+      @internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
+    end
+    
     @arrival_mail = ArrivalMail.new
     
     register_type = RegisterType.where("lower(name) = ?",  "Courrier d'arrivée".downcase).take

@@ -14,7 +14,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <%= form.label :internal_reference, "Réf. interne" %>
-            <%= form.text_field :internal_reference,  class: "form-control", placeholder: "Réf. interne", readonly: true %>
+            <%= form.text_field :internal_reference,  class: "form-control", value: (arrival_mail.internal_reference.present? ? arrival_mail.internal_reference : @internal_reference ), placeholder: "Réf. interne", readonly: true %>
           </div>
         </div>
          <div class="col-md-3">

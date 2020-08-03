@@ -8,12 +8,17 @@ class CustomUsersController < ApplicationController
 
     
 		def new
+		
 			@user = User.new
+			@user.build_profile
+			#@roles = Role.where.not(name: "superuser")
+		
 			@roles = Role.all
 			
 		end
 	
-    def create
+		def create
+			@services = Service.all
 		@user = User.new(user_params)
 		@user.created_by = current_user.id
 
@@ -59,8 +64,10 @@ class CustomUsersController < ApplicationController
     end
 
     # GET /users/1/edit
-    def edit
-    	@roles = Role.where.not(name: "Superadmin")
+		def edit
+			@services = Service.all
+			@roles = Role.where.not(name: "superuser")
+			@user.profile || @user.build_profile 
     end
 
     def delete
@@ -191,7 +198,7 @@ class CustomUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:login,  :email, :password,:password_confirmation, :role_id)
+      params.require(:user).permit(:login,  :email, :password,:password_confirmation, :role_id,  profile_attributes: [:first_name, :last_name, :civility])
     end
 
 end

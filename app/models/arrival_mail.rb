@@ -44,7 +44,7 @@ class ArrivalMail < ApplicationRecord
 
   has_many :imputations, as: :imputable,  dependent: :destroy
 
-
+  validates :internal_reference, presence: true, uniqueness: true
 
 
   has_many_attached :files

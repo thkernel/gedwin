@@ -23,7 +23,7 @@ class Profile < ApplicationRecord
   before_save :generate_uid
 
   belongs_to :user
-  belongs_to :service
+  belongs_to :service, optional: true
 
   # For active storage
   has_one_attached :avatar

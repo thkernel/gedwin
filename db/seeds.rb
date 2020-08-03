@@ -74,6 +74,26 @@ else
     users = User.all
 end
 
+# Profile
+unless Profile.all.present?
+    profile = Profile.create([
+        {
+            first_name: "Amos",  
+            last_name: "DEMBELE",
+            service_id: services.first.id,   
+            user_id: users.first.id
+        },
+        {
+            first_name: "Alassane",  
+            last_name: "BABY",
+            service_id: services.first.id, 
+            user_id: users.last.id
+        }
+    
+    ])
+
+end
+
 unless OrganizationType.all.present?
     organization_types = OrganizationType.create(
         [
@@ -163,24 +183,7 @@ else
     services = Service.all
 end
 
-unless Profile.all.present?
-    profile = Profile.create([
-        {
-            first_name: "Amos",  
-            last_name: "DEMBELE",
-            service_id: services.first.id,   
-            user_id: users.first.id
-        },
-        {
-            first_name: "Alassane",  
-            last_name: "BABY",
-            service_id: services.first.id, 
-            user_id: users.last.id
-        }
-    
-    ])
 
-end
 
 unless CorrespondentType.all.present?
     correspondent_types = CorrespondentType.create(

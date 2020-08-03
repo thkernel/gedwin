@@ -1,12 +1,13 @@
 class ImputationsController < ApplicationController
  
   before_action :authenticate_user!
-  layout "dashboard"
+  
 
   before_action :set_imputation, only: [:show, :edit, :update, :destroy]
   before_action :set_arrival_mail, only: [:index, :new]
   #before_action :get_arrival_mail, only: [:create]
 
+  layout "dashboard"
   # GET /imputations
   # GET /imputations.json
   def index
@@ -30,16 +31,21 @@ class ImputationsController < ApplicationController
   end
   # GET /imputations/new
   def new
-   
+    
     @services = Service.all
     @tasks = Task.all
     @task_statuses = TaskStatus.all
     @services = Service.all
+
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
-    @recipients = User.where("role_id NOT IN (?)", role_ids).map {|user| user.profile}
     
+    puts "IDS: #{role_ids}"
+    @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
+    puts "RECIPIENTS: #{@recipients}"
   
 
+    puts "SOURCE URL: #{request.original_url}"
+    puts "LOCATION: #{request.url}"
     @imputation = Imputation.new
 
   end
@@ -49,9 +55,9 @@ class ImputationsController < ApplicationController
     @services = Service.all
     @tasks = Task.all
     @task_statuses = TaskStatus.all
-    @services = Service.all
+  
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
-    @recipients = User.where("role_id NOT IN (?)", role_ids).map {|user| user.profile}
+    @recipients = User.where("role_id  IN (?)", role_ids).map {|user| user.profile}
     
   end
 
@@ -59,19 +65,21 @@ class ImputationsController < ApplicationController
   # POST /imputations.json
   def create
 
+    
+    @arrival_mail = ArrivalMail.find(flash[:arrival_mail]["id"])
     @imputation = current_user.imputations.build(imputation_params)
-    @imputation.arrival_mail_id = @@arrival_mail.id
-
-   
+    @imputation.imputable = @arrival_mail
+    
 
     respond_to do |format|
       if @imputation.save
-        @imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
-
-        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully created.' }
+        @imputations = @arrival_mail.imputations
+        
+        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@arrival_mail.id).uid), notice: 'Imputation was successfully created.' }
         format.json { render :show, status: :created, location: @imputation }
         format.js
       else
+       
         format.html { render :new }
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
         format.js
@@ -88,8 +96,8 @@ class ImputationsController < ApplicationController
 
     respond_to do |format|
       if @imputation.update(imputation_params)
-        @imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
-        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully updated.' }
+        #@imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
+        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.imputable_id).uid), notice: 'Imputation was successfully updated.' }
         format.json { render :show, status: :ok, location: @imputation }
         format.js
       else
@@ -111,7 +119,7 @@ class ImputationsController < ApplicationController
   def destroy
     @imputation.destroy
     respond_to do |format|
-      format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.arrival_mail_id).uid), notice: 'Imputation was successfully destroyed.' }
+      format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.imputable_id).uid), notice: 'Imputation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -124,10 +132,8 @@ class ImputationsController < ApplicationController
 
     def set_arrival_mail
       @arrival_mail ||= ArrivalMail.find_by(uid: params[:amuid])
-      @@arrival_mail = @arrival_mail
+      flash[:arrival_mail] = @arrival_mail
     end
-
-    
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params

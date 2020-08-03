@@ -19,7 +19,7 @@
 
   <div class="form-group">
     <%= form.label :recipient_id, "Destinataire" %>
-    <%= form.collection_select(:recipient_id, @recipients, :id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
+    <%= form.collection_select(:recipient_id, @recipients, :user_id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
 
   </div>
 
@@ -59,7 +59,6 @@
 
   
     
-    <%= form.hidden_field :arrival_mail_id, value: (imputation.arrival_mail_id.present? ? imputation.arrival_mail_id : @arrival_mail.id) %>
  
 
  
