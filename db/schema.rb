@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_152643) do
+ActiveRecord::Schema.define(version: 2020_08_12_153900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,18 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
     t.datetime "updated_at", null: false
     t.index ["folder_id"], name: "index_binders_on_folder_id"
     t.index ["user_id"], name: "index_binders_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.string "status"
+    t.bigint "user_id"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "correspondent_types", force: :cascade do |t|
@@ -178,6 +190,22 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
     t.index ["user_id"], name: "index_divisions_on_user_id"
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.bigint "support_id"
+    t.bigint "nature_id"
+    t.bigint "binder_id"
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["binder_id"], name: "index_documents_on_binder_id"
+    t.index ["nature_id"], name: "index_documents_on_nature_id"
+    t.index ["support_id"], name: "index_documents_on_support_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
   create_table "features", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -232,6 +260,19 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
     t.index ["user_id"], name: "index_imputations_on_user_id"
   end
 
+  create_table "indices", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.string "indexable_type"
+    t.bigint "indexable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["indexable_type", "indexable_id"], name: "index_indices_on_indexable_type_and_indexable_id"
+    t.index ["user_id"], name: "index_indices_on_user_id"
+  end
+
   create_table "natures", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -241,6 +282,20 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_natures_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "nature"
+    t.bigint "recipient_id"
+    t.text "content"
+    t.string "status"
+    t.datetime "readed_at"
+    t.string "notificable_type"
+    t.bigint "notificable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notificable_type", "notificable_id"], name: "index_notifications_on_notificable_type_and_notificable_id"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
   create_table "organization_types", force: :cascade do |t|
@@ -468,6 +523,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
   add_foreign_key "arrival_mails", "users"
   add_foreign_key "binders", "folders"
   add_foreign_key "binders", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "correspondent_types", "users"
   add_foreign_key "correspondents", "correspondent_types"
   add_foreign_key "correspondents", "users"
@@ -480,12 +536,17 @@ ActiveRecord::Schema.define(version: 2020_07_31_152643) do
   add_foreign_key "directions", "users"
   add_foreign_key "divisions", "directions"
   add_foreign_key "divisions", "users"
+  add_foreign_key "documents", "binders"
+  add_foreign_key "documents", "natures"
+  add_foreign_key "documents", "supports"
+  add_foreign_key "documents", "users"
   add_foreign_key "folders", "users"
   add_foreign_key "imputation_items", "imputations"
   add_foreign_key "imputation_items", "task_statuses"
   add_foreign_key "imputation_items", "tasks"
   add_foreign_key "imputations", "services"
   add_foreign_key "imputations", "users"
+  add_foreign_key "indices", "users"
   add_foreign_key "natures", "users"
   add_foreign_key "organization_types", "users"
   add_foreign_key "organizations", "organization_types"

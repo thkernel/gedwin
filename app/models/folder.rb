@@ -16,7 +16,7 @@
 class Folder < ApplicationRecord
   include SharedUtils::Generate
 
-  before_save :generate_uid
+  before_save :generate_random_number_uid
   belongs_to :user
 
   has_many :binders, dependent: :destroy

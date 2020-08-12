@@ -14,7 +14,7 @@
 class Role < ApplicationRecord
     include SharedUtils::Generate
 
-  before_save :generate_uid
+  before_save :generate_random_number_uid
     has_many :users
 
     

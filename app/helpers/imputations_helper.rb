@@ -7,4 +7,8 @@ module ImputationsHelper
     def service(id)
         Service.find(id)
     end
+
+    def user(id)
+        User.find(id)
+    end
 end

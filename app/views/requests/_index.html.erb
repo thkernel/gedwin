@@ -13,7 +13,7 @@
         <td>
       
           <div class="action-buttons">
-          <%= link_to raw('<i class="fa fa-user-plus" aria-hidden="true"></i>'),request_imputations_path(ruid: request.uid), title: "Imputations" %>
+          <%= link_to raw('<i class="fa fa-user-plus" aria-hidden="true"></i>'), imputations_path(uid: request.uid, rtype: "Request"), title: "Imputations" %>
           <%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
     '),  edit_request_path(request), title: "Modifier", remote: true %>
 

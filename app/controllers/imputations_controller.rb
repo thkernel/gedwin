@@ -4,14 +4,24 @@ class ImputationsController < ApplicationController
   
 
   before_action :set_imputation, only: [:show, :edit, :update, :destroy]
-  before_action :set_arrival_mail, only: [:index, :new]
+  before_action :get_resource, only: [:index, :new, :edit]
+  #before_action :set_request, only: [:index, :new]
   #before_action :get_arrival_mail, only: [:create]
 
   layout "dashboard"
   # GET /imputations
   # GET /imputations.json
   def index
-    @imputations = @arrival_mail.imputations
+    
+
+    if params[:rtype].present? && params[:rtype] == "ArrivalMail"
+      @imputations = @arrival_mail.imputations
+    elsif params[:rtype].present? && params[:rtype] == "Request"
+      @imputations = @request.imputations
+    end
+
+    
+
   end
 
   # GET /imputations/1
@@ -38,14 +48,9 @@ class ImputationsController < ApplicationController
     @services = Service.all
 
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
-    
-    puts "IDS: #{role_ids}"
     @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
-    puts "RECIPIENTS: #{@recipients}"
-  
 
-    puts "SOURCE URL: #{request.original_url}"
-    puts "LOCATION: #{request.url}"
+    puts "RECIPIENTS: #{@recipients}"
     @imputation = Imputation.new
 
   end
@@ -65,17 +70,29 @@ class ImputationsController < ApplicationController
   # POST /imputations.json
   def create
 
-    
-    @arrival_mail = ArrivalMail.find(flash[:arrival_mail]["id"])
+    if flash[:rtype].present? && flash[:rtype] == "ArrivalMail"
+      resource = ArrivalMail.find(flash[:arrival_mail]["id"])
+
+    elsif flash[:rtype].present? && flash[:rtype] == "Request"
+      resource = Request.find(flash[:request]["id"])
+    else
+      return
+    end
+
     @imputation = current_user.imputations.build(imputation_params)
-    @imputation.imputable = @arrival_mail
+    @imputation.imputable = resource
+  
     
 
     respond_to do |format|
       if @imputation.save
-        @imputations = @arrival_mail.imputations
+        if flash[:rtype].present? && flash[:rtype] == "ArrivalMail"
+          @imputations = resource.imputations
+        elsif flash[:rtype].present? && flash[:rtype] == "Request"
+          @imputations = resource.imputations
+        end
         
-        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@arrival_mail.id).uid), notice: 'Imputation was successfully created.' }
+        format.html { redirect_to imputations_path(uid: flash[:rtype].constantize.find(@imputation.imputable_id).uid, rtype: flash[:rtype]), notice: 'Imputation was successfully created.' }
         format.json { render :show, status: :created, location: @imputation }
         format.js
       else
@@ -96,14 +113,16 @@ class ImputationsController < ApplicationController
 
     respond_to do |format|
       if @imputation.update(imputation_params)
-        #@imputations = Imputation.where(arrival_mail_id: @imputation.arrival_mail_id)
-        format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.imputable_id).uid), notice: 'Imputation was successfully updated.' }
+
+        #@imputations = @imputation.imputable_type.constantize.find(@imputation.imputable_id).imputations
+
+        format.html { redirect_to imputations_path(uid: @imputation.imputable_type.constantize.find(@imputation.imputable_id).uid, rtype: @imputation.imputable_type), notice: 'Imputation was successfully updated.' }
         format.json { render :show, status: :ok, location: @imputation }
-        format.js
+        
       else
         format.html { render :edit }
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
-        format.js
+        
       end
     end
   end
@@ -119,7 +138,7 @@ class ImputationsController < ApplicationController
   def destroy
     @imputation.destroy
     respond_to do |format|
-      format.html { redirect_to imputations_path(amuid: ArrivalMail.find(@imputation.imputable_id).uid), notice: 'Imputation was successfully destroyed.' }
+      format.html { redirect_to imputations_path(uid: @imputation.imputable_type.constantize.find(@imputation.imputable_id).uid, rtype: @imputation.imputable_type), notice: 'Imputation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -130,10 +149,23 @@ class ImputationsController < ApplicationController
       @imputation = Imputation.find(params[:id])
     end
 
-    def set_arrival_mail
-      @arrival_mail ||= ArrivalMail.find_by(uid: params[:amuid])
-      flash[:arrival_mail] = @arrival_mail
+    def get_resource
+      if params[:rtype].present? && params[:rtype] == "ArrivalMail"
+        @arrival_mail ||= ArrivalMail.find_by(uid: params[:uid])
+        
+        flash[:arrival_mail] = @arrival_mail
+        flash[:rtype] = "ArrivalMail"
+      elsif params[:rtype].present? && params[:rtype] == "Request"
+        
+        @request ||= Request.find_by(uid: params[:uid])
+        flash[:request] = @request
+        flash[:rtype] = "Request"
+      end
     end
+
+    
+
+    
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params

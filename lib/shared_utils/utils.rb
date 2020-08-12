@@ -15,12 +15,27 @@ module SharedUtils
     # For model
     module Generate
         
-        def generate_uid
+        def generate_random_number_uid
             current_record = self
-            unless current_record.uid.present?
-                begin
-                    current_record.uid = SecureRandom.hex(32)
-                end while current_record.class.where(uid: current_record.uid).exists?
+          
+            if current_record.present?
+                unless current_record.uid.present? 
+                    begin
+                        current_record.uid = SecureRandom.random_number(100_000_000_000)
+                    end while current_record.class.where(uid: current_record.uid).exists?
+                end
+            end
+        end
+
+        def generate_hex_uid
+            current_record = self
+          
+            if current_record.present?
+                unless current_record.uid.present? 
+                    begin
+                        current_record.uid = SecureRandom.hex(32)
+                    end while current_record.class.where(uid: current_record.uid).exists?
+                end
             end
         end
 

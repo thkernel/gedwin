@@ -11,9 +11,9 @@ class CustomUsersController < ApplicationController
 		
 			@user = User.new
 			@user.build_profile
-			#@roles = Role.where.not(name: "superuser")
+			@roles = Role.where.not(name: "superuser")
 		
-			@roles = Role.all
+			#@roles = Role.all
 			
 		end
 	

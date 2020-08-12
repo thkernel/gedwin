@@ -5,14 +5,11 @@
     <td><%= arrival_mail.departure_date.strftime("%d/%m/%Y") %></td>
     <td><%= arrival_mail.receipt_date.strftime("%d/%m/%Y") %></td>
     <td><%= correspondent(arrival_mail.correspondent_id).organization_name %></td>
-   
-    
-
     <td>
-    
+
 	    <span class="action-buttons">
-        <%= link_to raw('<i class="fa fa-user-plus" aria-hidden="true"></i>'), imputations_path(amuid: arrival_mail.uid) %>
-			<%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
+            <%= link_to raw('<i class="fa fa-user-plus" aria-hidden="true"></i>'), imputations_path(uid: arrival_mail.uid, rtype: "ArrivalMail") %>
+		    <%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
 '),  edit_arrival_mail_path(arrival_mail), title: "Modifier", remote: false %>
 
 

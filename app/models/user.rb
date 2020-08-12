@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
 		 include SharedUtils::Generate
 
-		 before_save :generate_uid
+		 before_save :generate_random_number_uid
 
   # Relationships
 	belongs_to :role
@@ -53,6 +53,7 @@ class User < ApplicationRecord
 	has_many :tasks, dependent: :destroy
 	has_many :directions, dependent: :destroy
 	has_many :divisions, dependent: :destroy
+	has_many :documents, dependent: :destroy
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
 	

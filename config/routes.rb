@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :notifications
+  resources :comments
+  resources :indices
+  resources :documents
   resources :task_time_trackings do   
     get "delete"
   end
