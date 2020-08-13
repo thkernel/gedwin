@@ -17,11 +17,16 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   def new
+    @binders = Binder.all
+    @supports = Support.all 
+    @natures = Nature.all
+   
     @document = Document.new
   end
 
   # GET /documents/1/edit
   def edit
+    @selected_tags = @document.tag_list
   end
 
   # POST /documents
@@ -72,6 +77,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:support_id, :nature_id, :name, :description, :status, :user_id)
+      params.require(:document).permit(:support_id, :nature_id, :name, :description, :tags_list)
     end
 end

@@ -61,113 +61,137 @@
 //= require arrival_mails
 //= require imputations
 //= require departure_mails
+// require documentss
 
 $(document).on('turbolinks:load', function() {
     
-      $('#datatable1').DataTable({
-            "searching": true,
-        "ordering": true,
-        language: {
-            processing: "Traitement en cours...",
-            search: "Rechercher&nbsp;:",
-            lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
-            info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-            infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-            infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-            infoPostFix: "",
-            loadingRecords: "Chargement en cours...",
-            zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
-            emptyTable: "Aucune donnée disponible dans le tableau",
-            paginate: {
-                first: "Premier",
-                previous: "Pr&eacute;c&eacute;dent",
-                next: "Suivant",
-                last: "Dernier"
-            },
-            aria: {
-                sortAscending: ": activer pour trier la colonne par ordre croissant",
-                sortDescending: ": activer pour trier la colonne par ordre décroissant"
-            }
+  $('#datatable1').DataTable({
+        "searching": true,
+    "ordering": true,
+    language: {
+        processing: "Traitement en cours...",
+        search: "Rechercher&nbsp;:",
+        lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+        info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+        infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+        infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+        infoPostFix: "",
+        loadingRecords: "Chargement en cours...",
+        zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        emptyTable: "Aucune donnée disponible dans le tableau",
+        paginate: {
+            first: "Premier",
+            previous: "Pr&eacute;c&eacute;dent",
+            next: "Suivant",
+            last: "Dernier"
         },
-        responsive: false
-          });
+        aria: {
+            sortAscending: ": activer pour trier la colonne par ordre croissant",
+            sortDescending: ": activer pour trier la colonne par ordre décroissant"
+        }
+    },
+    responsive: false
+      });
+});
+
+
+
+$(document).on('turbolinks:load', function() {
+  $('body').on('shown.bs.modal', '.modal', function() {
+    $(this).find('select').each(function() {
+      var dropdownParent = $(document.body);
+      if ($(this).parents('.modal.in:first').length !== 0)
+        dropdownParent = $(this).parents('.modal.in:first');
+      $(this).select2({
+        dropdownParent: dropdownParent,
+        width: 'resolve' ,
+      });
+    });
   });
+});
 
+$(document).on('turbolinks:load', function() {  
 
+  $(this).find('select').each(function() {
+    var dropdownParent = $(document.body);
 
-  $(document).on('turbolinks:load', function() {
-    $('body').on('shown.bs.modal', '.modal', function() {
-        $(this).find('select').each(function() {
-          var dropdownParent = $(document.body);
-          if ($(this).parents('.modal.in:first').length !== 0)
-            dropdownParent = $(this).parents('.modal.in:first');
-          $(this).select2({
-            dropdownParent: dropdownParent,
-            width: 'resolve' ,
-          });
-        });
+      $(this).select2({
+        dropdownParent: dropdownParent,
+        width: 'resolve' ,
       });
   });
 
-  $(document).on('turbolinks:load', function() {  
+});
 
-    $(this).find('select').each(function() {
-      var dropdownParent = $(document.body);
+$(document).on('turbolinks:load', function() {  
 
-        $(this).select2({
-          dropdownParent: dropdownParent,
-          width: 'resolve' ,
-        });
-    });
+  $(this).find('.customSelect select').each(function() {
+    var dropdownParent = $(document.body);
 
+      $(this).select2({
+        dropdownParent: dropdownParent,
+        width: 'auto' ,
+        dropdownAutoWidth: true,
+      });
   });
 
-  $(document).on('turbolinks:load', function() {  
+});
 
-    $(this).find('.customSelect select').each(function() {
-      var dropdownParent = $(document.body);
 
-        $(this).select2({
-          dropdownParent: dropdownParent,
-          width: 'auto' ,
-          dropdownAutoWidth: true,
-        });
-    });
 
+
+// Ajax call.
+
+function ajaxRefresh(source, route, verb){
+  console.log("Source: ", source);
+  $(source).on('select2:opening', function() {
+      $.ajax({
+          type: verb,
+          headers: {
+              'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+              },
+          dataType: 'script',
+          cache: false,
+          url: route
+          
+      });
   });
+};
+
+function ajaxFilterPost(source, route, verb){
+  console.log("Source: ", source);
+  $(source).on("change", function() {
+      $.ajax({
+          type: verb,
+          headers: {
+              'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+              },
+          dataType: 'script',
+          url: route,
+          data: { data: $(source + ' option:selected').val()}
+      });
+  });
+};
 
 
-  
-  
-  // Ajax call.
+$(document).on('turbolinks:load', function(){
 
-  function ajaxRefresh(source, route, verb){
-    console.log("Source: ", source);
-    $(source).on('select2:opening', function() {
-        $.ajax({
-            type: verb,
-            headers: {
-                'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
-                },
-            dataType: 'script',
-            cache: false,
-            url: route
-            
-        });
-    });
-  };
-
-  function ajaxFilterPost(source, route, verb){
-    console.log("Source: ", source);
-    $(source).on("change", function() {
-        $.ajax({
-            type: verb,
-            headers: {
-                'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
-                },
-            dataType: 'script',
-            url: route,
-            data: { data: $(source + ' option:selected').val()}
-        });
-    });
-  };
+  $('#document_tags_list').select2({
+      tags: true,
+    
+      tokenSeparators: [',', ' '],
+      createTag: function (params) {
+          var term = $.trim(params.term);
+      
+          if (term === '') {
+            return null;
+          }
+      
+          return {
+            id: term,
+            text: term,
+            newTag: true // add additional parameters
+          }
+        }
+  });
+});

@@ -1,37 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="br-pageheader">
+      <nav class="breadcrumb pd-0 mg-0 tx-12">
+        
+        <span class="breadcrumb-item active"><h5>Documents</h5></span>
+      </nav>
+    </div><!-- br-pageheader -->
+<div class="br-pagebody">
+  <div class="br-section-wrapper">
+    <div class="headers mg-b-20">
+        <div class="left-content">
+        </div>
 
-<h1>Documents</h1>
+        <div class="text-right">
+            <%= link_to raw('<i class="fa fa-plus" aria-hidden="true"></i> Nouveau'), new_document_path, class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", remote: false %>
 
-<table>
+        </div>
+
+    </div>
+
+
+<table id="datatable1" class="table display responsive nowrap">
+
   <thead>
     <tr>
       <th>Support</th>
       <th>Nature</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th>Nom</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= document.support %></td>
-        <td><%= document.nature %></td>
-        <td><%= document.name %></td>
-        <td><%= document.description %></td>
-        <td><%= document.status %></td>
-        <td><%= document.user %></td>
-        <td><%= link_to 'Show', document %></td>
-        <td><%= link_to 'Edit', edit_document_path(document) %></td>
-        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+   <tbody class="document">
+    <%= render "index" %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Document', new_document_path %>
+</div>
+</div>
+<div id="document-modal" class="c-modal modal fade" data-backdrop="static"></div>
