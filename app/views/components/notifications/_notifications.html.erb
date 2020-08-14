@@ -9,51 +9,30 @@
 <div class="dropdown-menu dropdown-menu-header" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-83px, 1px, 0px);">
     <div class="dropdown-menu-label">
     <label>Notifications</label>
-    <a href="">Mark All as Read</a>
+    <!-- <a href="">Mark All as Read</a> -->
     </div><!-- d-flex -->
 
     <div class="media-list">
-    <!-- loop starts here -->
-    <a href="" class="media-list-link read">
-        <div class="media">
-        <img src="https://via.placeholder.com/500" alt="">
-        <div class="media-body">
-            <p class="noti-text"><strong>Suzzeth Bungaos</strong> tagged you and 18 others in a post.</p>
-            <span>October 03, 2017 8:45am</span>
+        
+        <!-- loop starts here -->
+        <% user_notifications.each do |notification| %>
+            <%= link_to root_path, class: "media-list-link read" do %>
+                <div class="media">
+                    <i class="fa fa-info-circle tx-40" aria-hidden="true"></i>
+
+                    <div class="media-body">
+                        <p class="noti-text">
+                            <strong><%= notification.notificable_type %></strong> 
+                            <%= notification.content %>
+                        </p>
+                        <span><%= l(notification.created_at, format: :long, locale: :"fr")%></span>
+                    </div>
+                </div><!-- media -->
+            <% end %>
+        <% end %>
+        <div class="dropdown-footer">
+            <a href=""><i class="fa fa-angle-down"></i> Tout afficher</a>
         </div>
-        </div><!-- media -->
-    </a>
-    <!-- loop ends here -->
-    <a href="" class="media-list-link read">
-        <div class="media">
-        <img src="https://via.placeholder.com/500" alt="">
-        <div class="media-body">
-            <p class="noti-text"><strong>Mellisa Brown</strong> appreciated your work <strong>The Social Network</strong></p>
-            <span>October 02, 2017 12:44am</span>
-        </div>
-        </div><!-- media -->
-    </a>
-    <a href="" class="media-list-link read">
-        <div class="media">
-        <img src="https://via.placeholder.com/500" alt="">
-        <div class="media-body">
-            <p class="noti-text">20+ new items added are for sale in your <strong>Sale Group</strong></p>
-            <span>October 01, 2017 10:20pm</span>
-        </div>
-        </div><!-- media -->
-    </a>
-    <a href="" class="media-list-link read">
-        <div class="media">
-        <img src="https://via.placeholder.com/500" alt="">
-        <div class="media-body">
-            <p class="noti-text"><strong>Julius Erving</strong> wants to connect with you on your conversation with <strong>Ronnie Mara</strong></p>
-            <span>October 01, 2017 6:08pm</span>
-        </div>
-        </div><!-- media -->
-    </a>
-    <div class="dropdown-footer">
-        <a href=""><i class="fas fa-angle-down"></i> Show All Notifications</a>
-    </div>
     </div><!-- media-list -->
 </div><!-- dropdown-menu -->
 </div><!-- dropdown -->

@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
 
   before_action :authenticate_user! unless :front_origin?
-  before_action :front_origin!, only: [:new]
+  before_action :front_origin?, only: [:new]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
  
   # GET /requests

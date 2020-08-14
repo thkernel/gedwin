@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   resources :notifications
   resources :comments
   resources :indices
-  resources :documents
+  resources :documents do   
+    get "delete"
+  end
+  
   resources :task_time_trackings do   
     get "delete"
   end
@@ -17,9 +20,13 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :imputations do   
+  resources :imputations, except: [:edit] do   
     get "delete"
+    
   end
+  get "imputation/show/:uid" => "imputations#show", as: :show_imputation
+  get "imputation/edit/:uid" => "imputations#edit", as: :edit_imputation
+  get "arrival-mail/show/:uid" => "arrival_mails#show", as: :show_arrival_mail
 
   resources :request_imputation_items do   
     get "delete"
@@ -74,7 +81,7 @@ Rails.application.routes.draw do
   end
 
   resources :attachments
-  resources :arrival_mails do   
+  resources :arrival_mails , except: [:show] do   
     get "delete"
     get "archive"
     get "archives"

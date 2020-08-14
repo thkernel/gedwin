@@ -176,7 +176,7 @@ function ajaxFilterPost(source, route, verb){
 
 $(document).on('turbolinks:load', function(){
 
-  $('#document_tags_list').select2({
+  $('#document_tag_list').select2({
       tags: true,
     
       tokenSeparators: [',', ' '],

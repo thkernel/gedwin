@@ -80,12 +80,22 @@ class ImputationsController < ApplicationController
     end
 
     @imputation = current_user.imputations.build(imputation_params)
+
+    #Imputable
     @imputation.imputable = resource
+    #ImputationsService.imputable(resource)
+    
+
+    notification_content = "Un courrier ou demande vous a été imputé."
+   
   
     
 
     respond_to do |format|
       if @imputation.save
+         #Notificable
+        NotificationsService.notificate(@imputation.recipient_id, @imputation, notification_content)
+
         if flash[:rtype].present? && flash[:rtype] == "ArrivalMail"
           @imputations = resource.imputations
         elsif flash[:rtype].present? && flash[:rtype] == "Request"
@@ -146,7 +156,11 @@ class ImputationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_imputation
-      @imputation = Imputation.find(params[:id])
+        if params[:uid]
+        @imputation = Imputation.find_by(uid: params[:uid])
+        else 
+          @imputation = Imputation.find(params[:id])
+        end
     end
 
     def get_resource

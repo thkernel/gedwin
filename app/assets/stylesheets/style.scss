@@ -301,6 +301,13 @@
 .mt-30 {
     margin-top: 30px;
 }
+.pt-25{
+    padding-top: 25px
+}
+
+.pb-25{
+    padding-bottom: 25px
+}
 
 .mb-30 {
     margin-bottom: 30px;
@@ -317,3 +324,34 @@
     background-color: #008000ad !important;
     
 }
+
+.list-2-cols {
+    -moz-columns: 2;
+    columns: 2;
+}
+
+.list-2-cols li span {
+    float: right;
+}
+
+.list-2-cols li {
+    line-height: 40px;
+    border-bottom: 1px solid;
+        border-bottom-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-color: #dce0e0;
+    padding: 0 10px;
+    page-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.list--col {
+    -moz-columns: 1;
+    columns: 1;
+}
+
+.list-1-col li span {
+    /*float: right;*/
+}
+

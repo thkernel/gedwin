@@ -56,7 +56,8 @@ class User < ApplicationRecord
 	has_many :documents, dependent: :destroy
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
-	
+	has_many :recipient_notifications, :class_name => "Notification", :foreign_key => :recipient_id
+
 	
 	#has_many :tenants, dependent: :destroy
 
@@ -68,13 +69,8 @@ class User < ApplicationRecord
 	validates :login, presence: true, uniqueness: true
 
 
+	
 
-	private 
-
-	def generate_random_uid
-		begin
-			self.slug = "u#{SecureRandom.random_number(1_000_000_000)}"
-		end while User.where(slug: self.slug).exists?
-	end 
+	
 
 end

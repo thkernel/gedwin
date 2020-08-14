@@ -263,9 +263,11 @@ end
 unless TaskStatus.all.present?
     task_statuses = TaskStatus.create(
         [
+
             {name: "Encours", user_id: users.first.id},
+            {name: "Suspendue", user_id: users.first.id}
             {name: "Annulée", user_id: users.first.id},
-            {name: "Clôturée", user_id: users.first.id}
+            {name: "Terminée", user_id: users.first.id}
         ])
 else    
     task_statuses =  TaskStatus.all

@@ -66,5 +66,31 @@ module ApplicationHelper
 		user = User.find(user_id)
 	end
 	
-	
+	def user_notifications
+		current_user.recipient_notifications.order(created_at: 'DESC').take(5)
+	end
+
+	def imputable_type(imputation)
+		if imputation.imputable_type == "ArrivalMail"
+			"Réf. courrier: #{ArrivalMail.find(imputation.imputable_id).internal_reference}"
+		elsif imputation.imputable_type == "Request"
+			"Réf. demande: #{Request.find(imputation.imputable_id).uid}"
+
+		end
+	end
+
+	def arrival_mail_total_task(id)
+		arrival_mail = ArrivalMail.find(id)
+		total_task = 0
+		total_task = arrival_mail.imputations.map {|item| item.imputation_items.count}.sum
+	end
+
+	def arrival_mail_total_completed_task(id)
+		arrival_mail = ArrivalMail.find(id)
+		total_task = 0
+		total_task = arrival_mail.imputations.map {|item| item.imputation_items.completed.count}.sum
+	end
+	def arrival_mail_total_uncompleted_task(id)
+		
+	end
 end

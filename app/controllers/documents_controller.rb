@@ -26,7 +26,13 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    @binders = Binder.all
+    @supports = Support.all 
+    @natures = Nature.all
+
+    puts "ALL TAGS: #{ActsAsTaggableOn::Tag.all.inspect}"
     @selected_tags = @document.tag_list
+    puts "SELECTED: #{@selected_tags.inspect}"
   end
 
   # POST /documents
@@ -36,9 +42,10 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to documents_path, notice: 'Document was successfully created.' }
         format.json { render :show, status: :created, location: @document }
       else
+       
         format.html { render :new }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
@@ -50,7 +57,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to documents_path, notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -77,6 +84,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:support_id, :nature_id, :name, :description, :tags_list)
+      params.require(:document).permit(:support_id, :nature_id, :binder_id, :name, :description, tag_list: [], files: [])
     end
 end

@@ -189,7 +189,11 @@ class ArrivalMailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_arrival_mail
-      @arrival_mail = ArrivalMail.find(params[:id])
+      if params[:id]
+        @arrival_mail = ArrivalMail.find(params[:id])
+      elsif params[:uid]
+        @arrival_mail = ArrivalMail.find_by(uid: params[:uid])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

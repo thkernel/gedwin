@@ -12,9 +12,10 @@
 		    <%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
 '),  edit_arrival_mail_path(arrival_mail), title: "Modifier", remote: false %>
 
+<%= link_to raw('<i class="fa fa-eye" aria-hidden="true"></i>
+'),  show_arrival_mail_path(arrival_mail.uid), title: "Voir", remote: false %>
 
-<%= link_to raw('<i class="fa fa-archive" aria-hidden="true"></i>
-'), arrival_mail_archive_path(arrival_mail), remote: true, title: "Archiver", class: "archive" %>
+
 
 
 

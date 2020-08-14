@@ -1,39 +1,101 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Reference:</strong>
-  <%= @diffusion.reference %>
-</p>
+  <div class="container page-wrapper mg-t-80">
+ 
+    <div class="row">
+      <div class="col-md-9">
+        <!-- -->
+        <div class="card shadow-base bd-0">
+          <div class="card-header bg-transparent pd-20">
+            <h6 class="card-title tx-uppercase tx-12 mg-b-0">Imputation</h6>
+          </div><!-- card-header -->
+          <div class="card-body">
+           
+              <ul class="list-1-col list-unstyled">
+              <li class="detail-address">
+									<strong><%= imputable_type(@imputation) %></strong> 
+									
+								</li>
+								<li class="detail-address">
+									<strong>Service: </strong> 
+									<span><%= service(@imputation.service_id).name %></span>
+								</li>
+								<li class="detail-city">
+									<strong>Bénéficiaire: </strong> 
+									<span><%= user(@imputation.recipient_id).profile.full_name %></span>
+								</li>
+								<li class="detail-state">
+									<strong>Auteur: </strong> 
+									<span><%= user(@imputation.user_id).profile.full_name if user(@imputation.user_id).profile.present? %></span>
+								</li>
+							
+										
+							</ul>
+             
+           
+            </div>
+           
+          
+        </div>
+        <!-- -->
 
-<p>
-  <strong>Service:</strong>
-  <%= @diffusion.service %>
-</p>
+        <!-- -->
+        <div class="card shadow-base  bd-0 mg-t-15">
+              <div class="card-header bg-transparent pd-20">
+                <h6 class="card-title tx-uppercase tx-12 mg-b-0">Tâches</h6>
+              </div><!-- card-header -->
+              <table class="table table-responsive mg-b-0 tx-12">
+                <thead>
+                  <tr class="tx-10">
+                
+                    <th class="pd-y-5">Date</th>
+                    <th class="pd-y-5">Titre</th>
+                    <th class="pd-y-5">Date début</th>
+                    <th class="pd-y-5">Date fin</th>
+                    <th class="pd-y-5">Statut</th>
+                    <th class="pd-y-5"></th>
 
-<p>
-  <strong>Recipient:</strong>
-  <%= @diffusion.recipient %>
-</p>
+                  </tr>
+                </thead>
+                <tbody>
 
-<p>
-  <strong>Arrival mail:</strong>
-  <%= @diffusion.arrival_mail %>
-</p>
+                  <% @imputation.imputation_items.each do |item| %>
+                  <tr>
+                    <td class="tx-12">
+                      <%= item.created_at.strftime("%d/%m/%Y") %>
+                    </td>
+                    <td>
+                      <%= item.title %>
+                    </td>
+                    <td class="tx-12">
+                      <%= item.start_date.strftime("%d/%m/%Y") %>
+                    </td>
+                     <td class="tx-12">
+                      <%= item.end_date.strftime("%d/%m/%Y") %>
+                    </td>
+                     <td class="tx-12">
+                      <%= task_status(item.task_status_id).name %>
+                    </td>
+                   
+                  </tr>
+                  <% end %>
 
-<p>
-  <strong>Status:</strong>
-  <%= @diffusion.status %>
-</p>
+                  
+                  
+                  
+                  
+                </tbody>
+              </table>
+              <!--
+              <div class="card-footer tx-12 pd-y-15 bg-transparent">
+                <a href=""><i class="fa fa-angle-down mg-r-5"></i>View All Transaction History</a>
+              </div> --><!-- card-footer -->
+            </div>
+        <!-- -->
 
-<p>
-  <strong>Broadcast by:</strong>
-  <%= @diffusion.broadcast_by %>
-</p>
+        <div class="col-md-3">
+        </div>
+    </div>
 
-<p>
-  <strong>User:</strong>
-  <%= @diffusion.user %>
-</p>
+  </div>
 
-<%= link_to 'Edit', edit_diffusion_path(@diffusion) %> |
-<%= link_to 'Back', diffusions_path %>
+

@@ -40,8 +40,9 @@
               <div class="card-body">
                 <div class="form-group ">
                   <%= form.label :files, "Pièces-jointes" %>
-                  <%= form.file_field :files, class: "form-control", multiple: true,  required: true %> 
+                  <%= form.file_field :files, class: "form-control", multiple: true %> 
                 </div>
+                
               </div>
             </div>
             </div>
@@ -82,8 +83,8 @@
           </div>
           <div class="card-body">
             <div class="form-group ">
-              <%= form.label :tags, "Etiquettes" %>
-              <%= form.collection_select(:tags_list, ActsAsTaggableOn::Tag.all, :id, :name, {include_blank: true, selected: @selected_tags}, class: "form-control", style: "width: 100%", multiple: true,  required: true) %> 
+              <%= form.label :tag_list, "Etiquettes" %>
+              <%= form.collection_select(:tag_list, ActsAsTaggableOn::Tag.all, :name, :name, { value: @selected_tags}, class: "form-control", style: "width: 100%", multiple: true) %> 
              </div>
           </div>
         </div>
