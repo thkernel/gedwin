@@ -3,6 +3,7 @@ require_relative 'boot'
 require 'rails/all'
 require './lib/shared_utils/utils'
 require './lib/outin_storage/outin_storage'
+require '.lib/shared_utils/google_api_client'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
