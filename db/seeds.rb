@@ -197,7 +197,6 @@ end
 
 
 
-
 # Priority
 unless Priority.all.present?
     priorities = Priority.create(
@@ -337,5 +336,22 @@ unless Binder.all.present?
         ])
 else    
     binders =  Binder.all
+
+end
+
+unless Feature.all.present?
+    features = Feature.create([
+        {
+            name: "Utilisateurs" 
+            
+        },
+        {
+            name: "Paramètres"
+        },
+        {
+            name: "Configurations" 
+        }
+    
+    ])
 
 end

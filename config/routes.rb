@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
  
   
+  resources :ability_items
     get "custom_users/get_divisions" => "custom_users#get_divisions"
     get "custom_users/get_services" => "custom_users#get_services"
   
@@ -10,6 +11,11 @@ Rails.application.routes.draw do
   resources :priorities do   
     get "delete"
   end
+
+  resources :abilities do   
+    get "delete"
+  end
+
   resources :notifications
   resources :comments
   
@@ -193,7 +199,9 @@ Rails.application.routes.draw do
   resources :permissions do   
     get "delete"
   end
-  resources :roles
+  resources :roles do  
+    get "delete"
+  end
 
   get "/dashboard" => "dashboard#index" , as: :dashboard
 

@@ -1,1 +1,1 @@
-json.array! @features, partial: 'features/feature', as: :feature
+json.array! @features, partial: "features/feature", as: :feature

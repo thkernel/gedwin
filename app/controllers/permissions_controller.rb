@@ -1,9 +1,7 @@
 class PermissionsController < ApplicationController
   before_action :authenticate_user!
-  layout "dashboard"
-  
   before_action :set_permission, only: [:show, :edit, :update, :destroy]
-
+  layout "dashboard"
   # GET /permissions
   # GET /permissions.json
   def index
@@ -32,7 +30,6 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.save
         @permissions = Permission.all
-
         format.html { redirect_to @permission, notice: 'Permission was successfully created.' }
         format.json { render :show, status: :created, location: @permission }
         format.js
@@ -50,7 +47,6 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.update(permission_params)
         @permissions = Permission.all
-
         format.html { redirect_to @permission, notice: 'Permission was successfully updated.' }
         format.json { render :show, status: :ok, location: @permission }
         format.js
@@ -63,17 +59,15 @@ class PermissionsController < ApplicationController
   end
 
 
-  # Use callbacks to share common setup or constraints between actions.
   def delete
     @permission = Permission.find(params[:permission_id])
   end
+
 
   # DELETE /permissions/1
   # DELETE /permissions/1.json
   def destroy
     @permission.destroy
-    @permissions = Permission.all
-
     respond_to do |format|
       format.html { redirect_to permissions_url, notice: 'Permission was successfully destroyed.' }
       format.json { head :no_content }
@@ -86,7 +80,7 @@ class PermissionsController < ApplicationController
       @permission = Permission.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def permission_params
       params.require(:permission).permit(:name, :description, :status)
     end

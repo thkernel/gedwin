@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ability:</strong>
+  <%= @ability_item.ability %>
+</p>
+
+<p>
+  <strong>Permission:</strong>
+  <%= @ability_item.permission %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @ability_item.status %>
+</p>
+
+<%= link_to 'Edit', edit_ability_item_path(@ability_item) %> |
+<%= link_to 'Back', ability_items_path %>

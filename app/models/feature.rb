@@ -16,7 +16,6 @@ class Feature < ApplicationRecord
 
   before_save :generate_random_number_uid
 
-  belongs_to :role
-  belongs_to :permission
+  
   belongs_to :user
 end
