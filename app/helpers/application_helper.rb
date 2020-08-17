@@ -41,9 +41,6 @@ module ApplicationHelper
 
 		elsif controller == "admin_setup"
 			t(:admin_setup)
-
-		
-
 		end
 	end
 
@@ -59,7 +56,6 @@ module ApplicationHelper
 		if organization.present?
 			organization
 		end
-		
 	end
 
 	def get_user(user_id)
@@ -90,7 +86,17 @@ module ApplicationHelper
 		total_task = 0
 		total_task = arrival_mail.imputations.map {|item| item.imputation_items.completed.count}.sum
 	end
+
+	# 
 	def arrival_mail_total_uncompleted_task(id)
 		
+	end
+
+	def is_account_locked?(user)
+		if user.status == 'enable'
+			false
+		else
+			true
+		end
 	end
 end

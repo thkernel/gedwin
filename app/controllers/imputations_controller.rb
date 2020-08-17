@@ -43,7 +43,7 @@ class ImputationsController < ApplicationController
   def new
     
     @services = Service.all
-    @tasks = Task.all
+   
     @task_statuses = TaskStatus.all
     @services = Service.all
 
@@ -58,7 +58,7 @@ class ImputationsController < ApplicationController
   # GET /imputations/1/edit
   def edit
     @services = Service.all
-    @tasks = Task.all
+    
     @task_statuses = TaskStatus.all
   
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
@@ -85,11 +85,8 @@ class ImputationsController < ApplicationController
     @imputation.imputable = resource
     #ImputationsService.imputable(resource)
     
-
     notification_content = "Un courrier ou demande vous a été imputé."
    
-  
-    
 
     respond_to do |format|
       if @imputation.save
@@ -98,18 +95,19 @@ class ImputationsController < ApplicationController
 
         if flash[:rtype].present? && flash[:rtype] == "ArrivalMail"
           @imputations = resource.imputations
+
         elsif flash[:rtype].present? && flash[:rtype] == "Request"
           @imputations = resource.imputations
         end
         
         format.html { redirect_to imputations_path(uid: flash[:rtype].constantize.find(@imputation.imputable_id).uid, rtype: flash[:rtype]), notice: 'Imputation was successfully created.' }
         format.json { render :show, status: :created, location: @imputation }
-        format.js
+     
       else
        
         format.html { render :new }
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
-        format.js
+      
       end
     end
   end
@@ -183,6 +181,9 @@ class ImputationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params
-      params.require(:imputation).permit(:service_id, :recipient_id,  imputation_items_attributes: [:id, :task_id, :start_date, :end_date, :description, :task_status_id, :_destroy])
+      params.require(:imputation).permit(:service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :task_status_id, :_destroy])
+    end
+
+    def track_start_date
     end
 end

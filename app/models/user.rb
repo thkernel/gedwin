@@ -8,6 +8,7 @@
 #  slug                   :string
 #  role_id                :bigint           not null
 #  created_by             :integer
+#  status                 :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
@@ -26,7 +27,7 @@ class User < ApplicationRecord
 
 		 include SharedUtils::Generate
 
-		 before_save :generate_random_number_uid
+		 before_save :generate_random_number_uid, :set_default_status
 
   # Relationships
 	belongs_to :role
@@ -66,11 +67,17 @@ class User < ApplicationRecord
 	
 	# Validations
 
-	validates :login, presence: true, uniqueness: true
+	#validates :login, presence: true, uniqueness: true
 
 
 	
+	private 
 
+	def set_default_status
+		unless self.status.present?
+			self.status = "enable"
+		end
+	end
 	
 
 end

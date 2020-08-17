@@ -9,22 +9,35 @@ class CustomUsersController < ApplicationController
     
 		def new
 		
-			@user = User.new
-			@user.build_profile
+		
+			@directions = Direction.all
+			@divisions = Division.all
+			@services = Service.all
 			@roles = Role.where.not(name: "superuser")
 		
 			#@roles = Role.all
-			
+			@user = User.new
+			@user.build_profile
+		end
+
+		def get_divisions
+			puts "ID: #{params[:id]}"
+			@divisions = Division.where(direction_id: params[:id]).map { |division| [division.name, division.id] }.unshift('Sélectionner')
+		end
+
+		def get_services
+			puts "ID: #{params[:id]}"
+			@services = Service.where(division_id: params[:id]).map { |service| [service.name, service.id] }.unshift('Sélectionner')
 		end
 	
 		def create
-			@services = Service.all
+			
 		@user = User.new(user_params)
 		@user.created_by = current_user.id
 
 			respond_to do |format|
 				if @user.save
-					@user.build_profile
+					#@user.build_profile
 					@users = User.where.not(id: current_user.id)
 
 					format.html { redirect_to all_users_path, notice: 'User was successfully created.' }
@@ -65,6 +78,9 @@ class CustomUsersController < ApplicationController
 
     # GET /users/1/edit
 		def edit
+			
+			@directions = Direction.all
+			@divisions = Division.all
 			@services = Service.all
 			@roles = Role.where.not(name: "superuser")
 			@user.profile || @user.build_profile 
@@ -198,7 +214,7 @@ class CustomUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:login,  :email, :password,:password_confirmation, :role_id,  profile_attributes: [:first_name, :last_name, :civility])
+      params.require(:user).permit(:email, :password,:password_confirmation, :role_id,  profile_attributes: [:first_name, :last_name, :civility, :direction_id, :division_id, :service_id])
     end
 
 end

@@ -8,7 +8,7 @@ class ImputationItemsController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @imputation_items = ImputationItem.where(imputation_id: @imputation.id)
+    @imputation_items = @imputation.imputation_items
   end
 
   # GET /tasks/1
@@ -24,7 +24,7 @@ class ImputationItemsController < ApplicationController
   # GET /tasks/new
   def new
     @task_statuses = TaskStatus.all
-    @task_types = TaskType.all
+   
     @imputation_item = Task.new
   end
 
@@ -58,9 +58,21 @@ class ImputationItemsController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+
+    if @imputation_item.task_status_id == TaskStatus.find_by(name: "En cours").id
+      @imputation_item.start_date = Time.now
+    elsif @imputation_item.task_status_id == TaskStatus.find_by(name: "Terminé").id
+      @imputation_item.completed_date = Time.now
+      unless @imputation_item.start_date.present?
+        
+        @imputation_item.start_date = Time.now
+      end
+    end
+
     respond_to do |format|
       if @imputation_item.update(task_params)
-        @imputation_items = ImputationItem.where(imputation_id: @imputation_item.imputation_id)
+        #@imputation_items = ImputationItem.where(imputation_id: @imputation_item.imputation_id)
+        @imputation = Imputation.find(@imputation_item.imputation_id)
 
         format.html { redirect_to @imputation_item, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @imputation_item }
@@ -103,7 +115,7 @@ class ImputationItemsController < ApplicationController
 
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
+    def set_imputation_item
       @imputation_item = ImputationItem.find(params[:id])
     end
 

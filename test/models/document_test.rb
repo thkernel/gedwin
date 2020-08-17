@@ -3,6 +3,8 @@
 # Table name: documents
 #
 #  id          :bigint           not null, primary key
+#  uid         :string
+#  slug        :string
 #  support_id  :bigint
 #  nature_id   :bigint
 #  binder_id   :bigint

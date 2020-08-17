@@ -1,8 +1,18 @@
 Rails.application.routes.draw do
 
+ 
+  
+    get "custom_users/get_divisions" => "custom_users#get_divisions"
+    get "custom_users/get_services" => "custom_users#get_services"
+  
+  
+
+  resources :priorities do   
+    get "delete"
+  end
   resources :notifications
   resources :comments
-  resources :indices
+  
   resources :documents do   
     get "delete"
   end
@@ -212,7 +222,7 @@ Rails.application.routes.draw do
 	post "/users/new"     => "custom_users#create", as: :create_user
 	get "/users/new"     => "custom_users#new", as: :new_user
 	get "/user/edit/:id" => "custom_users#edit", as: :edit_user
-	patch "/user/update/:id" => "custom_users#update", as: :udapte_user
+	patch "/user/update/:id" => "custom_users#update", as: :update_user
 	delete "/user/destroy/:id" => "custom_users#destroy", as: :destroy_user
   get "/user/delete/:id" => "custom_users#delete", as: :delete_user
   

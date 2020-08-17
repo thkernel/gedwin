@@ -74,18 +74,64 @@ else
     users = User.all
 end
 
+# Direction.
+unless Direction.all.present?
+    directions = Direction.create(
+        [
+            {name: "Direction 1" , user_id: users.first.id},
+            {name: "Direction 2", user_id: users.first.id},
+            {name: "Direction 3", user_id: users.first.id}
+
+        ])
+else
+    directions = Direction.all
+end
+
+
+# Division.
+unless Division.all.present?
+    divisions = Division.create(
+        [
+            {name: "Division 1" , direction_id: directions.first.id, user_id: users.first.id},
+            {name: "Division 2", direction_id: directions.first.id, user_id: users.first.id},
+            {name: "Division 3", direction_id: directions.first.id, user_id: users.first.id}
+
+        ])
+else
+    divisions = Division.all
+end
+
+
+# Service.
+unless Service.all.present?
+    services = Service.create(
+        [
+            {name: "Informatique", division_id: divisions.first.id , user_id: users.first.id},
+            {name: "Direction", division_id: divisions.first.id, user_id: users.first.id},
+            {name: "Comptabilité", division_id: divisions.first.id , user_id: users.first.id}
+
+        ])
+else
+    services = Service.all
+end
+
+
 # Profile
 unless Profile.all.present?
     profile = Profile.create([
         {
             first_name: "Amos",  
             last_name: "DEMBELE",
+            direction_id: directions.first.id, 
+            division_id: divisions.first.id, 
             service_id: services.first.id,   
             user_id: users.first.id
         },
         {
             first_name: "Alassane",  
             last_name: "BABY",
+            direction_id: directions.first.id, 
+            division_id: divisions.first.id, 
             service_id: services.first.id, 
             user_id: users.last.id
         }
@@ -113,31 +159,10 @@ end
 unless Organization.all.present?
     organizations = Organization.create([
         {
-            name: "Auctum",  
+            name: "Upcase LLC",  
             organization_type_id: organization_types.first.id,
-            web_site: "auctum.io", 
+            web_site: "upcase.net", 
             user_id: users.first.id
-        },
-        {
-            name: "Logineo",  
-            organization_type_id: organization_types.first.id,  
-            web_site: "logineo.com", 
-            user_id: users.first.id
-
-        },
-        {
-            name: "Upcase",  
-            organization_type_id: organization_types.first.id,  
-            web_site: "upcase.com", 
-            user_id: users.first.id
-
-        },
-        {
-            name: "Ouagadousoft",  
-            organization_type_id: organization_types.first.id,  
-            web_site: "ouagadousoft.com", 
-            user_id: users.first.id
-
         }
     
     ])
@@ -171,16 +196,20 @@ unless Nature.all.present?
 end
 
 
-unless Service.all.present?
-    services = Service.create(
+
+
+# Priority
+unless Priority.all.present?
+    priorities = Priority.create(
         [
-            {name: "Informatique" , user_id: users.first.id},
-            {name: "Direction", user_id: users.first.id},
-            {name: "Comptabilité", user_id: users.first.id}
+            {name: "Aucune" , user_id: users.first.id},
+            {name: "Basse", user_id: users.first.id},
+            {name: "Moyen", user_id: users.first.id},
+            {name: "Haute", user_id: users.first.id}
 
         ])
 else
-    services = Service.all
+    priorities = Priority.all
 end
 
 
@@ -263,11 +292,11 @@ end
 unless TaskStatus.all.present?
     task_statuses = TaskStatus.create(
         [
-
-            {name: "Encours", user_id: users.first.id},
-            {name: "Suspendue", user_id: users.first.id}
-            {name: "Annulée", user_id: users.first.id},
-            {name: "Terminée", user_id: users.first.id}
+            {name: "En attente", user_id: users.first.id},
+            {name: "En cours", user_id: users.first.id},
+            {name: "Suspendu", user_id: users.first.id},
+            {name: "Annulé", user_id: users.first.id},
+            {name: "Terminé", user_id: users.first.id}
         ])
 else    
     task_statuses =  TaskStatus.all

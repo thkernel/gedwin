@@ -61,7 +61,8 @@
 //= require arrival_mails
 //= require imputations
 //= require departure_mails
-// require documentss
+//= require custom_users
+
 
 $(document).on('turbolinks:load', function() {
     
@@ -169,6 +170,21 @@ function ajaxFilterPost(source, route, verb){
           dataType: 'script',
           url: route,
           data: { data: $(source + ' option:selected').val()}
+      });
+  });
+};
+
+function ajaxFilterByID(source, route, verb){
+  console.log("Source: ", source);
+  $(source).on("change", function() {
+      $.ajax({
+          type: verb,
+          headers: {
+              'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+              },
+          dataType: 'script',
+          url: route,
+          data: { id: $(source + ' option:selected').val()}
       });
   });
 };

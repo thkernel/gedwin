@@ -12,19 +12,26 @@
            
               <ul class="list-1-col list-unstyled">
               <li class="detail-address">
+                  <i class="fa fa-key" aria-hidden="true"></i>
 									<strong><%= imputable_type(@imputation) %></strong> 
 									
 								</li>
 								<li class="detail-address">
+                  <i class="fa fa-building-o" aria-hidden="true"></i>
+
 									<strong>Service: </strong> 
 									<span><%= service(@imputation.service_id).name %></span>
 								</li>
 								<li class="detail-city">
-									<strong>Bénéficiaire: </strong> 
+                  <i class="fa fa-user" aria-hidden="true"></i>
+
+									<strong>Imputé à: </strong> 
 									<span><%= user(@imputation.recipient_id).profile.full_name %></span>
 								</li>
 								<li class="detail-state">
-									<strong>Auteur: </strong> 
+                <i class="fa fa-user-secret" aria-hidden="true"></i>
+
+									<strong>Imputé par: </strong> 
 									<span><%= user(@imputation.user_id).profile.full_name if user(@imputation.user_id).profile.present? %></span>
 								</li>
 							
@@ -49,39 +56,17 @@
                 
                     <th class="pd-y-5">Date</th>
                     <th class="pd-y-5">Titre</th>
-                    <th class="pd-y-5">Date début</th>
+                    <th class="pd-y-5">Date d'échéance</th>
+                     <th class="pd-y-5">Date début</th>
                     <th class="pd-y-5">Date fin</th>
-                    <th class="pd-y-5">Statut</th>
+                    <th class="pd-y-5">Progression</th>
                     <th class="pd-y-5"></th>
 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="imputation-items">
 
-                  <% @imputation.imputation_items.each do |item| %>
-                  <tr>
-                    <td class="tx-12">
-                      <%= item.created_at.strftime("%d/%m/%Y") %>
-                    </td>
-                    <td>
-                      <%= item.title %>
-                    </td>
-                    <td class="tx-12">
-                      <%= item.start_date.strftime("%d/%m/%Y") %>
-                    </td>
-                     <td class="tx-12">
-                      <%= item.end_date.strftime("%d/%m/%Y") %>
-                    </td>
-                     <td class="tx-12">
-                      <%= task_status(item.task_status_id).name %>
-                    </td>
-                   
-                  </tr>
-                  <% end %>
-
-                  
-                  
-                  
+                  <%= render "imputations/partials/index", locals: @imputation %>
                   
                 </tbody>
               </table>
@@ -99,3 +84,4 @@
   </div>
 
 
+<div id="imputation-item-modal" class="c-modal modal fade" data-backdrop="static"></div>

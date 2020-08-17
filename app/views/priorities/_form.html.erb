@@ -1,10 +1,10 @@
-<%= form_with(model: index, local: true) do |form| %>
-  <% if index.errors.any? %>
+<%= form_with(model: priority, local: true) do |form| %>
+  <% if priority.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(index.errors.count, "error") %> prohibited this index from being saved:</h2>
+      <h2><%= pluralize(priority.errors.count, "error") %> prohibited this priority from being saved:</h2>
 
       <ul>
-      <% index.errors.full_messages.each do |message| %>
+      <% priority.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -14,11 +14,6 @@
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
   </div>
 
   <div class="field">

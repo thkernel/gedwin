@@ -17,9 +17,7 @@
             <%= form.text_field :internal_reference,  class: "form-control", value: (arrival_mail.internal_reference.present? ? arrival_mail.internal_reference : @internal_reference ), placeholder: "Réf. interne", readonly: true %>
           </div>
         </div>
-         <div class="col-md-3">
-
-
+        <div class="col-md-3">
           <div class="form-group">
             <%= form.label :external_reference, "Réf. externe" %>
             <%= form.text_field :external_reference,  class: "form-control" , placeholder: "Réf. externe"%>
@@ -30,12 +28,9 @@
           <div class="form-group">
            <%= form.label :nature_id, "Nature", class: "required" %>
             <div class="input-group customSelect">
-                <%= form.collection_select(:nature_id, @natures, :id, :name, {prompt: "Sélectionner"}, class: "form-control ", required: true, 'aria-describedby'=> "basic-addon2") %> 
-                
+                <%= form.collection_select(:nature_id, @natures, :id, :name, {prompt: "Sélectionner"}, class: "form-control ", required: true) %> 
                 <div class="input-group-append">
-                 
-                  <%= link_to raw('<i class="fa fa-plus-circle" aria-hidden="true"></i>
-'), new_nature_path, class: "btn btn-outline-secondary", remote: true %>
+                  <%= link_to raw('<i class="fa fa-plus-circle" aria-hidden="true"></i>'), new_nature_path, class: "btn btn-outline-secondary", remote: true %>
                 </div>
             </div>
           </div>
@@ -52,9 +47,7 @@
             <div class="input-group customSelect">
               <%= form.collection_select(:support_id, @supports, :id, :name, {prompt: "Sélectionner"}, class: "form-control",  required: true) %> 
               <div class="input-group-append">
-                 
-                <%= link_to raw('<i class="fa fa-plus-circle" aria-hidden="true"></i>
-'), new_support_path, class: "btn btn-outline-secondary", remote: true %>
+                <%= link_to raw('<i class="fa fa-plus-circle" aria-hidden="true"></i>'), new_support_path, class: "btn btn-outline-secondary", remote: true %>
               </div>
             </div>
           </div>

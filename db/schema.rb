@@ -202,6 +202,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
   end
 
   create_table "documents", force: :cascade do |t|
+    t.string "uid"
+    t.string "slug"
     t.bigint "support_id"
     t.bigint "nature_id"
     t.bigint "binder_id"
@@ -240,18 +242,18 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
 
   create_table "imputation_items", force: :cascade do |t|
     t.string "uid"
-    t.bigint "task_id"
     t.string "title"
     t.text "description"
+    t.bigint "priority_id"
+    t.datetime "due_date"
     t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "closing_date"
+    t.datetime "completed_date"
     t.bigint "task_status_id"
     t.bigint "imputation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imputation_id"], name: "index_imputation_items_on_imputation_id"
-    t.index ["task_id"], name: "index_imputation_items_on_task_id"
+    t.index ["priority_id"], name: "index_imputation_items_on_priority_id"
     t.index ["task_status_id"], name: "index_imputation_items_on_task_status_id"
   end
 
@@ -269,19 +271,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
     t.index ["recipient_id"], name: "index_imputations_on_recipient_id"
     t.index ["service_id"], name: "index_imputations_on_service_id"
     t.index ["user_id"], name: "index_imputations_on_user_id"
-  end
-
-  create_table "indices", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.string "indexable_type"
-    t.bigint "indexable_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["indexable_type", "indexable_id"], name: "index_indices_on_indexable_type_and_indexable_id"
-    t.index ["user_id"], name: "index_indices_on_user_id"
   end
 
   create_table "natures", force: :cascade do |t|
@@ -350,6 +339,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "priorities", force: :cascade do |t|
+    t.string "name"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_priorities_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "uid"
     t.string "civility"
@@ -360,9 +358,13 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
     t.text "description"
     t.string "status"
     t.bigint "service_id"
+    t.bigint "direction_id"
+    t.bigint "division_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["direction_id"], name: "index_profiles_on_direction_id"
+    t.index ["division_id"], name: "index_profiles_on_division_id"
     t.index ["service_id"], name: "index_profiles_on_service_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
@@ -537,6 +539,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
     t.string "slug"
     t.bigint "role_id", null: false
     t.integer "created_by"
+    t.string "status"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -580,15 +583,17 @@ ActiveRecord::Schema.define(version: 2020_08_13_153404) do
   add_foreign_key "documents", "users"
   add_foreign_key "folders", "users"
   add_foreign_key "imputation_items", "imputations"
+  add_foreign_key "imputation_items", "priorities"
   add_foreign_key "imputation_items", "task_statuses"
-  add_foreign_key "imputation_items", "tasks"
   add_foreign_key "imputations", "services"
   add_foreign_key "imputations", "users"
-  add_foreign_key "indices", "users"
   add_foreign_key "natures", "users"
   add_foreign_key "organization_types", "users"
   add_foreign_key "organizations", "organization_types"
   add_foreign_key "organizations", "users"
+  add_foreign_key "priorities", "users"
+  add_foreign_key "profiles", "directions"
+  add_foreign_key "profiles", "divisions"
   add_foreign_key "profiles", "services"
   add_foreign_key "profiles", "users"
   add_foreign_key "register_types", "users"

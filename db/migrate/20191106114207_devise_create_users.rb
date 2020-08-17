@@ -10,6 +10,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :slug
       t.references :role, foreign_key: true, null: false
       t.integer :created_by
+      t.string :status
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

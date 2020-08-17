@@ -2,19 +2,17 @@
 
     
     <td>
-    <%= f.collection_select(:task_id, @tasks, :id, :title, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 
+    <%= f.text_field :title, class: "form-control", placeholder: "Titre", required: true %> 
 
     </td>
      <td>
         <%= f.text_area :description, class: "form-control", required: true %>
     </td>
     <td>
-        <%= f.date_field :start_date, class: "form-control", required: true %>
+        <%= f.date_field :due_date, class: "form-control", required: true %>
     </td>
 
-    <td>
-        <%= f.date_field :end_date, class: "form-control", required: true %>
-    </td>
+   
     
      <td>
     <%= f.collection_select(:task_status_id, @task_statuses, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 

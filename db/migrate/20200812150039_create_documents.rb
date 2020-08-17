@@ -1,7 +1,7 @@
 class CreateDocuments < ActiveRecord::Migration[5.2]
   def change
     create_table :documents do |t|
-      t.string :uid,
+      t.string :uid
       t.string :slug
       t.references :support, foreign_key: true
       t.references :nature, foreign_key: true

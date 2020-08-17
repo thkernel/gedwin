@@ -126,18 +126,12 @@
                 <%= link_to  "Registres", registers_path, class: "sub-link" %>
             </li>
 
-            <li class="sub-item">
-                <%= link_to  "Types de tâches", task_types_path, class: "sub-link" %>
-            </li>
-
+           
               <li class="sub-item">
                 <%= link_to  "Statuts de tâches", task_statuses_path, class: "sub-link" %>
             </li>
 
-            <li class="sub-item">
-                <%= link_to  "Tâches", tasks_path, class: "sub-link" %>
-            </li>
-
+           
           
 
             
@@ -159,6 +153,46 @@
             <li class="sub-item">
                 <%= link_to  "Natures", natures_path, class: "sub-link" %>
             </li>
+
+             
+           
+
+           
+
+          </ul>
+        </li>
+
+        <li class="br-menu-item">
+          <a href="#" class="br-menu-link with-sub">
+            <i class="fa fa-cog tx-20"></i>
+            <span class="menu-item-label">Configurations</span>
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub">
+            
+            <li class="sub-item">
+                <%= link_to  "Utilisateurs", all_users_path, class: "sub-link" %>
+            </li>
+
+            
+
+
+           
+            <li class="sub-item">
+                <%= link_to  "SMTP", register_types_path, class: "sub-link" %>
+            </li>
+
+            <li class="sub-item">
+                <%= link_to  "API Drive", registers_path, class: "sub-link" %>
+            </li>
+
+           
+              
+           
+          
+
+            
+
+            
 
              
            
