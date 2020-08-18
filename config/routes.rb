@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
  
-  
+  scope "account" do 
+    resources :profiles 
+    get "profile/:uid" => "profiles#edit", as: :edit_account
+  end
+
   resources :ability_items
     get "custom_users/get_divisions" => "custom_users#get_divisions"
     get "custom_users/get_services" => "custom_users#get_services"
@@ -190,11 +194,7 @@ Rails.application.routes.draw do
     get 'delete'
   end
   
-  #resources :profiles 
-
-  scope "settings" do 
-    resources :profiles 
-  end
+  
   #devise_for :users
   resources :permissions do   
     get "delete"

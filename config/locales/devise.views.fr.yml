@@ -25,6 +25,8 @@ fr:
         unconfirmed_email: Courriel non confirmé
         unlock_token: Clé de déverrouillage
         updated_at: Date de mise à jour
+        passwords:
+          send_me_reset_password_instructions: "Réinitialiser"
     models:
       user: Utilisateur
   devise:
@@ -89,6 +91,7 @@ fr:
       updated: Votre mot de passe a été modifié avec succès. Vous êtes maintenant connecté(e).
       updated_not_active: Votre mot de passe a été modifié avec succès.
     registrations:
+      register: "Inscription"
       destroyed: Au revoir ! Votre compte a été annulé avec succès. Nous espérons vous revoir bientôt.
       edit:
         are_you_sure: "Êtes-vous sûr ?"
@@ -141,3 +144,11 @@ fr:
       not_saved:
         one: 'une erreur a empêché ce (cet ou cette) %{resource} d’être enregistré(e) :'
         other: "%{count} erreurs ont empêché ce (cet ou cette) %{resource} d’être enregistré(e) :"
+  profiles:
+    partials:
+      security:
+        new_password: "Nouveau mot de passe"
+        confirm_new_password: "Confirmer le nouveau mot de passe"
+        change_my_password: "Changer mon mot de passe"
+      account: 
+        cancel_my_account: "Supprimer mon compte"

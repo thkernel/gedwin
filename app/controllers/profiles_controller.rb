@@ -1,13 +1,11 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  layout "dashboard"
-  
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-
+  layout "dashboard"
   # GET /profiles
   # GET /profiles.json
   def index
-    @profile = current_user.profile
+    @profiles = Profile.all
   end
 
   # GET /profiles/1
@@ -22,6 +20,11 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+  
+      @profile = current_user.profile || current_user.build_profile 
+    
+
+    puts "PROFILE: #{@profile.inspect}"
   end
 
   # POST /profiles
@@ -43,9 +46,10 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
+    puts "MY PROFILE: #{@profile}"
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to edit_account_path(current_user.profile.uid), notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -67,11 +71,15 @@ class ProfilesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
-      @profile = Profile.find(params[:id])
+      unless params[:uid].present?
+        @profile = Profile.find(params[:id])
+      else  
+        @profile = Profile.find_by(uid: params[:uid])
+      end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def profile_params
-      params.require(:profile).permit(:first_name, :last_name,  :status, :service_id, :user_id)
+      params.require(:profile).permit(:first_name, :last_name, :civility,  :phone, :address,  :user_id)
     end
 end

@@ -99,6 +99,7 @@ gem 'dotenv-rails', '~> 2.7', '>= 2.7.6',  :groups => [:development, :test, :pro
 gem 'acts-as-taggable-on', '~> 6.5'
 gem 'select2-rails', '~> 4.0', '>= 4.0.13'
 gem 'google-api-client', '~> 0.43.0'
+gem 'countries', require: 'countries/global'
 
 # This gem causes db:create to fail
 # You can enable it for tests as long as the db has been created
