@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
- 
+  scope "settings" do
+    resources :configs, except: [:show]
+    get "smtp" => "configs#smtp_configs", as: :smtp_configs
+    get "smtp/new" => "configs#new_smtp_config", as: :new_smtp_config
+    get "smtp/edit/:id" => "configs#edit_smtp_config", as: :edit_smtp_config
+  end
+
   scope "account" do 
     resources :profiles 
     get "profile/:uid" => "profiles#edit", as: :edit_account
@@ -9,6 +15,8 @@ Rails.application.routes.draw do
   resources :ability_items
     get "custom_users/get_divisions" => "custom_users#get_divisions"
     get "custom_users/get_services" => "custom_users#get_services"
+    get "imputations/get_divisions" => "imputations#get_divisions"
+    get "imputations/get_services" => "imputations#get_services"
   
   
 
@@ -47,7 +55,8 @@ Rails.application.routes.draw do
   get "imputation/show/:uid" => "imputations#show", as: :show_imputation
   get "imputation/edit/:uid" => "imputations#edit", as: :edit_imputation
   get "arrival-mail/show/:uid" => "arrival_mails#show", as: :show_arrival_mail
-
+  get "request/show/:uid" => "requests#show", as: :show_request
+  get "/settings/smtp" => "smtp_configurations#settings", as: :smtp_settings
   resources :request_imputation_items do   
     get "delete"
   end

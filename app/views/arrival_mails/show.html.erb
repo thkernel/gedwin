@@ -104,7 +104,7 @@
                 <%= user_avatar(imputation.recipient_id, 48)%>
                 <div class="mg-xs-l-15 mg-t-10 mg-xs-t-0 mg-r-auto">
                   <p class="mg-b-0 tx-inverse tx-medium"><%= user(imputation.recipient_id).profile.full_name %></p>
-                  <span class="d-block tx-13">Clemson, CA</span>
+                  <span class="d-block tx-13"><%= user(imputation.recipient_id).profile.position %></span>
                 </div>
                 
                 

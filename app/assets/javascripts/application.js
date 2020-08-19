@@ -66,7 +66,7 @@
 
 $(document).on('turbolinks:load', function() {
     
-  $('#datatable1').DataTable({
+  $('#datatable1, #datatable2, #datatable3').DataTable({
         "searching": true,
     "ordering": true,
     language: {

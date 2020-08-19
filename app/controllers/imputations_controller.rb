@@ -18,6 +18,8 @@ class ImputationsController < ApplicationController
       @imputations = @arrival_mail.imputations
     elsif params[:rtype].present? && params[:rtype] == "Request"
       @imputations = @request.imputations
+    elsif params[:rtype].present? && params[:rtype] == "Document"
+      @imputations = @document.imputations
     end
 
     
@@ -41,15 +43,15 @@ class ImputationsController < ApplicationController
   end
   # GET /imputations/new
   def new
-    
+    @directions = Direction.all
+    @divisions = Division.all
     @services = Service.all
    
     @task_statuses = TaskStatus.all
-    @services = Service.all
+  
 
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
     @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
-
     puts "RECIPIENTS: #{@recipients}"
     @imputation = Imputation.new
 
@@ -57,6 +59,8 @@ class ImputationsController < ApplicationController
 
   # GET /imputations/1/edit
   def edit
+    @directions = Direction.all
+    @divisions = Division.all
     @services = Service.all
     
     @task_statuses = TaskStatus.all
@@ -65,6 +69,17 @@ class ImputationsController < ApplicationController
     @recipients = User.where("role_id  IN (?)", role_ids).map {|user| user.profile}
     
   end
+
+  def get_divisions
+    puts "ID: #{params[:id]}"
+    @divisions = Division.where(direction_id: params[:id]).map { |division| [division.name, division.id] }.unshift('Sélectionner')
+  end
+
+  def get_services
+    puts "ID: #{params[:id]}"
+    @services = Service.where(division_id: params[:id]).map { |service| [service.name, service.id] }.unshift('Sélectionner')
+  end
+
 
   # POST /imputations
   # POST /imputations.json
@@ -172,6 +187,12 @@ class ImputationsController < ApplicationController
         @request ||= Request.find_by(uid: params[:uid])
         flash[:request] = @request
         flash[:rtype] = "Request"
+      elsif params[:rtype].present? && params[:rtype] == "Document"
+        
+        @document ||= Document.find_by(uid: params[:uid])
+        flash[:document] = @document
+        flash[:rtype] = "Document"
+      
       end
     end
 
@@ -181,7 +202,7 @@ class ImputationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params
-      params.require(:imputation).permit(:service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :task_status_id, :_destroy])
+      params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :task_status_id, :_destroy])
     end
 
     def track_start_date

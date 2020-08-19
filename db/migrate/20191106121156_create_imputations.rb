@@ -5,8 +5,11 @@ class CreateImputations < ActiveRecord::Migration[5.2]
       #t.references :imputation_reason, foreign_key: true
       #t.string :reference, unique: true
       t.references :imputable, polymorphic: true
+      t.references :direction, foreign_key: true
+      t.references :division, foreign_key: true
       t.references :service, foreign_key: true
       t.references :recipient, index: true
+      t.datetime :viewed_at
       #t.references :arrival_mail, foreign_key: true
       t.string :status
       #t.references :sender, index: true

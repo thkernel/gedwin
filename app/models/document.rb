@@ -17,14 +17,14 @@
 #
 
 class Document < ApplicationRecord
-  #before_save :generate_random_number_uid
+  before_save :generate_random_number_uid
 
   belongs_to :support
   belongs_to :nature
   belongs_to :binder
   belongs_to :user
 
-  #has_many :imputations, as: :imputable,  dependent: :destroy
+  has_many :imputations, as: :imputable,  dependent: :destroy
   acts_as_taggable_on :tags
 
   has_many_attached :files

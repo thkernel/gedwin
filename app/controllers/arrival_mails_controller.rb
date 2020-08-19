@@ -1,15 +1,19 @@
 class ArrivalMailsController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_arrival_mail, only: [:show, :edit, :update, :destroy, :to_archive]
   layout "dashboard"
 
-
-  before_action :set_arrival_mail, only: [:show, :edit, :update, :destroy, :to_archive]
 
   # GET /arrival_mails
   # GET /arrival_mails.json
   def index
-    @arrival_mails = ArrivalMail.where.not(status: "Archived")
+
+    @current_user_arrival_mails = current_user.arrival_mails
+    @imputations = Imputation.where(imputable_type: "ArrivalMail").where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
+
+
+    #@arrival_mails = ArrivalMail.where.not(status: "Archived")
   end
 
   # GET /arrival_mails/1
@@ -195,6 +199,8 @@ class ArrivalMailsController < ApplicationController
         @arrival_mail = ArrivalMail.find_by(uid: params[:uid])
       end
     end
+
+   
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def arrival_mail_params

@@ -99,4 +99,14 @@ module ApplicationHelper
 			true
 		end
 	end
+
+	def configs?
+		configs = Config.take
+
+		if configs.present? 
+			true
+		else
+			false
+		end
+	end
 end

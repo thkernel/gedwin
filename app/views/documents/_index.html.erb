@@ -7,6 +7,8 @@
     <td><%= document.name %></td>
     <td>
 	    <div class="action-buttons">
+                  <%= link_to raw('<i class="fa fa-share-alt" aria-hidden="true"></i>'), imputations_path(uid: document.uid, rtype: "Document") %>
+
 			<%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
 '),  edit_document_path(document), title: "Modifier", remote: false %>
 <%= link_to raw('<i class="fa fa-eye" aria-hidden="true"></i>

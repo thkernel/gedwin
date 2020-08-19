@@ -8,13 +8,15 @@ class RequestsController < ApplicationController
   # GET /requests.json
   def index
 
-    @requests = Request.all
+    @current_user_requests = current_user.requests
+    @imputations = Imputation.where(imputable_type: "Request").where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
     render layout: "dashboard"
   end
 
   # GET /requests/1
   # GET /requests/1.json
   def show
+    render layout: "dashboard"
   end
 
   # GET /requests/new
@@ -112,7 +114,11 @@ class RequestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_request
+      if params[:id].present?
       @request = Request.find(params[:id])
+      elsif params[:uid]
+        @request = Request.find_by(uid: params[:uid])
+      end
     end
 
     # Only allow a list of trusted parameters through.

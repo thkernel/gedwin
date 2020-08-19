@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_205532) do
+ActiveRecord::Schema.define(version: 2020_08_18_162119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,20 @@ ActiveRecord::Schema.define(version: 2020_08_17_205532) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "configs", force: :cascade do |t|
+    t.string "smtp_host"
+    t.string "smtp_user_name"
+    t.string "smtp_user_password"
+    t.string "smtp_domain"
+    t.string "smtp_address"
+    t.integer "smtp_port"
+    t.string "smtp_authentification"
+    t.boolean "smtp_enable_starttls_auto"
+    t.boolean "smtp_ssl"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "correspondent_types", force: :cascade do |t|
@@ -271,6 +285,7 @@ ActiveRecord::Schema.define(version: 2020_08_17_205532) do
     t.bigint "imputable_id"
     t.bigint "service_id"
     t.bigint "recipient_id"
+    t.datetime "viewed_at"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -508,16 +523,6 @@ ActiveRecord::Schema.define(version: 2020_08_17_205532) do
     t.index ["user_id"], name: "index_task_statuses_on_user_id"
   end
 
-  create_table "task_time_trackings", force: :cascade do |t|
-    t.bigint "imputation_item_id"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["imputation_item_id"], name: "index_task_time_trackings_on_imputation_item_id"
-  end
-
   create_table "task_types", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -615,7 +620,6 @@ ActiveRecord::Schema.define(version: 2020_08_17_205532) do
   add_foreign_key "supports", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "task_statuses", "users"
-  add_foreign_key "task_time_trackings", "imputation_items"
   add_foreign_key "task_types", "users"
   add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "users"
