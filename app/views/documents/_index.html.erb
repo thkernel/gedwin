@@ -3,7 +3,7 @@
     <td><%= document.created_at.strftime("%d/%m/%Y") %></td>
     <td><%= support(document.support_id).name %></td>
     <td><%= nature(document.nature_id).name %></td>
-      <td><%= binder(document.binder_id).name %></td>
+    <td><%= binder(document.binder_id).name %></td>
     <td><%= document.name %></td>
     <td>
 	    <div class="action-buttons">
@@ -12,8 +12,7 @@
 			<%= link_to raw('<i class="fa fa-pencil" aria-hidden="true"></i>
 '),  edit_document_path(document), title: "Modifier", remote: false %>
 <%= link_to raw('<i class="fa fa-eye" aria-hidden="true"></i>
-'),  document_path(document), title: "Voir", remote: false %>
-
+'),  show_document_path(document.uid), title: "Voir", remote: false %>
 
 
 

@@ -107,7 +107,15 @@ class ImputationsController < ApplicationController
       if @imputation.save
          #Notificable
         NotificationsService.notificate(@imputation.recipient_id, @imputation, notification_content)
+        
+        # New thread to send mail
+        Thread.new do
+					Rails.application.executor.wrap do
+            ImputationMailer.new_imputation_mail(@imputation.recipient_id, @imputation).deliver_now
 
+					end
+        end
+          
         if flash[:rtype].present? && flash[:rtype] == "ArrivalMail"
           @imputations = resource.imputations
 

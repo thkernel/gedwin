@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get "imputation/show/:uid" => "imputations#show", as: :show_imputation
   get "imputation/edit/:uid" => "imputations#edit", as: :edit_imputation
   get "arrival-mail/show/:uid" => "arrival_mails#show", as: :show_arrival_mail
+  get "document/show/:uid" => "documents#show", as: :show_document
   get "request/show/:uid" => "requests#show", as: :show_request
   get "/settings/smtp" => "smtp_configurations#settings", as: :smtp_settings
   resources :request_imputation_items do   
