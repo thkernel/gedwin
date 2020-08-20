@@ -97,7 +97,7 @@ Rails.application.configure do
   
   config.action_mailer.default_url_options = { protocol: "https", host: Rails.application.credentials.dig(:email, :production, :host)  }
   config.action_mailer.delivery_method = :smtp
-  =begin
+=begin
   config.action_mailer.smtp_settings = {
     address:              Rails.application.credentials.dig(:email, :production, :address) ,
     port:                 Rails.application.credentials.dig(:email, :production, :port) ,
@@ -108,7 +108,7 @@ Rails.application.configure do
     enable_starttls_auto: Rails.application.credentials.dig(:email, :production, :enable_starttls_auto)  ,
     :ssl => Rails.application.credentials.dig(:email, :production, :ssl) 
   }
-  =end
+=end
    
   
    #Credentials requirment
