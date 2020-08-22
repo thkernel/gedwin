@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :tickets do   
+    get "delete"
+  end
+  
   scope "settings" do
     resources :configs, except: [:show]
     get "smtp" => "configs#smtp_configs", as: :smtp_configs
@@ -58,6 +62,8 @@ Rails.application.routes.draw do
   get "document/show/:uid" => "documents#show", as: :show_document
   get "request/show/:uid" => "requests#show", as: :show_request
   get "/settings/smtp" => "smtp_configurations#settings", as: :smtp_settings
+  get "setup/organization" => "organizations#setup", as: :setup_organization
+
   resources :request_imputation_items do   
     get "delete"
   end

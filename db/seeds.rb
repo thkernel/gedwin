@@ -197,19 +197,7 @@ end
 
 
 
-# Priority
-unless Priority.all.present?
-    priorities = Priority.create(
-        [
-            {name: "Aucune" , user_id: users.first.id},
-            {name: "Basse", user_id: users.first.id},
-            {name: "Moyen", user_id: users.first.id},
-            {name: "Haute", user_id: users.first.id}
 
-        ])
-else
-    priorities = Priority.all
-end
 
 
 
@@ -240,67 +228,24 @@ end
 
 
 
-unless RegisterType.all.present?
-    register_types = RegisterType.create(
-        [
-            {name: "COURRIER D'ARRIVÉE", user_id: users.first.id},
-            {name: "COURRIER DÉPART", user_id: users.first.id}
-        ])
-else    
-    register_types =  RegisterType.all
 
-end
 
 unless Register.all.present?
     registers = Register.create(
         [
 
-            {register_type_id: register_types.first.id, name: "COURRIER D'ARRIVÉE 2020",  user_id: users.first.id},
-            {register_type_id: register_types.last.id, name: "COURRIER DEPART 2020", user_id: users.first.id}
+            {register_type: REGISTER_TYPES[0][0], name: "COURRIER D'ARRIVÉE 2020",  user_id: users.first.id},
+            {register_type: REGISTER_TYPES[1][0], name: "COURRIER DEPART 2020", user_id: users.first.id}
         ])
 else    
     registers =  Register.all
 
 end
 
-# Task type.
-unless TaskType.all.present?
-    task_types = TaskType.create(
-        [
-            {name: "Attente reponse", user_id: users.first.id},
-            {name: "Tâche réparation", user_id: users.first.id}
-        ])
-else    
-    task_types =  TaskType.all
 
-end
 
-# Task.
-unless Task.all.present?
-    tasks = Task.create(
-        [
-            {task_type_id: task_types.first.id, title: "Attente reponse", user_id: users.first.id},
-            {task_type_id: task_types.last.id, title: "Tâche réparation", user_id: users.first.id}
-        ])
-else    
-    tasks =  Task.all
 
-end
 
-# Task statuses.
-unless TaskStatus.all.present?
-    task_statuses = TaskStatus.create(
-        [
-            {name: "En attente", user_id: users.first.id},
-            {name: "En cours", user_id: users.first.id},
-            {name: "Suspendu", user_id: users.first.id},
-            {name: "Annulé", user_id: users.first.id},
-            {name: "Terminé", user_id: users.first.id}
-        ])
-else    
-    task_statuses =  TaskStatus.all
-
-end
 
 
 

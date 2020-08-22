@@ -21,7 +21,7 @@ class Register < ApplicationRecord
 
   before_save :generate_random_number_uid
 
-  belongs_to :register_type
+  
   belongs_to :user
 
 

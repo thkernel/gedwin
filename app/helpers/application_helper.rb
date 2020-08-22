@@ -61,6 +61,14 @@ module ApplicationHelper
 	def get_user(user_id)
 		user = User.find(user_id)
 	end
+
+	def priority(id)
+		Priority.find(id)
+	end
+
+	def task_status(id)
+		TaskStatus.find(id)
+	end
 	
 	def user_notifications
 		current_user.recipient_notifications.order(created_at: 'DESC').take(5)

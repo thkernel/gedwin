@@ -15,6 +15,9 @@
                      <td class="tx-12">
                       <%= item.completed_date.strftime("%d/%m/%Y") if item.completed_date %>
                     </td>
+                     <td class="tx-12">
+                      <%= priority(item.priority_id).name if item.priority_id %>
+                    </td>
                     <td class="tx-12">
                       <%= task_status(item.task_status_id).name %>
                     </td>

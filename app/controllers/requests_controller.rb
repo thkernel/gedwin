@@ -50,8 +50,9 @@ class RequestsController < ApplicationController
 
       respond_to do |format|
         if @request.save
-          @requests = Request.all
-          format.html { redirect_to @request, notice: 'Request was successfully created.' }
+          @current_user_requests = current_user.requests
+
+          format.html { redirect_to requests_path, notice: 'Request was successfully created.' }
           format.json { render :show, status: :created, location: @request }
           format.js
         else
@@ -64,7 +65,7 @@ class RequestsController < ApplicationController
       @request = Request.new(request_params)
 
       respond_to do |format|
-        if   @request.save
+        if  @request.save
           
           format.html { redirect_to front_request_success_path, notice: 'Request was successfully created.' }
           format.json { render :show, status: :created, location: @request }
@@ -84,8 +85,9 @@ class RequestsController < ApplicationController
   def update
     respond_to do |format|
       if @request.update(request_params)
-        @requests = Request.all
-        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
+        @current_user_requests = current_user.requests
+
+        format.html { redirect_to requests_path, notice: 'Request was successfully updated.' }
         format.json { render :show, status: :ok, location: @request }
         format.js
       else

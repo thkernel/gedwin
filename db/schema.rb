@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_162119) do
+ActiveRecord::Schema.define(version: 2020_08_21_193018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,23 +266,23 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.string "uid"
     t.string "title"
     t.text "description"
-    t.bigint "priority_id"
     t.datetime "due_date"
     t.datetime "start_date"
     t.datetime "completed_date"
-    t.bigint "task_status_id"
+    t.string "status"
+    t.string "priority"
     t.bigint "imputation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imputation_id"], name: "index_imputation_items_on_imputation_id"
-    t.index ["priority_id"], name: "index_imputation_items_on_priority_id"
-    t.index ["task_status_id"], name: "index_imputation_items_on_task_status_id"
   end
 
   create_table "imputations", force: :cascade do |t|
     t.string "uid"
     t.string "imputable_type"
     t.bigint "imputable_id"
+    t.bigint "direction_id"
+    t.bigint "division_id"
     t.bigint "service_id"
     t.bigint "recipient_id"
     t.datetime "viewed_at"
@@ -290,6 +290,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["direction_id"], name: "index_imputations_on_direction_id"
+    t.index ["division_id"], name: "index_imputations_on_division_id"
     t.index ["imputable_type", "imputable_id"], name: "index_imputations_on_imputable_type_and_imputable_id"
     t.index ["recipient_id"], name: "index_imputations_on_recipient_id"
     t.index ["service_id"], name: "index_imputations_on_service_id"
@@ -362,20 +364,12 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "priorities", force: :cascade do |t|
-    t.string "name"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_priorities_on_user_id"
-  end
-
   create_table "profiles", force: :cascade do |t|
     t.string "uid"
     t.string "civility"
     t.string "first_name"
     t.string "last_name"
+    t.string "position"
     t.string "address"
     t.string "phone"
     t.text "description"
@@ -392,20 +386,9 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "register_types", force: :cascade do |t|
-    t.string "uid"
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_register_types_on_user_id"
-  end
-
   create_table "registers", force: :cascade do |t|
     t.string "uid"
-    t.bigint "register_type_id"
+    t.string "register_type"
     t.string "name"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -415,7 +398,6 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["register_type_id"], name: "index_registers_on_register_type_id"
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
@@ -512,38 +494,29 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "task_statuses", force: :cascade do |t|
-    t.string "uid"
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_task_statuses_on_user_id"
-  end
-
-  create_table "task_types", force: :cascade do |t|
-    t.string "uid"
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_task_types_on_user_id"
-  end
-
   create_table "tasks", force: :cascade do |t|
     t.string "uid"
-    t.bigint "task_type_id"
     t.string "title"
     t.text "description"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_type_id"], name: "index_tasks_on_task_type_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "uid"
+    t.string "title"
+    t.string "priority"
+    t.text "content"
+    t.datetime "due_date"
+    t.datetime "start_date"
+    t.datetime "completed_date"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -597,21 +570,18 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
   add_foreign_key "documents", "users"
   add_foreign_key "folders", "users"
   add_foreign_key "imputation_items", "imputations"
-  add_foreign_key "imputation_items", "priorities"
-  add_foreign_key "imputation_items", "task_statuses"
+  add_foreign_key "imputations", "directions"
+  add_foreign_key "imputations", "divisions"
   add_foreign_key "imputations", "services"
   add_foreign_key "imputations", "users"
   add_foreign_key "natures", "users"
   add_foreign_key "organization_types", "users"
   add_foreign_key "organizations", "organization_types"
   add_foreign_key "organizations", "users"
-  add_foreign_key "priorities", "users"
   add_foreign_key "profiles", "directions"
   add_foreign_key "profiles", "divisions"
   add_foreign_key "profiles", "services"
   add_foreign_key "profiles", "users"
-  add_foreign_key "register_types", "users"
-  add_foreign_key "registers", "register_types"
   add_foreign_key "registers", "users"
   add_foreign_key "request_types", "users"
   add_foreign_key "requests", "request_types"
@@ -619,9 +589,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_162119) do
   add_foreign_key "services", "users"
   add_foreign_key "supports", "users"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "task_statuses", "users"
-  add_foreign_key "task_types", "users"
-  add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "users"
+  add_foreign_key "tickets", "users"
   add_foreign_key "users", "roles"
 end

@@ -34,6 +34,10 @@ class Request < ApplicationRecord
   has_many :imputations, as: :imputable,  dependent: :destroy
 
 
+
+  def student_full_name
+    "#{first_name} #{last_name}"
+  end
   private
 
   def set_default_status

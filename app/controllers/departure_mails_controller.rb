@@ -88,13 +88,11 @@ class DepartureMailsController < ApplicationController
   # GET /departure_mails/new
   def new
     @departure_mail = DepartureMail.new
-    register_type = RegisterType.where("lower(name) =  ? ", "Courrier départ".downcase).take
+   
     
-    if register_type.present?
-      @registers = Register.where(["status = ? AND register_type_id = ?", "Ouvert", register_type.id ]) 
-    else
-      @registers = []
-    end
+   
+    @registers = Register.where(["status = ? AND register_type = ?", "Open", "Departure mail" ]) 
+    
     @natures = Nature.all 
     @supports = Support.all
     @binders = Binder.all

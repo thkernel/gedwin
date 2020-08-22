@@ -20,6 +20,10 @@ class ImputationsController < ApplicationController
       @imputations = @request.imputations
     elsif params[:rtype].present? && params[:rtype] == "Document"
       @imputations = @document.imputations
+
+    elsif !params[:rtype].present? && !params[:rtype]
+      @imputations = Imputation.where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
+
     end
 
     
@@ -47,8 +51,7 @@ class ImputationsController < ApplicationController
     @divisions = Division.all
     @services = Service.all
    
-    @task_statuses = TaskStatus.all
-  
+   
 
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
     @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
@@ -63,7 +66,7 @@ class ImputationsController < ApplicationController
     @divisions = Division.all
     @services = Service.all
     
-    @task_statuses = TaskStatus.all
+   
   
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
     @recipients = User.where("role_id  IN (?)", role_ids).map {|user| user.profile}
@@ -210,7 +213,7 @@ class ImputationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params
-      params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :task_status_id, :_destroy])
+      params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :priority, :status, :_destroy])
     end
 
     def track_start_date

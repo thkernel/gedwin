@@ -17,12 +17,12 @@ class RegistersController < ApplicationController
   # GET /registers/new
   def new
     @register = Register.new
-    @register_types = RegisterType.all
+    
   end
 
   # GET /registers/1/edit
   def edit
-    @register_types = RegisterType.all
+    
 
   end
 
@@ -32,13 +32,13 @@ class RegistersController < ApplicationController
     @register = current_user.registers.build(register_params)
     
     # Set all olders registers status to "close"
-    register_type = RegisterType.find(@register.register_type_id)
+    
 
   
 
     if register_type.present? && register_type.id == @register.register_type_id
     
-      Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
+      Register.where(register_type: register_type.id).update_all(status: "Fermé")
      
     end
     
@@ -62,15 +62,9 @@ class RegistersController < ApplicationController
   # PATCH/PUT /registers/1
   # PATCH/PUT /registers/1.json
   def update
-    register_type = RegisterType.find(@register.register_type_id)
     
 
 
-    if register_type.present? && register_type.id == @register.register_type_id
-    
-      Register.where(register_type_id: register_type.id).update_all(status: "Fermé")
-      
-    end
     respond_to do |format|
       if @register.update(register_params)
         @registers = Register.all
@@ -112,6 +106,6 @@ class RegistersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def register_params
-      params.require(:register).permit(:reference, :start_date, :end_date, :name, :register_type_id, :status)
+      params.require(:register).permit(:reference, :start_date, :end_date, :name, :register_type, :status)
     end
 end

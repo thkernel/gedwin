@@ -31,7 +31,6 @@ class User < ApplicationRecord
 
   # Relationships
 	belongs_to :role
-	has_many :register_types, dependent: :destroy
 	has_many :registers, dependent: :destroy
 	has_many :services, dependent: :destroy
 	has_many :supports, dependent: :destroy
@@ -47,13 +46,13 @@ class User < ApplicationRecord
 	has_one  :organization, dependent: :destroy
 	has_many :imputations, dependent: :destroy
 	has_many :request_imputations, dependent: :destroy
-	has_many :task_statuses, dependent: :destroy
 	has_many :request_types, dependent: :destroy
 	has_many :requests, dependent: :destroy
 	has_many :tasks, dependent: :destroy
 	has_many :directions, dependent: :destroy
 	has_many :divisions, dependent: :destroy
 	has_many :documents, dependent: :destroy
+	has_many :tickets, dependent: :destroy
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
 	has_many :recipient_notifications, :class_name => "Notification", :foreign_key => :recipient_id

@@ -17,7 +17,15 @@ class OrganizationsController < ApplicationController
   def new
     @organization_types = OrganizationType.all
     @organization = Organization.new
+   
   end
+
+  def setup
+    @organization_types = OrganizationType.all
+    @organization = Organization.new
+    render layout: "setup"
+  end
+  
 
   # GET /organizations/1/edit
   def edit

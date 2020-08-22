@@ -56,7 +56,7 @@
 						
                         <div class="form-group col-md-6">
                             <%= f.label "Profil" %>
-                            <%= f.collection_select(:role_id, @roles,  :id, :name , {prompt: "Sélectionner un profil"}, class: "form-control", required: true) %>
+                            <%= f.collection_select(:role_id, @roles,  :id, :name , {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %>
                                                     
                         </div>
 

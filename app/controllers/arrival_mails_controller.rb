@@ -111,8 +111,7 @@ class ArrivalMailsController < ApplicationController
     
     @arrival_mail = ArrivalMail.new
     
-    register_type = RegisterType.where("lower(name) = ?",  "Courrier d'arrivée".downcase).take
-    @registers = Register.where(["status = ? AND register_type_id = ?", "Ouvert", register_type.id ])
+    @registers = Register.where("status = ? AND register_type = ?", "Open", "Arrival mail")
     
     @natures = Nature.all 
     @supports = Support.all
@@ -123,8 +122,8 @@ class ArrivalMailsController < ApplicationController
 
   # GET /arrival_mails/1/edit
   def edit
-    register_type = RegisterType.find_by(name: "Courrier d'arrivée".upcase)
-    @registers = Register.where(["status = ? AND register_type_id = ?", "Ouvert", register_type.id ])
+    
+    @registers = Register.where("status = ? AND register_type = ?", "Open", "Arrival mail")
     
     @natures = Nature.all 
     @supports = Support.all

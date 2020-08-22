@@ -18,6 +18,7 @@ class RequestType < ApplicationRecord
   before_save :generate_random_number_uid
 
   belongs_to :user
+  has_many :request, dependent: :destroy
 
 
   # Validations
