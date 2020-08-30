@@ -21,6 +21,7 @@ class ArrivalMailsController < ApplicationController
   def show
   end
 
+
   def get_natures
     @natures = Nature.all.map { |nature| [nature.name, nature.id] } 
   end
@@ -28,9 +29,9 @@ class ArrivalMailsController < ApplicationController
   def get_supports
     @supports = Support.all.map { |support| [support.name, support.id] } 
   end
-
-  def get_binders
-    @binders = Binder.all.map { |binder| [binder.name, binder.id] } 
+  
+  def get_folders
+    @folders = Folder.all.map { |folder| [folder.name, folder.id] } 
   end
 
   def get_correspondents
@@ -115,7 +116,7 @@ class ArrivalMailsController < ApplicationController
     
     @natures = Nature.all 
     @supports = Support.all
-    @binders = Binder.all
+    @folders = Folder.all
     @correspondents = Correspondent.all
     @last_arrival_mail = ArrivalMail.last(1)
   end
@@ -127,29 +128,46 @@ class ArrivalMailsController < ApplicationController
     
     @natures = Nature.all 
     @supports = Support.all
-    @binders = Binder.all
+    @folders = Folder.all
     @correspondents = Correspondent.all
   end
 
   # POST /arrival_mails
   # POST /arrival_mails.json
   def create
+    files = params[:arrival_mail][:files]
+    #puts "FILES: #{files.inspect}"
+    
+   
+
     @arrival_mail = current_user.arrival_mails.build(arrival_mail_params)
     @arrival_mail.status = "Enable"
     
     respond_to do |format|
       if @arrival_mail.save
+
+        UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+        
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
 
         format.html { redirect_to arrival_mails_path, notice: 'Arrival mail was successfully created.' }
         format.json { render :show, status: :created, location: @arrival_mail }
         format.js
       else
+        @registers = Register.where("status = ? AND register_type = ?", "Open", "Arrival mail")
+    
+        @natures = Nature.all 
+        @supports = Support.all
+        @folders = Folder.all
+        @correspondents = Correspondent.all
+
         format.html { render :new }
         format.json { render json: @arrival_mail.errors, status: :unprocessable_entity }
         format.js
       end
     end
+
+   
   end
 
   # PATCH/PUT /arrival_mails/1
@@ -203,6 +221,6 @@ class ArrivalMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def arrival_mail_params
-      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :binder_id,   :files)
+      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id)
     end
 end

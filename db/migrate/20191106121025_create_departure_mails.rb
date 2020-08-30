@@ -23,7 +23,7 @@ class CreateDepartureMails < ActiveRecord::Migration[5.2]
       t.text :description
       #t.boolean :attachments
       #t.string :attachments_number
-      t.references :binder, foreign_key: true
+      t.references :folder, foreign_key: true
       t.string :status
       t.references :user, foreign_key: true
 

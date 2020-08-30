@@ -15,4 +15,7 @@ class Permission < ApplicationRecord
     include SharedUtils::Generate
 
   before_save :generate_random_number_uid
+
+  # Validations.
+  validates :name, presence: true, uniqueness: true
 end

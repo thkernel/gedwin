@@ -7,7 +7,7 @@
 #  slug        :string
 #  support_id  :bigint
 #  nature_id   :bigint
-#  binder_id   :bigint
+#  folder_id   :bigint
 #  name        :string
 #  description :text
 #  status      :string
@@ -22,12 +22,15 @@ class Document < ApplicationRecord
 
   belongs_to :support
   belongs_to :nature
-  belongs_to :binder
+  belongs_to :folder
   belongs_to :user
 
   has_many :imputations, as: :imputable,  dependent: :destroy
   acts_as_taggable_on :tags
 
   has_many_attached :files
+
+  # Validations.
+  validates :name, presence: true
   
 end

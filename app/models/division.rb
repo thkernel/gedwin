@@ -14,4 +14,8 @@
 
 class Division < ApplicationRecord
   belongs_to :direction
+
+  # Validations.
+  validates :name, presence: true, uniqueness: true
+  
 end

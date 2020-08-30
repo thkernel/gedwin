@@ -130,7 +130,11 @@ class ImputationsController < ApplicationController
         format.json { render :show, status: :created, location: @imputation }
      
       else
-       
+        @directions = Direction.all
+        @divisions = Division.all
+        @services = Service.all
+        role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+        @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
         format.html { render :new }
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
       
@@ -216,6 +220,5 @@ class ImputationsController < ApplicationController
       params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :priority, :status, :_destroy])
     end
 
-    def track_start_date
-    end
+   
 end

@@ -5,7 +5,7 @@ class CreateDocuments < ActiveRecord::Migration[5.2]
       t.string :slug
       t.references :support, foreign_key: true
       t.references :nature, foreign_key: true
-      t.references :binder, foreign_key: true
+      t.references :folder, foreign_key: true
       t.string :name
       t.text :description
       t.string :status

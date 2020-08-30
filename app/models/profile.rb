@@ -7,6 +7,7 @@
 #  civility     :string
 #  first_name   :string
 #  last_name    :string
+#  position     :string
 #  address      :string
 #  phone        :string
 #  description  :text

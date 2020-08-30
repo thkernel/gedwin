@@ -27,7 +27,7 @@ class CreateArrivalMails < ActiveRecord::Migration[5.2]
       #t.string :attachments_number
       
       t.string :reserved_suite
-      t.references :binder, foreign_key: true
+      t.references :folder, foreign_key: true
       
       t.string :status
       t.references :user, foreign_key: true

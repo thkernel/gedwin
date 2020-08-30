@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 	
   protect_from_forgery with: :exception
-	
+	before_action :google_login, except: [:set_google_drive_token]
 
 
   def set_mailer_settings
@@ -28,6 +28,14 @@ class ApplicationController < ActionController::Base
 
   end
 
+
 	
+
+	def google_login
+		unless $drive.get_credentials
+			redirect_to oauth2callback_path
+		end
+	end
+		
 
 end

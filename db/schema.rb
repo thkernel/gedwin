@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_193018) do
+ActiveRecord::Schema.define(version: 2020_08_27_172441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,31 +75,17 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
     t.string "object"
     t.text "description"
     t.string "reserved_suite"
-    t.bigint "binder_id"
+    t.bigint "folder_id"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["binder_id"], name: "index_arrival_mails_on_binder_id"
     t.index ["correspondent_id"], name: "index_arrival_mails_on_correspondent_id"
+    t.index ["folder_id"], name: "index_arrival_mails_on_folder_id"
     t.index ["nature_id"], name: "index_arrival_mails_on_nature_id"
     t.index ["register_id"], name: "index_arrival_mails_on_register_id"
     t.index ["support_id"], name: "index_arrival_mails_on_support_id"
     t.index ["user_id"], name: "index_arrival_mails_on_user_id"
-  end
-
-  create_table "binders", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "folder_id"
-    t.string "name"
-    t.text "description"
-    t.string "status"
-    t.string "path"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["folder_id"], name: "index_binders_on_folder_id"
-    t.index ["user_id"], name: "index_binders_on_user_id"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -188,13 +174,13 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
     t.bigint "correspondent_id"
     t.string "object"
     t.text "description"
-    t.bigint "binder_id"
+    t.bigint "folder_id"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["binder_id"], name: "index_departure_mails_on_binder_id"
     t.index ["correspondent_id"], name: "index_departure_mails_on_correspondent_id"
+    t.index ["folder_id"], name: "index_departure_mails_on_folder_id"
     t.index ["nature_id"], name: "index_departure_mails_on_nature_id"
     t.index ["register_id"], name: "index_departure_mails_on_register_id"
     t.index ["support_id"], name: "index_departure_mails_on_support_id"
@@ -228,17 +214,38 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
     t.string "slug"
     t.bigint "support_id"
     t.bigint "nature_id"
-    t.bigint "binder_id"
+    t.bigint "folder_id"
     t.string "name"
     t.text "description"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["binder_id"], name: "index_documents_on_binder_id"
+    t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["nature_id"], name: "index_documents_on_nature_id"
     t.index ["support_id"], name: "index_documents_on_support_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "drive_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "attachable_type", null: false
+    t.bigint "attachable_id", null: false
+    t.bigint "drive_blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["attachable_type", "attachable_id"], name: "index_drive_attachments_on_attachable_type_and_attachable_id"
+    t.index ["drive_blob_id"], name: "index_drive_attachments_on_drive_blob_id"
+  end
+
+  create_table "drive_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_drive_blobs_on_key", unique: true
   end
 
   create_table "features", force: :cascade do |t|
@@ -256,9 +263,13 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
     t.string "path"
     t.text "description"
     t.string "status"
+    t.bigint "parent_id"
+    t.string "google_drive_parent_id"
+    t.string "google_drive_file_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_folders_on_parent_id"
     t.index ["user_id"], name: "index_folders_on_user_id"
   end
 
@@ -543,20 +554,18 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
   add_foreign_key "ability_items", "abilities"
   add_foreign_key "ability_items", "permissions"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "arrival_mails", "binders"
   add_foreign_key "arrival_mails", "correspondents"
+  add_foreign_key "arrival_mails", "folders"
   add_foreign_key "arrival_mails", "natures"
   add_foreign_key "arrival_mails", "registers"
   add_foreign_key "arrival_mails", "supports"
   add_foreign_key "arrival_mails", "users"
-  add_foreign_key "binders", "folders"
-  add_foreign_key "binders", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "correspondent_types", "users"
   add_foreign_key "correspondents", "correspondent_types"
   add_foreign_key "correspondents", "users"
-  add_foreign_key "departure_mails", "binders"
   add_foreign_key "departure_mails", "correspondents"
+  add_foreign_key "departure_mails", "folders"
   add_foreign_key "departure_mails", "natures"
   add_foreign_key "departure_mails", "registers"
   add_foreign_key "departure_mails", "supports"
@@ -564,10 +573,11 @@ ActiveRecord::Schema.define(version: 2020_08_21_193018) do
   add_foreign_key "directions", "users"
   add_foreign_key "divisions", "directions"
   add_foreign_key "divisions", "users"
-  add_foreign_key "documents", "binders"
+  add_foreign_key "documents", "folders"
   add_foreign_key "documents", "natures"
   add_foreign_key "documents", "supports"
   add_foreign_key "documents", "users"
+  add_foreign_key "drive_attachments", "drive_blobs"
   add_foreign_key "folders", "users"
   add_foreign_key "imputation_items", "imputations"
   add_foreign_key "imputations", "directions"

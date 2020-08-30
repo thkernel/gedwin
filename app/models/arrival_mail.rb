@@ -20,7 +20,7 @@
 #  object                :string
 #  description           :text
 #  reserved_suite        :string
-#  binder_id             :bigint
+#  folder_id             :bigint
 #  status                :string
 #  user_id               :bigint
 #  created_at            :datetime         not null
@@ -40,14 +40,15 @@ class ArrivalMail < ApplicationRecord
   belongs_to :support
   belongs_to :nature
   belongs_to :correspondent
-  belongs_to :binder
+  belongs_to :folder, optional: true
 
   has_many :imputations, as: :imputable,  dependent: :destroy
+  has_many :drive_attachments, as: :attachable,  dependent: :destroy
 
   validates :internal_reference, presence: true, uniqueness: true
 
 
-  has_many_attached :files
+  #has_many_attached :files
 
   
 end

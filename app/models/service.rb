@@ -19,6 +19,7 @@ class Service < ApplicationRecord
   before_save :generate_random_number_uid
   belongs_to :user
   has_many :profiles, dependent: :destroy
+  
   # Validations
 	validates :name, presence: true, uniqueness: true
 end

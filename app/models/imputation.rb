@@ -6,6 +6,8 @@
 #  uid            :string
 #  imputable_type :string
 #  imputable_id   :bigint
+#  direction_id   :bigint
+#  division_id    :bigint
 #  service_id     :bigint
 #  recipient_id   :bigint
 #  viewed_at      :datetime
@@ -29,6 +31,18 @@ class Imputation < ApplicationRecord
   belongs_to :imputable, polymorphic: true
 
   has_many :imputation_items, dependent: :destroy
-  accepts_nested_attributes_for :imputation_items ,  allow_destroy: true
+  accepts_nested_attributes_for :imputation_items ,  allow_destroy: true , :reject_if => :no_imputation_items
+
+  validates_with ImputationValidator::ImputationUnicityValidator
+  validates_with ImputationValidator::ImputationItemValidator
+  
+  private 
+
+  def no_imputation_items(attributes)
+   attributes[:title].blank?
+  end
+  
+  
+ 
  
 end

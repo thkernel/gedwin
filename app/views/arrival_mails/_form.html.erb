@@ -163,13 +163,13 @@
          <div class="col-md-6">
          
           <div class="form-group">
-            <%= form.label :binder_id , "Classeur", class: "required" %>
+            <%= form.label :folder_id , "Dossier", class: "required" %>
             <div class="input-group customSelect">
-              <%= form.collection_select(:binder_id, @binders, :id,:name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
+              <%= form.collection_select(:folder_id, @folders, :id,:name, {prompt: "Sélectionner"}, class: "form-control", required: true) %> 
                <div class="input-group-append">
                  
                   <%= link_to raw('<i class="fa fa-plus-circle" aria-hidden="true"></i>
-'), new_binder_path, class: "btn btn-outline-secondary", remote: true %>
+'), new_folder_path, class: "btn btn-outline-secondary", remote: true %>
               </div>
           </div>
 

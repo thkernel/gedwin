@@ -26,7 +26,7 @@ class DashboardController < ApplicationController
 		overdue_imputations = Imputation.where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
 		#overdue_imputations = overdue_imputations.select {|imputation| imputation.imputation_items.present?}
 
-		@overdue_tasks = overdue_imputations.map {|imputation| imputation.imputation_items.where("due_date < ? AND task_status_id <> ? ", Time.now, TaskStatus.find_by(name: "Terminé").id)}.flatten
+		@overdue_tasks = overdue_imputations.map {|imputation| imputation.imputation_items.where("due_date < ? AND status <> ? ", Time.now, "Completed")}.flatten
 		@overdue_arrival_mails = ArrivalMail.where("to_answer = ? AND response_limit_time < ?", "Oui", Time.now)
 		
 		

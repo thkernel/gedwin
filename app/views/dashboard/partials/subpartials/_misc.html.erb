@@ -23,9 +23,9 @@
                         
                           <td class="valign-middle"><%= imputation_item.created_at.strftime("%d/%m/%Y") %></td>
                           <td class="valign-middle"><%= imputation_item.title %></td>
-                          <td class="valign-middle"><%= priority(imputation_item.priority_id).name if imputation_item.priority_id %></td>
+                          <td class="valign-middle"><%= imputation_item.priority %></td>
                           <td class="valign-middle"><%= imputation_item.due_date.strftime("%d/%m/%Y") %></td>
-                          <td class="valign-middle"><%= task_status(imputation_item.task_status_id).name %></td>
+                          <td class="valign-middle"><%= imputation_item.status %></td>
 
                         </tr>
                       <% end %>
@@ -146,9 +146,9 @@
                     
                       <td class="valign-middle"><%= imputation_item.created_at.strftime("%d/%m/%Y") %></td>
                       <td class="valign-middle"><%= imputation_item.title %></td>
-                      <td class="valign-middle"><%= priority(imputation_item.priority_id).name if imputation_item.priority_id %></td>
+                      <td class="valign-middle"><%= imputation_item.priority %></td>
                       <td class="valign-middle"><%= imputation_item.due_date.strftime("%d/%m/%Y") %></td>
-                      <td class="valign-middle"><%= task_status(imputation_item.task_status_id).name %></td>
+                      <td class="valign-middle"><%= imputation_item.status %></td>
 
                     </tr>
                   <% end %>

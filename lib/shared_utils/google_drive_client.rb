@@ -20,7 +20,7 @@ module GoogleDriveClient
     # the user's default browser will be launched to approve the request.
     #
     # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
-    def self.authorize
+    def authorize
       client_id = Google::Auth::ClientId.from_file CREDENTIALS_PATH
       token_store = Google::Auth::Stores::FileTokenStore.new file: TOKEN_PATH
       authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store

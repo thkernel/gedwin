@@ -7,7 +7,7 @@
 #  slug        :string
 #  support_id  :bigint
 #  nature_id   :bigint
-#  binder_id   :bigint
+#  folder_id   :bigint
 #  name        :string
 #  description :text
 #  status      :string

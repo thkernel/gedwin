@@ -16,7 +16,15 @@ class Ability < ApplicationRecord
 
   before_save :generate_random_number_uid
 
-  belongs_to :permission
+  
   belongs_to :role
   belongs_to :feature
+
+  has_many :ability_items, dependent: :destroy
+
+  validates_with AbilityValidator
+
+
+  
+  
 end

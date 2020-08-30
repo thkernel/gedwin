@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  get 'oauth2callback' => 'static_pages#set_google_drive_token'
+  get 'static_pages/files' => 'static_pages#files'
+
+  get "browse/:uid" => "folders#browse", :as => "browse"
+  get "browse/:uid/new" => "folders#new", :as => "new_sub_folder"
+  get "create_file" => "folders#create_file", as: :create_file
+  
+  get "folder/:uid/edit" => "folders#edit", as: :edit_folder
+  get "folder/:uid/delete" => "folders#delete", as: :folder_delete
+  resources :folders , except: [:edit] do
+
+     
+   
+  end
 
   resources :tickets do   
     get "delete"
@@ -93,11 +107,7 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :task_types do    
-    get "delete"
-
-    
-  end
+ 
 
   resources :task_statuses do    
     get "delete"
@@ -129,7 +139,7 @@ Rails.application.routes.draw do
 
     collection do    
       get "get_natures" => "arrival_mails#get_natures"
-      get "get_binders" => "arrival_mails#get_binders"
+      get "get_folders" => "arrival_mails#get_folders"
       get "get_supports" => "arrival_mails#get_supports"
       get "get_correspondents" => "arrival_mails#get_correspondents"
     end
@@ -146,13 +156,9 @@ Rails.application.routes.draw do
   end
   
 
-  resources :binders do   
-    get "delete"
-  end
+ 
   
-  resources :folders do   
-    get "delete"
-  end
+  
 
   resources :features do   
     get "delete"

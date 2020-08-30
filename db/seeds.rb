@@ -273,16 +273,6 @@ else
 end
 
 
-unless Binder.all.present?
-    binders = Binder.create(
-        [
-            {name: "FACTURES 2020", folder_id: folders.first.id, user_id: users.first.id},
-            {name: "LETTRRES 2020", folder_id: folders.last.id, user_id: users.first.id}
-        ])
-else    
-    binders =  Binder.all
-
-end
 
 unless Feature.all.present?
     features = Feature.create([

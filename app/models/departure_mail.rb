@@ -17,7 +17,7 @@
 #  correspondent_id      :bigint
 #  object                :string
 #  description           :text
-#  binder_id             :bigint
+#  folder_id             :bigint
 #  status                :string
 #  user_id               :bigint
 #  created_at            :datetime         not null
@@ -29,6 +29,7 @@ class DepartureMail < ApplicationRecord
 
   before_save :generate_random_number_uid
   belongs_to :user
+  belongs_to :folder, optional: true
 
   has_many_attached :files
 

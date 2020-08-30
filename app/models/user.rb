@@ -39,7 +39,6 @@ class User < ApplicationRecord
 	has_many :organization_types, dependent: :destroy
 	has_many :correspondents, dependent: :destroy
 	has_many :folders, dependent: :destroy
-	has_many :binders, dependent: :destroy
 	has_many :arrival_mails, dependent: :destroy
 	has_many :departure_mails, dependent: :destroy
 	has_one  :profile, dependent: :destroy
