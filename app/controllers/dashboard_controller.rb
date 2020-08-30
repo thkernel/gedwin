@@ -28,7 +28,8 @@ class DashboardController < ApplicationController
 
 		@overdue_tasks = overdue_imputations.map {|imputation| imputation.imputation_items.where("due_date < ? AND status <> ? ", Time.now, "Completed")}.flatten
 		@overdue_arrival_mails = ArrivalMail.where("to_answer = ? AND response_limit_time < ?", "Oui", Time.now)
-		
+		@overdue_tickets = Ticket.where("due_date < ? AND status <> ?", Time.now, "Completed")
+
 		
 	end
 

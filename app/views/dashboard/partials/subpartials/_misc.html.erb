@@ -50,29 +50,34 @@
               <table class="table table-responsive mg-b-0 tx-12">
                 <thead>
                   <tr class="tx-10">
-                  
-                    <th class="pd-y-5">Item Details</th>
-                    <th class="pd-y-5">Sold</th>
-                    <th class="pd-y-5">Gain</th>
+                    <th class="pd-y-5">Date</th>
+                    <th class="pd-y-5">Titre</th>
+                    <th class="pd-y-5">Date d'écheance</th>
+                    <th class="pd-y-5">Priorité</th>
+                     <th class="pd-y-5">Progression</th>
                    
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    
-                    
-                    <td class="valign-middle">3,345</td>
-                    <td class="valign-middle">3,345</td>
-                    <td class="valign-middle">3,345</td>
-
-                    
-                  </tr>
+                  <% if @overdue_tickets.present? %>
+                    <% @overdue_tikets.take(5).each do |tiket| %>
+                      <tr>
+                      
+                        <td class="valign-middle"><%= ticket.created_at.strftime("%d/%m/%Y") %></td>
+                        <td class="valign-middle"><%= ticket.title%></td>
+                        <td class="valign-middle"><%= ticket.due_date.strftime("%d/%m/%Y") %></td>
+                        <td class="valign-middle"><%= ticket.priority  %></td>
+                        <td class="valign-middle"><%= ticket.status %></td>
+                        
+                      </tr>
+                    <% end %>
+                  <% end %>
                   
                 </tbody>
               </table>
                
               <div class="card-footer tx-12 pd-y-15 bg-transparent">
-                <a href=""><i class="fa fa-angle-down mg-r-5"></i>Voir tout</a>
+                <%= link_to raw('<i class="fa fa-angle-down mg-r-5"></i>Voir tout'), tickets_path %>
               </div><!-- card-footer -->
             </div>
 
