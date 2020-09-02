@@ -71,10 +71,10 @@ class ProfilesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
-      unless params[:uid].present?
-        @profile = Profile.find(params[:id])
+      if params[:uid].present?
+        @profile = Profile.find(uid: params[:uid])
       else  
-        @profile = Profile.find_by(uid: params[:uid])
+        @profile = Profile.find_by(params[:id])
       end
     end
 
