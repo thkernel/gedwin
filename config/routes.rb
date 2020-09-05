@@ -247,6 +247,8 @@ Rails.application.routes.draw do
   
   get "/setup/admin" => "admin_setup#new", as: :new_admin
   post "/setup/admin/create" => "admin_setup#create", as: :create_admin
+  get "utilities/backup" => "utilities#show_backup", as: :show_backup
+  post 'utilities/backup' => "utilities#backup_database", as: :backup_database
 
 
 	get "/user/enable/:id" => "custom_users#get_enable", as: :get_enable_user_account

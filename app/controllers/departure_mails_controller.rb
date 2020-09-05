@@ -70,7 +70,7 @@ class DepartureMailsController < ApplicationController
     
 
           format.html { redirect_to departure_mails_archives_path, notice: 'Departure mail was successfully created.' }
-          format.json { render :show, status: :created, location: @arrival_mail }
+          format.json { render :show, status: :created, location: @departure_mail }
           format.js
         end
       else
@@ -96,7 +96,7 @@ class DepartureMailsController < ApplicationController
     
     @natures = Nature.all 
     @supports = Support.all
-    @binders = Binder.all
+    @folders = Folder.all
     @correspondents = Correspondent.all
 
 
@@ -107,7 +107,7 @@ class DepartureMailsController < ApplicationController
     @registers = Register.all 
     @natures = Nature.all 
     @supports = Support.all
-    @binders = Binder.all
+    @folders = Folder.all
     @correspondents = Correspondent.all
 
 
@@ -116,11 +116,14 @@ class DepartureMailsController < ApplicationController
   # POST /departure_mails
   # POST /departure_mails.json
   def create
+    files = params[:departure_mail][:files]
     @departure_mail = current_user.departure_mails.build(departure_mail_params)
     @departure_mail.status = "Enable"
 
     respond_to do |format|
       if @departure_mail.save
+        UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
+
         format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully created.' }
         format.json { render :show, status: :created, location: @departure_mail }
       else
@@ -167,6 +170,6 @@ class DepartureMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def departure_mail_params
-      params.require(:departure_mail).permit(:register_id, :internal_reference,  :departure_date,  :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :binder_id,   files: [])
+      params.require(:departure_mail).permit(:register_id, :internal_reference,  :departure_date,  :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id)
     end
 end

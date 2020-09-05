@@ -13,14 +13,12 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    if @document.files.attached?
-    puts "FILES: #{@document.files.attachments.inspect}"
-    end
+    
   end
 
   # GET /documents/new
   def new
-    @binders = Binder.all
+    @folders = Folder.all
     @supports = Support.all 
     @natures = Nature.all
    
@@ -29,7 +27,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    @binders = Binder.all
+    @folders = Folder.all
     @supports = Support.all 
     @natures = Nature.all
 
@@ -45,10 +43,15 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
+        files = params[:document][:files]
+        UploadFileService.upload(files, @document,  parent_id: Folder.find(@document.folder_id).google_drive_file_id)
+
         format.html { redirect_to documents_path, notice: 'Document was successfully created.' }
         format.json { render :show, status: :created, location: @document }
       else
-       
+        @folders = Folder.all
+        @supports = Support.all 
+        @natures = Nature.all
         format.html { render :new }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
@@ -82,11 +85,15 @@ class DocumentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_document
+      if params[:id]
       @document = Document.find(params[:id])
+      elsif params[:uid]
+        @document = Document.find_by(uid: params[:uid])
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:support_id, :nature_id, :binder_id, :name, :description, tag_list: [], files: [])
+      params.require(:document).permit(:support_id, :nature_id, :folder_id, :name, :description, tag_list: [])
     end
 end

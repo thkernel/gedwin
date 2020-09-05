@@ -26,9 +26,11 @@ class Document < ApplicationRecord
   belongs_to :user
 
   has_many :imputations, as: :imputable,  dependent: :destroy
+  has_many :drive_attachments, as: :attachable,  dependent: :destroy
+
   acts_as_taggable_on :tags
 
-  has_many_attached :files
+  #has_many_attached :files
 
   # Validations.
   validates :name, presence: true

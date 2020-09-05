@@ -78,7 +78,7 @@
 
               <li class="detail-address">
                   <strong>Classeur: </strong> 
-                  <span><%= binder(@document.binder_id).name %></span>
+                  <span><%= folder(@document.folder_id).name %></span>
                   
               </li>
               
@@ -110,11 +110,13 @@
          
             
             <ul class="list-group">
-              <% @document.files.each do |file| %>
+              <% @document.drive_attachments.each do |file| %>
                 <li class="list-group-item rounded-top-0">
                   <p class="mg-b-0">
                     <i class="fa fa-file-text-o tx-info mg-r-8"></i>
-                    <strong class="tx-inverse tx-medium"><%= link_to "#{file.blob.filename}", rails_blob_path(file, disposition: 'attachment') %></strong>
+                    <strong class="tx-inverse tx-medium">
+                    
+                    </strong>
                   
                     
                   </p>

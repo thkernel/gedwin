@@ -30,6 +30,7 @@ class DepartureMail < ApplicationRecord
   before_save :generate_random_number_uid
   belongs_to :user
   belongs_to :folder, optional: true
+  has_many :drive_attachments, as: :attachable,  dependent: :destroy
 
   has_many_attached :files
 
