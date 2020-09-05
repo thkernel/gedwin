@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
   layout "dashboard"

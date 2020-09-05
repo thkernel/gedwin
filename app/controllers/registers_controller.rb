@@ -1,4 +1,5 @@
 class RegistersController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
   before_action :set_register, only: [:show, :edit, :update, :destroy]

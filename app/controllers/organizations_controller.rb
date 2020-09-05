@@ -1,4 +1,5 @@
 class OrganizationsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   layout "dashboard"
@@ -11,6 +12,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    
   end
 
   # GET /organizations/new
@@ -35,11 +37,11 @@ class OrganizationsController < ApplicationController
   # POST /organizations
   # POST /organizations.json
   def create
-    @organization = current_user.organization.build(organization_params)
+    @organization = current_user.build_organization(organization_params)
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
+        format.html { redirect_to show_organization_path(@organization.uid), notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: @organization }
       else
         format.html { render :new }
@@ -53,7 +55,7 @@ class OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update(organization_params)
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
+        format.html { redirect_to show_organization_path(@organization.uid), notice: 'Organization was successfully updated.' }
         format.json { render :show, status: :ok, location: @organization }
       else
         format.html { render :edit }
@@ -75,7 +77,11 @@ class OrganizationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_organization
-      @organization = Organization.find(params[:id])
+      if params[:id]
+        @organization = Organization.find(params[:id])
+      elsif params[:uid]
+        @organization = Organization.find_by(uid: params[:uid])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

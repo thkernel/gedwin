@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: google_drive_storage_blobs
+# Table name: drive_blobs
 #
 #  id           :bigint           not null, primary key
 #  key          :string           not null

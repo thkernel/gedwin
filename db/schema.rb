@@ -15,27 +15,6 @@ ActiveRecord::Schema.define(version: 2020_08_27_172441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "abilities", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "feature_id"
-    t.bigint "role_id"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["feature_id"], name: "index_abilities_on_feature_id"
-    t.index ["role_id"], name: "index_abilities_on_role_id"
-  end
-
-  create_table "ability_items", force: :cascade do |t|
-    t.bigint "ability_id"
-    t.bigint "permission_id"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ability_id"], name: "index_ability_items_on_ability_id"
-    t.index ["permission_id"], name: "index_ability_items_on_permission_id"
-  end
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -251,6 +230,7 @@ ActiveRecord::Schema.define(version: 2020_08_27_172441) do
   create_table "features", force: :cascade do |t|
     t.string "uid"
     t.string "name"
+    t.string "subject_class"
     t.text "description"
     t.string "status"
     t.datetime "created_at", null: false
@@ -366,13 +346,25 @@ ActiveRecord::Schema.define(version: 2020_08_27_172441) do
     t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
-  create_table "permissions", force: :cascade do |t|
+  create_table "permission_items", force: :cascade do |t|
     t.string "uid"
-    t.string "name"
-    t.text "description"
+    t.bigint "permission_id"
+    t.string "action_name"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_permission_items_on_permission_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "feature_id"
+    t.bigint "role_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_id"], name: "index_permissions_on_feature_id"
+    t.index ["role_id"], name: "index_permissions_on_role_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -549,10 +541,6 @@ ActiveRecord::Schema.define(version: 2020_08_27_172441) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  add_foreign_key "abilities", "features"
-  add_foreign_key "abilities", "roles"
-  add_foreign_key "ability_items", "abilities"
-  add_foreign_key "ability_items", "permissions"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "arrival_mails", "correspondents"
   add_foreign_key "arrival_mails", "folders"
@@ -588,6 +576,9 @@ ActiveRecord::Schema.define(version: 2020_08_27_172441) do
   add_foreign_key "organization_types", "users"
   add_foreign_key "organizations", "organization_types"
   add_foreign_key "organizations", "users"
+  add_foreign_key "permission_items", "permissions"
+  add_foreign_key "permissions", "features"
+  add_foreign_key "permissions", "roles"
   add_foreign_key "profiles", "directions"
   add_foreign_key "profiles", "divisions"
   add_foreign_key "profiles", "services"

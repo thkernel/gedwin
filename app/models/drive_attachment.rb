@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: google_drive_storage_attachments
+# Table name: drive_attachments
 #
 #  id              :bigint           not null, primary key
 #  name            :string           not null
 #  attachable_type :string           not null
 #  attachable_id   :bigint           not null
-#  blob_id         :bigint           not null
+#  drive_blob_id   :bigint           not null
 #  created_at      :datetime         not null
 #
 

@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-    
+  authorize_resource
     
     def set_google_drive_token
       if request['code'] == nil

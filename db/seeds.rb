@@ -25,7 +25,7 @@ unless Role.all.present?
     roles = Role.create(
         [
             {name: "superuser"},
-            {name: "root"},
+            {name: "administrator"},
             {name: "guest"},
             {name: "user"},
             {name: "demo"}
@@ -38,23 +38,7 @@ else
 
 end
 
-unless Permission.all.present?
-    permissions = Permission.create(
-        [
-            {name: "create"},
-            {name: "edit"},
-            {name: "update"},
-            {name: "delete"},
-            {name: "search"},
-            {name: "show"},
-            {name: "denied"}
- 
 
-        ])
-else
-    permissions = Permission.all
-
-end
 
 
 
@@ -62,7 +46,7 @@ end
 unless User.all.present?
     users = User.create([
         {login: "superuser",  email: "superuser@gmail.com",  password: "AMOSXZIBITDE88", password_confirmation: "AMOSXZIBITDE88", role_id:  Role.find_by(name: "superuser").id},
-        {login: "root",  email: "root@gmail.com",  password: "AMOSXZIBITDE88", password_confirmation: "AMOSXZIBITDE88", role_id: Role.find_by(name: "root").id},
+        {login: "root",  email: "root@gmail.com",  password: "AMOSXZIBITDE88", password_confirmation: "AMOSXZIBITDE88", role_id: Role.find_by(name: "administrator").id},
         {login: "user",  email: "user@gmail.com",  password: "AMOSXZIBITDE88", password_confirmation: "AMOSXZIBITDE88", role_id:  Role.find_by(name: "user").id},
         {login: "guest",  email: "guest@gmail.com",  password: "AMOSXZIBITDE88", password_confirmation: "AMOSXZIBITDE88", role_id:  Role.find_by(name: "guest").id},
         {login: "demo",  email: "demo@gmail.com",  password: "demo2019", password_confirmation: "demo2019", role_id: Role.find_by(name: "superuser").id}
@@ -144,7 +128,8 @@ unless OrganizationType.all.present?
     organization_types = OrganizationType.create(
         [
             {name: "Service en informatique", user_id: users.first.id},
-            {name: "ONG", user_id: users.first.id}
+            {name: "ONG", user_id: users.first.id},
+            {name: "Université", user_id: users.first.id}
             
 
         ])
@@ -155,7 +140,7 @@ end
 
 
 
-
+=begin
 unless Organization.all.present?
     organizations = Organization.create([
         {
@@ -170,7 +155,7 @@ else
     organizations = Organization.all
 end
 
-
+=end
 
 unless Support.all.present?
     supports = Support.create(

@@ -1,4 +1,5 @@
 class FoldersController < ApplicationController
+  authorize_resource
  # Include shared utils.
  include SharedUtils::Folder
 

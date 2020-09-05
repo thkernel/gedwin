@@ -1,7 +1,11 @@
 class FeaturesController < ApplicationController
+  authorize_resource
+  
   before_action :authenticate_user!
   before_action :set_feature, only: [:show, :edit, :update, :destroy]
   layout "dashboard"
+
+
   # GET /features
   # GET /features.json
   def index
@@ -15,11 +19,15 @@ class FeaturesController < ApplicationController
 
   # GET /features/new
   def new
+    Rails.application.eager_load!
+    @subject_classes = ApplicationRecord.descendants.map{ |type| [type.name] }
     @feature = Feature.new
   end
 
   # GET /features/1/edit
   def edit
+    Rails.application.eager_load!
+    @subject_classes = ApplicationRecord.descendants.map{ |type| [type.name] }
   end
 
   # POST /features
@@ -81,6 +89,6 @@ class FeaturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def feature_params
-      params.require(:feature).permit(:uid, :name, :description, :status)
+      params.require(:feature).permit(:uid, :name, :subject_class)
     end
 end

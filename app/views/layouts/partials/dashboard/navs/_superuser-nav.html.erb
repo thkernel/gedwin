@@ -51,7 +51,7 @@
             <li class="sub-item">
                
               <% if current_organization.present? %>
-                <%= link_to "Mon organisation", show_organization_path(current_organization) , class: "sub-link" %>
+                <%= link_to "Mon organisation", show_organization_path(current_organization.uid) , class: "sub-link" %>
               <% end %>
 							
             </li>
@@ -113,16 +113,10 @@
                 <%= link_to  "Rôles", roles_path, class: "sub-link" %>
             </li>
 
-             <li class="sub-item">
-                <%= link_to  "Permissions", permissions_path, class: "sub-link" %>
-            </li>
-
+           
             <li class="sub-item">
-                <%= link_to  "Droits d'accès", abilities_path, class: "sub-link" %>
+                <%= link_to  "Droits d'accès", permissions_path, class: "sub-link" %>
             </li>
-
-          
-
 
             <li class="sub-item">
                 <%= link_to  "Registres", registers_path, class: "sub-link" %>
@@ -164,10 +158,7 @@
                 <%= link_to  "SMTP", smtp_configs_path, class: "sub-link" %>
             </li>
 
-            <li class="sub-item">
-                <%= link_to  "API Drive", registers_path, class: "sub-link" %>
-            </li>
-
+          
             </ul>
         </li>
 

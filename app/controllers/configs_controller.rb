@@ -1,4 +1,6 @@
 class ConfigsController < ApplicationController
+  authorize_resource
+  
   before_action :authenticate_user!
   before_action :set_config, only: [:show, :edit_smtp_config, :edit, :update, :destroy]
 

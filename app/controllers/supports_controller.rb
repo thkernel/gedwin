@@ -1,4 +1,5 @@
 class SupportsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
   before_action :set_support, only: [:show, :edit, :update, :destroy]

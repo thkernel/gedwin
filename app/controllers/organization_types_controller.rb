@@ -1,4 +1,6 @@
 class OrganizationTypesController < ApplicationController
+  authorize_resource
+  before_action :authenticate_user!
   before_action :set_organization_type, only: [:show, :edit, :update, :destroy]
 
   # GET /organization_types

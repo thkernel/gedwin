@@ -14,6 +14,8 @@ Rails.application.routes.draw do
    
   end
 
+  
+
   resources :tickets do   
     get "delete"
   end
@@ -30,7 +32,7 @@ Rails.application.routes.draw do
     get "profile/:uid" => "profiles#edit", as: :edit_account
   end
 
-  resources :ability_items
+ 
     get "custom_users/get_divisions" => "custom_users#get_divisions"
     get "custom_users/get_services" => "custom_users#get_services"
     get "imputations/get_divisions" => "imputations#get_divisions"
@@ -42,10 +44,7 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :abilities do   
-    get "delete"
-  end
-
+  
   resources :notifications
   resources :comments
   
@@ -77,13 +76,6 @@ Rails.application.routes.draw do
   get "request/show/:uid" => "requests#show", as: :show_request
   get "/settings/smtp" => "smtp_configurations#settings", as: :smtp_settings
   get "setup/organization" => "organizations#setup", as: :setup_organization
-
-  resources :request_imputation_items do   
-    get "delete"
-  end
-  resources :request_imputations do   
-    get "delete"
-  end
 
  
   resources :requests do   
@@ -167,8 +159,10 @@ Rails.application.routes.draw do
   resources :services do   
     get "delete"
   end
+  get "settings/company/:uid" => "organizations#show", as: :show_organization
+  get "settings/company/:uid/edit" => "organizations#edit", as: :edit_organization
 
-  resources :organizations do      
+  resources :organizations, except: [:show, :edit] do      
     get "delete"
   end
   
@@ -186,15 +180,13 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :organizations do     
-    get "delete"
-  end
+ 
 
   get "request/new" => "requests#new_front_request" , as: :new_front_request
   get "request-success" => "requests#front_request_success" , as: :front_request_success
 	#post "/companies/new/" => "companies#create", as: :create_company
 	#get "/companies/new/" => "companies#new", as: :new_company
-	get "/organization/:id" => "organizations#show", as: :show_organization
+	#get "/organization/:id" => "organizations#show", as: :show_organization
 	#get "/companies/edit/:id" => "companies#edit", as: :edit_company
 	#patch "/companies/:id"  => "companies#update", as: :company
 
@@ -212,9 +204,6 @@ Rails.application.routes.draw do
     get "delete"
   end
 
-  resources :register_types do   
-    get 'delete'
-  end
   
   
   #devise_for :users

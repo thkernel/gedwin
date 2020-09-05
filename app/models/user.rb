@@ -66,6 +66,37 @@ class User < ApplicationRecord
 
 	#validates :login, presence: true, uniqueness: true
 
+	def superuser?
+		if self.role.name == "superuser"
+		  true 
+		else
+		  false
+		end
+	end
+  
+	  def admin?
+			if self.role.name == "administrator"
+				true 
+			else
+				false
+			end
+	  end
+  
+	  def user?
+		if self.role.name == "user"
+		  true 
+		else
+		  false
+		end
+	  end
+  
+	  def guest?
+		if self.role.name == "guest"
+		  true 
+		else
+		  false
+		end
+	  end
 
 	
 	private 

@@ -21,8 +21,8 @@
 // require geocomplete
 // require jquery.geocomplete
 //= require turbolinks
-//= require lib/popper.js/umd/popper.min
 
+//= require popper
 //= require bootstrap-sprockets
 //= require bootstrap
 //= require toastr

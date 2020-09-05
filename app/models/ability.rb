@@ -1,30 +1,39 @@
-# == Schema Information
-#
-# Table name: abilities
-#
-#  id         :bigint           not null, primary key
-#  uid        :string
-#  feature_id :bigint
-#  role_id    :bigint
-#  status     :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
+# frozen_string_literal: true
 
-class Ability < ApplicationRecord
-  include SharedUtils::Generate
+class Ability
+  include CanCan::Ability
 
-  before_save :generate_random_number_uid
-
-  
-  belongs_to :role
-  belongs_to :feature
-
-  has_many :ability_items, dependent: :destroy
-
-  validates_with AbilityValidator
-
-
-  
-  
+  def initialize(user)
+    # Define abilities for the passed in user here. For example:
+    #
+    user ||= User.new # guest user (not logged in)
+    if user.superuser? || user.admin?
+      can :manage, :all
+    else
+      user.role.permissions.each do |permission|
+        permission.permission_items.each do |permission_item|
+          can permission_item.action_name.to_sym, Feature.find(permission_item.permission.feature_id)
+        end
+      end
+       #:read, :all
+    end
+    #
+    # The first argument to `can` is the action you are giving the user
+    # permission to do.
+    # If you pass :manage it will apply to every action. Other common actions
+    # here are :read, :create, :update and :destroy.
+    #
+    # The second argument is the resource the user can perform the action on.
+    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
+    # class of the resource.
+    #
+    # The third argument is an optional hash of conditions to further filter the
+    # objects.
+    # For example, here the user can only update published articles.
+    #
+    #   can :update, Article, :published => true
+    #
+    # See the wiki for details:
+    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+  end
 end

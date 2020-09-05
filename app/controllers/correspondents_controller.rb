@@ -1,4 +1,5 @@
 class CorrespondentsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
 
