@@ -4,13 +4,13 @@
     </ul>
 
   <div class="form-group">
-    <%= form.label t(:name) %>
-    <%= form.text_field :name, class: "form-control", placeholder: "#{t(:name)}", id: :permission_name, required: true %>
+    <%= form.label :name, "Nom", class: "required" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Nom", required: true %>
   </div>
 
   <div class="form-group">
     <%= form.label t(:description) %>
-    <%= form.text_area :description, class: "form-control", placeholder: "#{t(:description)}", id: :permission_description %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Description" %>
   </div>
 
   

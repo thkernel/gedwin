@@ -5,7 +5,7 @@ $("ul.errors").html("");
     $("ul.errors").append($('<div class="c-alert c-alert--danger" > ').html("<%= message.html_safe %> "));
   <% end %>
 <% else %>
-  $(".correspondent-types-index").html("<%= escape_javascript(render 'index') %>");
+  $(".correspondent-types").html("<%= escape_javascript(render 'index') %>");
   $("#correspondent-type-modal").modal("hide");
  
 <% end %>
