@@ -30,8 +30,8 @@ class ImputationItemsController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
-    @task_statuses = TaskStatus.all
-    @task_types = TaskType.all
+    #@task_statuses = TaskStatus.all
+    #@task_types = TaskType.all
   end
 
   # POST /tasks

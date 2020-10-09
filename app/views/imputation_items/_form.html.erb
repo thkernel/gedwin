@@ -23,8 +23,8 @@
   
 
     <div class="form-group col-md-6">
-      <%= form.label :task_status_id, "Progression", class: "required" %>
-      <%= form.collection_select(:task_status_id , @task_statuses, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
+      <%= form.label :status, "Progression", class: "required" %>
+      <%= form.select :status , TASK_STATUSES, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true %> 
 
     </div>
   </div>

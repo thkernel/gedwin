@@ -23,7 +23,14 @@ class ArrivalMailsController < ApplicationController
 
 
   def get_natures
-    @natures = Nature.all.map { |nature| [nature.name, nature.id] } 
+    @natures = Nature.all.map { |nature| [nature.name, nature.id] }#.insert(0, "Sélectionner")
+    
+    #respond_to do |format|
+     
+        #format.json { render :show, status: :created, location: @arrival_mail }
+    #end
+    #@natures = Nature.where("name ILIKE ?", "%#{params[:term]}%").map{|item| {:id=>item.id,:text => item.name}}
+
   end
 
   def get_supports
@@ -112,7 +119,7 @@ class ArrivalMailsController < ApplicationController
     
     @arrival_mail = ArrivalMail.new
     
-    @registers = Register.where("status = ? AND register_type = ?", "Open", "Arrival mail")
+    @registers = Register.where("status = ? AND register_type = ?", "Ouvert", "Registre arrivée")
     
     @natures = Nature.all 
     @supports = Support.all

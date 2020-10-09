@@ -33,6 +33,9 @@ class ImputationsController < ApplicationController
   # GET /imputations/1
   # GET /imputations/1.json
   def show
+    unless @imputation.viewed_at.present?
+      @imputation.update_column(:viewed_at, Time.now)
+    end
   end
 
   def get_profiles
@@ -133,9 +136,11 @@ class ImputationsController < ApplicationController
         @directions = Direction.all
         @divisions = Division.all
         @services = Service.all
+        
         role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
         @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
-        format.html { render :new }
+        
+        format.html { render :new}
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
       
       end

@@ -104,20 +104,44 @@ end
 unless Profile.all.present?
     profile = Profile.create([
         {
-            first_name: "Amos",  
-            last_name: "DEMBELE",
+            first_name: "Super",  
+            last_name: "User",
             direction_id: directions.first.id, 
             division_id: divisions.first.id, 
             service_id: services.first.id,   
-            user_id: users.first.id
+            user_id: User.find_by(login: "superuser").id
         },
         {
-            first_name: "Alassane",  
-            last_name: "BABY",
+            first_name: "Root",  
+            last_name: "Root",
             direction_id: directions.first.id, 
             division_id: divisions.first.id, 
             service_id: services.first.id, 
-            user_id: users.last.id
+            user_id: User.find_by(login: "root").id
+        },
+        {
+            first_name: "User",  
+            last_name: "User",
+            direction_id: directions.first.id, 
+            division_id: divisions.first.id, 
+            service_id: services.first.id, 
+            user_id: User.find_by(login: "user").id
+        },
+        {
+            first_name: "Guest",  
+            last_name: "Guest",
+            direction_id: directions.first.id, 
+            division_id: divisions.first.id, 
+            service_id: services.first.id, 
+            user_id: User.find_by(login: "guest").id
+        },
+        {
+            first_name: "Demo",  
+            last_name: "Demo",
+            direction_id: directions.first.id, 
+            division_id: divisions.first.id, 
+            service_id: services.first.id, 
+            user_id: User.find_by(login: "demo").id
         }
     
     ])

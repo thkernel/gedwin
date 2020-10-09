@@ -11,4 +11,13 @@ module ImputationsHelper
     def user(id)
         User.find(id)
     end
+
+    def imputation_viewed?(imputation)
+        if imputation.viewed_at.present?
+            "Oui"
+        else
+            "Non"
+        end
+
+    end
 end

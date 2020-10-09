@@ -16,10 +16,10 @@
                       <%= item.completed_date.strftime("%d/%m/%Y") if item.completed_date %>
                     </td>
                      <td class="tx-12">
-                      <%= priority(item.priority_id).name if item.priority_id %>
+                      <%= item.priority %>
                     </td>
                     <td class="tx-12">
-                      <%= task_status(item.task_status_id).name %>
+                      <%= item.status %>
                     </td>
                     <td>
                         <%= link_to raw('<span class="fa-stack fa-lg">

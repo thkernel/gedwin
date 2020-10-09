@@ -40,9 +40,7 @@ Rails.application.routes.draw do
   
   
 
-  resources :priorities do   
-    get "delete"
-  end
+  
 
   
   resources :notifications
@@ -69,6 +67,13 @@ Rails.application.routes.draw do
     get "delete"
     
   end
+  #post "imputations/new"
+  #get "imputations/new", controller: "imputations", action: :new
+  #post "imputations/new", controller: "imputations", action: :create
+
+
+
+
   get "imputation/show/:uid" => "imputations#show", as: :show_imputation
   get "imputation/edit/:uid" => "imputations#edit", as: :edit_imputation
   get "arrival-mail/show/:uid" => "arrival_mails#show", as: :show_arrival_mail

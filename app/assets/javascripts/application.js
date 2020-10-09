@@ -31,10 +31,13 @@
 // OLD BRACKET
 
 
-//= require lib/datatables.net/js/jquery.dataTables.min
-//= require lib/datatables.net-dt/js/dataTables.dataTables.min
-//= require lib/datatables.net-responsive/js/dataTables.responsive.min
-//= require lib/datatables.net-responsive-dt/js/responsive.dataTables.min
+//= require lib/DataTables/datatables.min
+//= require lib/DataTables/Responsive-2.2.6/js/responsive.bootstrap4.min
+
+//= require lib/DataTables/Buttons-1.6.5/js/buttons.bootstrap.min
+
+
+
 
 //= require cocoon
 
@@ -65,9 +68,18 @@
 
 
 $(document).on('turbolinks:load', function() {
-    
-  $('#datatable1, #datatable2, #datatable3').DataTable({
-        "searching": true,
+ var datatable = {
+        
+    dom: 'Bfrtip',
+       
+    buttons: [
+      { extend: 'copyHtml5', footer: true },
+      { extend: 'csvHtml5', footer: true },
+      { extend: 'excelHtml5', footer: true },
+
+      { extend: 'pdfHtml5', footer: true }
+    ],
+    "searching": true,
     "ordering": true,
     language: {
         processing: "Traitement en cours...",
@@ -92,7 +104,11 @@ $(document).on('turbolinks:load', function() {
         }
     },
     responsive: false
-      });
+      };
+      
+      $('#datatable1').DataTable(datatable);
+      $('#imputations-table').DataTable(datatable);
+      $('#requests-table').DataTable(datatable);
 });
 
 
@@ -133,6 +149,7 @@ $(document).on('turbolinks:load', function() {
         dropdownParent: dropdownParent,
         width: 'auto' ,
         dropdownAutoWidth: true,
+        
       });
   });
 
@@ -145,18 +162,22 @@ $(document).on('turbolinks:load', function() {
 
 function ajaxRefresh(source, route, verb){
   console.log("Source: ", source);
+  //$(source).empty();
   $(source).on('select2:opening', function() {
+    console.log("Source: ", source);
+    
       $.ajax({
           type: verb,
           headers: {
               'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
               },
           dataType: 'script',
-          cache: false,
           url: route
-          
       });
+
+     
   });
+
 };
 
 function ajaxFilterPost(source, route, verb){

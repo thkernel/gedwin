@@ -62,3 +62,39 @@ $(document).on('turbolinks:load', function(){
         ajaxRefresh("#arrival_mail_folder_id", "/arrival_mails/get_folders", "GET");
 
 });
+/*
+$(document).on('turbolinks:load', function() {
+    $('#nature-modal').on('hide.bs.modal', function() {
+      
+        $('#arrival_mail_nature_id').trigger('focus');
+
+    ajaxRefresh("#arrival_mail_nature_id", "/arrival_mails/get_natures", "GET");
+    console.log("NATURE MODAL HIDE");
+
+    });
+  });
+  */
+
+/*
+$(document).on('turbolinks:load', function() {
+     console.log("SEL BGIN");
+    $("#arrival_mail_nature_id").select2({
+        ajax: {
+        url: "/get_natures", //URL for searching companies
+        dataType: "json",
+        delay: 200,
+        data: function (params) {
+            return {
+            term: params.term, //params send to companies controller
+            };
+        },
+        processResults: function (data) {
+            return {
+            results: data
+            };
+        },
+        cache: true
+        },
+    });
+});
+  */

@@ -122,7 +122,7 @@ module ApplicationHelper
 		config = Config.take
 
 		if config.present? && config.smtp_user_name.present? &&  config.smtp_user_password.present? && 
-			config.smtp_domain.present? && config.smtp_address.present? && config.smtp_port
+			config.smtp_address.present? && config.smtp_port
 		
 			true 
 		else

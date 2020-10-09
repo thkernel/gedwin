@@ -24,8 +24,8 @@ class ImputationItem < ApplicationRecord
   belongs_to :imputation
   
 
-  scope :completed, ->{where("task_status_id = #{TaskStatus.find_by(name: "Terminé").id}")}
-  scope :uncompleted, ->{where("task_status_id IS NOT  #{TaskStatus.find_by(name: "Terminé").id}")}
+  scope :completed, ->{where("status = ?", "Terminé")}
+  scope :uncompleted, ->{where("status IS NOT ?", "Terminé")}
 
   # Validations.
   validates :title, presence: true
