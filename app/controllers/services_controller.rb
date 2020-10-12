@@ -9,6 +9,8 @@ class ServicesController < ApplicationController
   # GET /services.json
   def index
     @services = Service.all
+    record_activity("Afficher la liste des services.")
+
   end
 
   # GET /services/1
@@ -34,6 +36,8 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
+        record_activity("Créer un service (ID: #{@service.id})")
+
         @services = Service.all
         format.html { redirect_to @service, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
@@ -57,6 +61,8 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
+        record_activity("Modifier un service (ID: #{@service.id})")
+
         @services = Service.all
         format.html { redirect_to @service, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
@@ -75,6 +81,8 @@ class ServicesController < ApplicationController
     @service.destroy
     @services = Service.all
     respond_to do |format|
+      record_activity("Supprimer un service (ID: #{@service.id})")
+
       format.html { redirect_to services_url, notice: 'Service was successfully destroyed.' }
       format.json { head :no_content }
       format.js

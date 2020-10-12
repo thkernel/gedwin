@@ -7,6 +7,8 @@ class DirectionsController < ApplicationController
   # GET /directions.json
   def index
     @directions = Direction.all
+    record_activity("Afficher la liste des directions.")
+
   end
 
   # GET /directions/1
@@ -30,6 +32,8 @@ class DirectionsController < ApplicationController
 
     respond_to do |format|
       if @direction.save
+        record_activity("Créer une direction (ID: #{@direction.id})")
+
         @directions = Direction.all
         format.html { redirect_to @direction, notice: 'Direction was successfully created.' }
         format.json { render :show, status: :created, location: @direction }
@@ -47,6 +51,8 @@ class DirectionsController < ApplicationController
   def update
     respond_to do |format|
       if @direction.update(direction_params)
+        record_activity("Modifier une direction (ID: #{@direction.id})")
+
         @directions = Direction.all
         format.html { redirect_to @direction, notice: 'Direction was successfully updated.' }
         format.json { render :show, status: :ok, location: @direction }
@@ -69,6 +75,8 @@ class DirectionsController < ApplicationController
   def destroy
     @direction.destroy
     respond_to do |format|
+      record_activity("Supprimer une direction (ID: #{@direction.id})")
+
       format.html { redirect_to directions_url, notice: 'Direction was successfully destroyed.' }
       format.json { head :no_content }
     end

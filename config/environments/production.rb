@@ -16,7 +16,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -95,7 +95,7 @@ config.action_mailer.perform_deliveries = true
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.default :charset => "utf-8"
 
-config.action_mailer.default_url_options = { protocol: "https", host: Rails.application.credentials.dig(:email, :production, :host)  }
+config.action_mailer.default_url_options = { protocol: "http", host: Rails.application.credentials.dig(:email, :production, :host)  }
 config.action_mailer.delivery_method = :smtp
 =begin
 config.action_mailer.smtp_settings = {
@@ -111,8 +111,7 @@ config.action_mailer.smtp_settings = {
 =end
  
 
- #Credentials requirment
-config.require_master_key = true
+ 
 # Added to customize error page
 config.exceptions_app = self.routes
 

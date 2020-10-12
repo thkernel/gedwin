@@ -11,6 +11,8 @@ class RequestsController < ApplicationController
     @current_user_requests = current_user.requests
     @imputations = Imputation.where(imputable_type: "Request").where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
     render layout: "dashboard"
+    record_activity("Afficher la liste des démandes.")
+
   end
 
   # GET /requests/1
@@ -50,6 +52,8 @@ class RequestsController < ApplicationController
 
       respond_to do |format|
         if @request.save
+          record_activity("Créer une nouvelle démande (ID: #{@request.id})")
+
           @current_user_requests = current_user.requests
 
           format.html { redirect_to requests_path, notice: 'Request was successfully created.' }
@@ -66,7 +70,8 @@ class RequestsController < ApplicationController
 
       respond_to do |format|
         if  @request.save
-          
+          record_activity("Créer une nouvelle démande (ID: #{@request.id})")
+
           format.html { redirect_to front_request_success_path, notice: 'Request was successfully created.' }
           format.json { render :show, status: :created, location: @request }
           
@@ -86,6 +91,7 @@ class RequestsController < ApplicationController
     respond_to do |format|
       if @request.update(request_params)
         @current_user_requests = current_user.requests
+        record_activity("Modifier une démande (ID: #{@request.id})")
 
         format.html { redirect_to requests_path, notice: 'Request was successfully updated.' }
         format.json { render :show, status: :ok, location: @request }
@@ -108,6 +114,8 @@ class RequestsController < ApplicationController
   def destroy
     @request.destroy
     respond_to do |format|
+      record_activity("Supprimer une démande (ID: #{@request.id})")
+
       format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
       format.json { head :no_content }
     end

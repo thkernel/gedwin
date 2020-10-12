@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :activity_logs
   get 'oauth2callback' => 'static_pages#set_google_drive_token'
   get 'static_pages/files' => 'static_pages#files'
 

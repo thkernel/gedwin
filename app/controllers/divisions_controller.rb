@@ -7,6 +7,8 @@ class DivisionsController < ApplicationController
   # GET /divisions.json
   def index
     @divisions = Division.all
+    record_activity("Afficher la liste des divisions.")
+
   end
 
   # GET /divisions/1
@@ -32,6 +34,8 @@ class DivisionsController < ApplicationController
 
     respond_to do |format|
       if @division.save
+        record_activity("Créer une division (ID: #{@division.id})")
+
         @divisions = Division.all
         format.html { redirect_to @division, notice: 'Division was successfully created.' }
         format.json { render :show, status: :created, location: @division }
@@ -49,6 +53,8 @@ class DivisionsController < ApplicationController
   def update
     respond_to do |format|
       if @division.update(division_params)
+        record_activity("Modifier une division (ID: #{@division.id})")
+
         @divisions = Division.all
         format.html { redirect_to @division, notice: 'Division was successfully updated.' }
         format.json { render :show, status: :ok, location: @division }
@@ -70,6 +76,8 @@ class DivisionsController < ApplicationController
   def destroy
     @division.destroy
     respond_to do |format|
+      record_activity("Supprimer une division (ID: #{@division.id})")
+
       format.html { redirect_to divisions_url, notice: 'Division was successfully destroyed.' }
       format.json { head :no_content }
     end

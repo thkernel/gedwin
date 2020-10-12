@@ -8,6 +8,8 @@ class RequestTypesController < ApplicationController
   # GET /request_types.json
   def index
     @request_types = RequestType.all
+    record_activity("Afficher la liste des types de démandes.")
+
   end
 
   # GET /request_types/1
@@ -31,6 +33,8 @@ class RequestTypesController < ApplicationController
 
     respond_to do |format|
       if @request_type.save
+        record_activity("Créer un type de démande (ID: #{@request_type.id})")
+
         @request_types = RequestType.all
         format.html { redirect_to @request_type, notice: 'Request type was successfully created.' }
         format.json { render :show, status: :created, location: @request_type }
@@ -48,6 +52,8 @@ class RequestTypesController < ApplicationController
   def update
     respond_to do |format|
       if @request_type.update(request_type_params)
+        record_activity("Modifier un type de démande (ID: #{@request_type.id})")
+
         @request_types = RequestType.all
         format.html { redirect_to @request_type, notice: 'Request type was successfully updated.' }
         format.json { render :show, status: :ok, location: @request_type }
@@ -70,6 +76,8 @@ class RequestTypesController < ApplicationController
   def destroy
     @request_type.destroy
     respond_to do |format|
+      record_activity("Supprimer un type de démande (ID: #{@request_type.id})")
+
       format.html { redirect_to request_types_url, notice: 'Request type was successfully destroyed.' }
       format.json { head :no_content }
     end

@@ -9,6 +9,8 @@ class TasksController < ApplicationController
     # GET /task_types.json
     def index
       @tasks = Task.all
+      record_activity("Afficher la liste des tâches.")
+
     end
   
     # GET /task_types/1
@@ -34,6 +36,8 @@ class TasksController < ApplicationController
   
       respond_to do |format|
         if @task.save
+          record_activity("Créer une tâche (ID: #{@task.id})")
+
           @tasks = TaskType.all
           format.html { redirect_to @task, notice: 'Task type was successfully created.' }
           format.json { render :show, status: :created, location: @task_type }
@@ -52,6 +56,8 @@ class TasksController < ApplicationController
       respond_to do |format|
         if @task.update(task_params)
           @tasks = Task.all
+          record_activity("Modifier une tâche (ID: #{@task.id})")
+
           format.html { redirect_to @task, notice: 'Task type was successfully updated.' }
           format.json { render :show, status: :ok, location: @task }
           format.js
@@ -75,6 +81,8 @@ class TasksController < ApplicationController
       @task.destroy
       @tasks = Task.all
       respond_to do |format|
+        record_activity("Supprimer une tâche (ID: #{@task.id})")
+
         format.html { redirect_to task_url, notice: 'Task type was successfully destroyed.' }
         format.json { head :no_content }
         

@@ -22,7 +22,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable#,:confirmable, :lockable, :timeoutable, :trackable
 
 
 		 include SharedUtils::Generate
@@ -52,6 +52,8 @@ class User < ApplicationRecord
 	has_many :divisions, dependent: :destroy
 	has_many :documents, dependent: :destroy
 	has_many :tickets, dependent: :destroy
+	has_many :activity_logs, dependent: :destroy
+
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
 	has_many :recipient_notifications, :class_name => "Notification", :foreign_key => :recipient_id

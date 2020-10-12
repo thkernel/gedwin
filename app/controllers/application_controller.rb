@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+	include ActivityLogsConcern
+
 	before_action :store_user_location!, if: :storable_location?
 
 
@@ -11,6 +13,7 @@ class ApplicationController < ActionController::Base
 		redirect_to dashboard_path
 	end
 
+	
 
   def set_mailer_settings
 	
@@ -21,11 +24,11 @@ class ApplicationController < ActionController::Base
 					:address => smtp_config.smtp_address , 
 					:port => smtp_config.smtp_port,
 					:domain => smtp_config.smtp_domain,
-					:authentication => 'plain',
+					:authentication => smtp_config.smtp_authentification,
 					:user_name => smtp_config.user_name,
 					:password => smtp_config.user_password,
-          :enable_starttls_auto => true,
-          :ssl => false
+          :enable_starttls_auto => smtp_config.enable_starttls_auto,
+          :ssl => smtp_config.smtp_ssl
 				})
 				
 			end

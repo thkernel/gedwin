@@ -85,6 +85,6 @@ class ConfigsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def config_params
-      params.require(:config).permit(:smtp_user_name, :smtp_user_password,  :smtp_address, :smtp_port, :smtp_authentification, :smtp_enable_starttls_auto, :smtp_ssl)
+      params.require(:config).permit(:smtp_user_name, :smtp_user_password,  :smtp_address, :smtp_domain, :smtp_port, :smtp_authentification, :smtp_enable_starttls_auto, :smtp_ssl)
     end
 end

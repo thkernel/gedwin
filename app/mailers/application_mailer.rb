@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  #default from: 'from@example.com'
+  default from: "#{Config.take.smtp_user_name if Config.take}"
   layout 'mailer'
 end

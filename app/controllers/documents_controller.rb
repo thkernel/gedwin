@@ -8,6 +8,8 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     @documents = Document.all
+    record_activity("Afficher la liste des documents archivés.")
+
   end
 
   # GET /documents/1
@@ -43,6 +45,8 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
+        record_activity("Créer un document (ID: #{@document.id})")
+
         files = params[:document][:files]
         UploadFileService.upload(files, @document,  parent_id: Folder.find(@document.folder_id).google_drive_file_id)
 
@@ -63,6 +67,8 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
+        record_activity("Modifier un document (ID: #{@document.id})")
+
         format.html { redirect_to documents_path, notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else
@@ -77,6 +83,8 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
+      record_activity("Supprimer un document (ID: #{@document.id})")
+
       format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
     end

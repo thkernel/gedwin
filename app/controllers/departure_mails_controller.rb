@@ -10,6 +10,8 @@ class DepartureMailsController < ApplicationController
   def index
     #@departure_mails = DepartureMail.all
     @departure_mails = DepartureMail.where.not(status: "Archived")
+    record_activity("Afficher la liste des courriers départ.")
+
 
   end
 
@@ -88,11 +90,30 @@ class DepartureMailsController < ApplicationController
 
   # GET /departure_mails/new
   def new
+
+    last_departure_mail = DepartureMail.last(1)
+    if last_departure_mail.present? 
+      id_str = last_departure_mail[0].id.to_s
+      
+      if id_str.size == 1
+        @internal_reference = "000#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str.size == 2
+        @internal_reference = "00#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str.size == 3
+        @internal_reference = "0#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      elsif id_str == 4
+        @internal_reference = "#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+      end
+    else
+      
+      @internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
+    end
+    
     @departure_mail = DepartureMail.new
    
     
    
-    @registers = Register.where(["status = ? AND register_type = ?", "Open", "Departure mail" ]) 
+    @registers = Register.where("status = ? AND register_type = ?", "Ouvert", "Registre départ")
     
     @natures = Nature.all 
     @supports = Support.all
@@ -122,6 +143,8 @@ class DepartureMailsController < ApplicationController
 
     respond_to do |format|
       if @departure_mail.save
+        record_activity("Créer un nouveau courrier départ (ID: #{@departure_mail.id})")
+
         UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
 
         format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully created.' }
@@ -138,6 +161,8 @@ class DepartureMailsController < ApplicationController
   def update
     respond_to do |format|
       if @departure_mail.update(departure_mail_params)
+        record_activity("Modifier un courrier départ (ID: #{@departure_mail.id})")
+
         format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully updated.' }
         format.json { render :show, status: :ok, location: @departure_mail }
       else
@@ -157,6 +182,8 @@ class DepartureMailsController < ApplicationController
   def destroy
     @departure_mail.destroy
     respond_to do |format|
+      record_activity("Supprimer un courrier départ (ID: #{@departure_mail.id})")
+
       format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully destroyed.' }
       format.json { head :no_content }
     end

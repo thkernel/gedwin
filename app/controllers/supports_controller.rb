@@ -8,6 +8,8 @@ class SupportsController < ApplicationController
   # GET /supports.json
   def index
     @supports = Support.all
+    record_activity("Afficher la liste des supports.")
+
   end
 
   # GET /supports/1
@@ -31,6 +33,8 @@ class SupportsController < ApplicationController
 
     respond_to do |format|
       if @support.save
+        record_activity("Créer un support (ID: #{@support.id})")
+
         @supports = Support.all
 
         format.html { redirect_to @support, notice: 'Support was successfully created.' }
@@ -49,6 +53,8 @@ class SupportsController < ApplicationController
   def update
     respond_to do |format|
       if @support.update(support_params)
+        record_activity("Modifier un support (ID: #{@support.id})")
+
         @supports = Support.all
 
         format.html { redirect_to @support, notice: 'Support was successfully updated.' }
@@ -74,6 +80,8 @@ class SupportsController < ApplicationController
     @supports = Support.all
 
     respond_to do |format|
+      record_activity("Supprimer un support (ID: #{@support.id})")
+
       format.html { redirect_to supports_url, notice: 'Support was successfully destroyed.' }
       format.json { head :no_content }
       format.js

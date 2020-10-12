@@ -8,6 +8,8 @@ class RegistersController < ApplicationController
   # GET /registers.json
   def index
     @registers = Register.all
+    record_activity("Afficher la liste des registres.")
+
   end
 
   # GET /registers/1
@@ -41,6 +43,8 @@ class RegistersController < ApplicationController
 
     respond_to do |format|
       if @register.save
+        record_activity("Créer un nouveau registre (ID: #{@register.id})")
+
         @registers = Register.all
 
         format.html { redirect_to @register, notice: 'Register was successfully created.' }
@@ -64,7 +68,8 @@ class RegistersController < ApplicationController
     respond_to do |format|
       if @register.update(register_params)
      
-    
+        record_activity("Modifier un registre (ID: #{@register.id})")
+
         @registers = Register.all
 
         format.html { redirect_to @register, notice: 'Register was successfully updated.' }
@@ -90,6 +95,8 @@ class RegistersController < ApplicationController
     @registers = Register.all
 
     respond_to do |format|
+      record_activity("Supprimer un registre (ID: #{@ticket.id})")
+
       format.html { redirect_to registers_url, notice: 'Register was successfully destroyed.' }
       format.json { head :no_content }
       format.js

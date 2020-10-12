@@ -26,7 +26,8 @@ class ImputationsController < ApplicationController
 
     end
 
-    
+    record_activity("Afficher la liste des imputations.")
+
 
   end
 
@@ -111,6 +112,8 @@ class ImputationsController < ApplicationController
 
     respond_to do |format|
       if @imputation.save
+        record_activity("Créer une nouvelle imputation (ID: #{@imputation.id})")
+
          #Notificable
         NotificationsService.notificate(@imputation.recipient_id, @imputation, notification_content)
         
@@ -156,6 +159,7 @@ class ImputationsController < ApplicationController
 
     respond_to do |format|
       if @imputation.update(imputation_params)
+        record_activity("Modifier une imputation (ID: #{@imputation.id})")
 
         #@imputations = @imputation.imputable_type.constantize.find(@imputation.imputable_id).imputations
 
@@ -181,6 +185,8 @@ class ImputationsController < ApplicationController
   def destroy
     @imputation.destroy
     respond_to do |format|
+      record_activity("Supprimer une imputation (ID: #{@imputation.id})")
+
       format.html { redirect_to imputations_path(uid: @imputation.imputable_type.constantize.find(@imputation.imputable_id).uid, rtype: @imputation.imputable_type), notice: 'Imputation was successfully destroyed.' }
       format.json { head :no_content }
     end

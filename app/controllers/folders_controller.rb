@@ -16,6 +16,8 @@ class FoldersController < ApplicationController
   def index
     #@folders = Folder.all
     @folders = current_user.folders.roots   
+    record_activity("Afficher la liste des dossiers.")
+
   end
 
   # GET /folders/1
@@ -86,6 +88,7 @@ end
     respond_to do |format|
       if @folder.save
         
+        record_activity("Créer un nouveau dossier (ID: #{@folder.id})")
 
         if @folder.parent_id #checking if we have a parent folder on this one 
           file_id = $drive.create_folder(@folder.name.upcase, parent_id: @folder.parent.google_drive_file_id)
@@ -124,7 +127,8 @@ end
     @parent_folder = @folder.parent 
     respond_to do |format|
       if @folder.update(folder_params)
-       
+        record_activity("Modifier un dossier (ID: #{@folder.id})")
+
         if @parent_folder
           format.html { redirect_to browse_path(uid: Folder.find(@folder.parent_id).uid), notice: "Successfully deleted the folder and all the contents inside."}
         else
@@ -152,6 +156,8 @@ end
   
 
     respond_to do |format|
+      record_activity("Supprimer un dossier (ID: #{@folder.id})")
+
       $drive.delete(@folder.google_drive_file_id) 
 
       if @parent_folder

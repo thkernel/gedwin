@@ -7,6 +7,8 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     @tickets = Ticket.all
+    record_activity("Afficher la liste des tickets")
+
   end
 
   # GET /tickets/1
@@ -30,6 +32,8 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
+        record_activity("Créer un ticket (ID: #{@ticket.id})")
+
         @tickets = Ticket.all
         format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: @ticket }
@@ -47,6 +51,8 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update(ticket_params)
+        record_activity("Modifier un ticket (ID: #{@ticket.id})")
+
         @tickets = Ticket.all
         format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
         format.json { render :show, status: :ok, location: @ticket }
@@ -70,6 +76,8 @@ class TicketsController < ApplicationController
   def destroy
     @ticket.destroy
     respond_to do |format|
+      record_activity("Supprimer un ticket (ID: #{@ticket.id})")
+
       format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
       format.json { head :no_content }
     end

@@ -9,6 +9,8 @@ class CorrespondentTypesController < ApplicationController
   # GET /correspondent_types.json
   def index
     @correspondent_types = CorrespondentType.all
+    record_activity("Afficher la liste des types correspondant (ID: #{@correspondent_type.id})")
+
   end
 
   # GET /correspondent_types/1
@@ -32,6 +34,8 @@ class CorrespondentTypesController < ApplicationController
 
     respond_to do |format|
       if @correspondent_type.save
+        record_activity("Créer un nouveau type de correspondant (ID: #{@correspondent_type.id})")
+
         @correspondent_types = CorrespondentType.all
 
         format.html { redirect_to @correspondent_type, notice: 'Correspondent type was successfully created.' }
@@ -50,6 +54,8 @@ class CorrespondentTypesController < ApplicationController
   def update
     respond_to do |format|
       if @correspondent_type.update(correspondent_type_params)
+        record_activity("Modifier un type de correspondant (ID: #{@correspondent_type.id})")
+
         @correspondent_types = CorrespondentType.all
 
         format.html { redirect_to @correspondent_type, notice: 'Correspondent type was successfully updated.' }
@@ -74,6 +80,8 @@ class CorrespondentTypesController < ApplicationController
     @correspondent_types = CorrespondentType.all
 
     respond_to do |format|
+      record_activity("Supprimer un type de correspondant (ID: #{@correspondent_type.id})")
+
       format.html { redirect_to correspondent_types_url, notice: 'Correspondent type was successfully destroyed.' }
       format.json { head :no_content }
     end

@@ -14,6 +14,8 @@ class ArrivalMailsController < ApplicationController
 
 
     #@arrival_mails = ArrivalMail.where.not(status: "Archived")
+    record_activity("Afficher la liste des courriers arrivées")
+
   end
 
   # GET /arrival_mails/1
@@ -152,6 +154,7 @@ class ArrivalMailsController < ApplicationController
     
     respond_to do |format|
       if @arrival_mail.save
+        record_activity("Créer un courrier arrivée (ID: #{@arrival_mail.id})")
 
         UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
         
@@ -182,6 +185,8 @@ class ArrivalMailsController < ApplicationController
   def update
     respond_to do |format|
       if @arrival_mail.update(arrival_mail_params)
+        record_activity("Modifier un courrier arrivée (ID: #{@arrival_mail.id})")
+
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
 
         format.html { redirect_to arrival_mails_path, notice: 'Arrival mail was successfully updated.' }
@@ -209,6 +214,8 @@ class ArrivalMailsController < ApplicationController
     @arrival_mails = ArrivalMail.where.not(status: "Archived")
 
     respond_to do |format|
+      record_activity("Supprimer un courrier arrivée (ID: #{@arrival_mail.id})")
+
       format.html { redirect_to arrival_mails_url, notice: 'Arrival mail was successfully destroyed.' }
       format.json { head :no_content }
     end
