@@ -18,17 +18,34 @@ class TicketsController < ApplicationController
 
   # GET /tickets/new
   def new
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
     @ticket = Ticket.new
   end
 
   # GET /tickets/1/edit
   def edit
+
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
+
+    ticket_users = @ticket.ticket_users
+
+    @selected_ticket_users = ticket_users unless ticket_users.blank?
+
+
   end
 
   # POST /tickets
   # POST /tickets.json
   def create
     @ticket = current_user.tickets.build(ticket_params)
+
+    params[:recipients][:id].each do |ticket_user|
+      unless ticket_user.empty?
+        @ticket.ticket_users.build(recipient_id: ticket_user)
+      end
+    end
 
     respond_to do |format|
       if @ticket.save
@@ -49,6 +66,13 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1
   # PATCH/PUT /tickets/1.json
   def update
+    @ticket.ticket_users.delete_all
+
+    params[:recipients][:id].each do |ticket_user|
+      unless ticket_user.empty?
+        @ticket.ticket_users.build(ticket_user_id: ticket_user)
+      end
+    end
     respond_to do |format|
       if @ticket.update(ticket_params)
         record_activity("Modifier un ticket (ID: #{@ticket.id})")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_143652) do
+ActiveRecord::Schema.define(version: 2020_10_14_141250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -521,6 +521,16 @@ ActiveRecord::Schema.define(version: 2020_10_12_143652) do
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "ticket_users", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "ticket_id"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_ticket_users_on_recipient_id"
+    t.index ["ticket_id"], name: "index_ticket_users_on_ticket_id"
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.string "uid"
     t.string "title"
@@ -606,6 +616,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_143652) do
   add_foreign_key "supports", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tasks", "users"
+  add_foreign_key "ticket_users", "tickets"
   add_foreign_key "tickets", "users"
   add_foreign_key "users", "roles"
 end

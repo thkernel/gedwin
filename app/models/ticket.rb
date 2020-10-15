@@ -25,4 +25,8 @@ class Ticket < ApplicationRecord
   belongs_to :user
 
   has_many_attached :files
+  has_many :ticket_users, dependent: :destroy
+  
+  accepts_nested_attributes_for :ticket_users
+
 end

@@ -57,6 +57,7 @@ class User < ApplicationRecord
 
 	has_many :recipient_imputations, :class_name => "Imputation", :foreign_key => :recipient_id
 	has_many :recipient_notifications, :class_name => "Notification", :foreign_key => :recipient_id
+	has_many :ticket_recipients, :class_name => "TicketUser", :foreign_key => :recipient_id
 
 	
 	#has_many :tenants, dependent: :destroy
