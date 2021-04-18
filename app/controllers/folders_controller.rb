@@ -25,25 +25,43 @@ class FoldersController < ApplicationController
   def show
   end
 
+  def download_drive_file 
+    file_id = params[:key]
+    puts "FileID: #{file_id}"
+    $drive.download_file(file_id, file_name: DriveBlob.find_by(key: file_id).filename )
+   
+    download_file("#{Dir.tmpdir}/#{DriveBlob.find_by(key: file_id).filename}", DriveBlob.find_by(key: file_id).content_type)
+
+  end
+
   # GET /folders/new
   def new
    
-    @folders = Folder.all
-    @folder = current_user.folders.new     
+    @folders = Folder.where(parent_id: nil)
+    @folder = Folder.new
+    #@folder = current_user.folders.new     
     #if there is "folder_id" param, we know that we are under a folder, thus, we will essentially create a subfolder 
-    if params[:uid] #if we want to create a folder inside another folder 
+    #if params[:uid] #if we want to create a folder inside another folder 
         
       #we still need to set the @current_folder to make the buttons working fine 
-      @current_folder = current_user.folders.find_by(uid: params[:uid]) 
+      #@current_folder = current_user.folders.find_by(uid: params[:uid]) 
         
       #then we make sure the folder we are creating has a parent folder which is the @current_folder 
-      @folder.parent_id = @current_folder.id 
-    end
+      #@folder.parent_id = @current_folder.id 
+    #end
 
   end
 
   # GET /folders/1/edit
   def edit
+    @folders = Folder.where(parent_id: nil)
+  end
+
+  def last_folder
+    last_folder = Folder.last
+    folders = Folder.all
+    data = {:last_record => last_folder, :all_records => folders}
+    render :json => data
   end
 
 
@@ -173,7 +191,7 @@ end
     # Use callbacks to share common setup or constraints between actions.
     def set_folder
       if params[:id].present?
-      @folder = Folder.find(params[:id])
+        @folder = Folder.find(params[:id])
       else  
         @folder = Folder.find_by(uid: params[:uid])
       end
@@ -183,4 +201,11 @@ end
     def folder_params
       params.require(:folder).permit(:name, :parent_id)
     end
+
+    def download_file(file, content_type)
+      #send_file file, :type => 'text/xml; charset=UTF-8;', :disposition => 'attachment'
+
+      send_file file, :type => content_type, :disposition => 'attachment'
+    end
+
 end

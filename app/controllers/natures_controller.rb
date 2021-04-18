@@ -1,9 +1,10 @@
 class NaturesController < ApplicationController
   authorize_resource
   before_action :authenticate_user!
-  layout "dashboard"
+  
 
   before_action :set_nature, only: [:show, :edit, :update, :destroy]
+  layout "dashboard"
 
   # GET /natures
   # GET /natures.json
@@ -21,6 +22,13 @@ class NaturesController < ApplicationController
   # GET /natures/new
   def new
     @nature = Nature.new
+  end
+
+  def last_nature
+    last_nature = Nature.last
+    natures = Nature.all
+    data = {:last_record => last_nature, :all_records => natures}
+    render :json => data
   end
 
   

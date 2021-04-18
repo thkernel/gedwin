@@ -45,6 +45,7 @@ module GoogleDriveService
     end
             
     def list_files(options = {})
+      puts "OPTIONS: #{options}"
       @drive.list_files(options: options)
     end
 

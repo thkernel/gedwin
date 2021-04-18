@@ -15,6 +15,12 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
+  
+    #@document.drive_attachments.each do |file|
+      #puts "FICHIERS: #{file.inspect}"
+    #end
+    #puts "LISTE DES FICHIERS"
+    #UploadFileService.get_files({q: "name='Volet alarme précoce'"})
     
   end
 
@@ -68,6 +74,9 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.update(document_params)
         record_activity("Modifier un document (ID: #{@document.id})")
+        files = params[:document][:files]
+        UploadFileService.upload(files, @document,  parent_id: Folder.find(@document.folder_id).google_drive_file_id)
+
 
         format.html { redirect_to documents_path, notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }

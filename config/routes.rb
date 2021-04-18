@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  resources :general_settings
+  resources :task_types
   resources :ticket_users
   resources :activity_logs
   get 'oauth2callback' => 'static_pages#set_google_drive_token'
@@ -10,24 +13,24 @@ Rails.application.routes.draw do
   
   get "folder/:uid/edit" => "folders#edit", as: :edit_folder
   get "folder/:uid/delete" => "folders#delete", as: :folder_delete
+  get "/downloadfile/:key" => "folders#download_drive_file", as: :download_file
+  
   resources :folders , except: [:edit] do
-
-     
-   
   end
 
   
-
   resources :tickets do   
     get "delete"
   end
   
   scope "settings" do
-    resources :configs, except: [:show]
-    get "smtp" => "configs#smtp_configs", as: :smtp_configs
-    get "smtp/new" => "configs#new_smtp_config", as: :new_smtp_config
-    get "smtp/edit/:id" => "configs#edit_smtp_config", as: :edit_smtp_config
+    resources :smtp_configs
+    #get "smtp" => "smtp_configs#smtp_configs", as: :smtp_configs
+    #get "smtp/new" => "smtp_configs#new_smtp_config", as: :new_smtp_config
+    #get "smtp/edit/:id" => "smtp_configs#edit_smtp_config", as: :edit_smtp_config
   end
+  #get "/settings/smtp" => "smtp_configs#smtp_configs", as: :smtp_settings
+
 
   scope "account" do 
     resources :profiles 
@@ -35,14 +38,13 @@ Rails.application.routes.draw do
   end
 
  
-    get "custom_users/get_divisions" => "custom_users#get_divisions"
-    get "custom_users/get_services" => "custom_users#get_services"
-    get "imputations/get_divisions" => "imputations#get_divisions"
-    get "imputations/get_services" => "imputations#get_services"
+  get "custom_users/get_divisions" => "custom_users#get_divisions"
+  get "custom_users/get_services" => "custom_users#get_services"
   
-  
+  get "imputations/get_divisions" => "imputations#get_divisions"
+  get "imputations/get_services" => "imputations#get_services"
+  get "imputations/get_profiles" => "imputations#get_profiles"
 
-  
 
   
   resources :notifications
@@ -81,7 +83,6 @@ Rails.application.routes.draw do
   get "arrival-mail/show/:uid" => "arrival_mails#show", as: :show_arrival_mail
   get "document/show/:uid" => "documents#show", as: :show_document
   get "request/show/:uid" => "requests#show", as: :show_request
-  get "/settings/smtp" => "smtp_configurations#settings", as: :smtp_settings
   get "setup/organization" => "organizations#setup", as: :setup_organization
 
  
@@ -114,7 +115,6 @@ Rails.application.routes.draw do
 
   
   
-  
   resources :departure_mails do     
     get "delete"
     get "archive" 
@@ -123,9 +123,19 @@ Rails.application.routes.draw do
     collection do    
       get "get_reference" => "departure_mails#get_reference"
     end
+
+
+    collection do    
+      get "get_natures" => "departure_mails#get_natures"
+      get "get_folders" => "departure_mails#get_folders"
+      get "get_supports" => "departure_mails#get_supports"
+      get "get_correspondents" => "departure_mails#get_correspondents"
+    end
+
+
   end
 
-  resources :attachments
+  
   resources :arrival_mails , except: [:show] do   
     get "delete"
     get "archive"
@@ -146,6 +156,8 @@ Rails.application.routes.draw do
 
   
   resources :options
+
+  get "/get/last_correspondent" => "correspondents#last_correspondent"
   resources :correspondents do    
     get "delete"
   end
@@ -155,9 +167,7 @@ Rails.application.routes.draw do
   end
   
 
- 
-  
-  
+
 
   resources :features do   
     get "delete"
@@ -173,6 +183,9 @@ Rails.application.routes.draw do
     get "delete"
   end
   
+
+  get "/get/last_folder" => "folders#last_folder"
+
   resources :folders do   
     get "delete"
   end
@@ -197,12 +210,20 @@ Rails.application.routes.draw do
 	#get "/companies/edit/:id" => "companies#edit", as: :edit_company
 	#patch "/companies/:id"  => "companies#update", as: :company
 
+
+  get "/get/last_nature" => "natures#last_nature"
+
+
   resources :natures do     
     get "delete"
+    #get "last_nature" => "natures#last_nature", as: :last_nature
 
     
   end
-  
+
+
+  get "/get/last_support" => "supports#last_support"
+
   resources :supports do      
     get "delete"
   end

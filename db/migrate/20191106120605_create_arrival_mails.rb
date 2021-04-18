@@ -30,6 +30,7 @@ class CreateArrivalMails < ActiveRecord::Migration[5.2]
       t.references :folder, foreign_key: true
       
       t.string :status
+      t.integer :year
       t.references :user, foreign_key: true
 
       

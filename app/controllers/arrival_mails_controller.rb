@@ -101,23 +101,7 @@ class ArrivalMailsController < ApplicationController
   # GET /arrival_mails/new
   def new
    
-    last_arrival_mail = ArrivalMail.last(1)
-    if last_arrival_mail.present? 
-      id_str = last_arrival_mail[0].id.to_s
-      
-      if id_str.size == 1
-        @internal_reference = "000#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str.size == 2
-        @internal_reference = "00#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str.size == 3
-        @internal_reference = "0#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str == 4
-        @internal_reference = "#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      end
-    else
-      
-      @internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
-    end
+    @internal_reference = last_arrival_mail
     
     @arrival_mail = ArrivalMail.new
     
@@ -125,15 +109,15 @@ class ArrivalMailsController < ApplicationController
     
     @natures = Nature.all 
     @supports = Support.all
-    @folders = Folder.all
+    @folders = Folder.where.not(parent_id: nil)
     @correspondents = Correspondent.all
-    @last_arrival_mail = ArrivalMail.last(1)
+    #@last_arrival_mail = ArrivalMail.last(1)
   end
 
   # GET /arrival_mails/1/edit
   def edit
     
-    @registers = Register.where("status = ? AND register_type = ?", "Open", "Arrival mail")
+    @registers = Register.where("status = ? AND register_type = ?", "Ouvert", "Registre arrivée")
     
     @natures = Nature.all 
     @supports = Support.all
@@ -155,6 +139,7 @@ class ArrivalMailsController < ApplicationController
     respond_to do |format|
       if @arrival_mail.save
         record_activity("Créer un courrier arrivée (ID: #{@arrival_mail.id})")
+        files = params[:arrival_mail][:files]
 
         UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
         
@@ -186,6 +171,9 @@ class ArrivalMailsController < ApplicationController
     respond_to do |format|
       if @arrival_mail.update(arrival_mail_params)
         record_activity("Modifier un courrier arrivée (ID: #{@arrival_mail.id})")
+        files = params[:arrival_mail][:files]
+
+        UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
 
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
 

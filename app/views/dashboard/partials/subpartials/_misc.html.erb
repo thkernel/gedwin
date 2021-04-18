@@ -60,7 +60,7 @@
                 </thead>
                 <tbody>
                   <% if @overdue_tickets.present? %>
-                    <% @overdue_tikets.take(5).each do |tiket| %>
+                    <% @overdue_tickets.take(5).each do |ticket| %>
                       <tr>
                       
                         <td class="valign-middle"><%= ticket.created_at.strftime("%d/%m/%Y") %></td>

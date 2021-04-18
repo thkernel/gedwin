@@ -109,8 +109,8 @@ class ImputationItemsController < ApplicationController
   private
 
   def set_imputation
-    @imputation ||= Imputation.find(params[:id])
-    @@imputation = @imputation
+    @imputation_item ||= ImputationItem.find(params[:id])
+    @@imputation_item = @imputation_item
   end
 
 

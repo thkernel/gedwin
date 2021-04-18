@@ -27,6 +27,12 @@ module UploadFileService
         end
     end
 
+    # Get files from drive
+    def self.get_files(options = {})
+        puts "OPTIONS PASSED: #{options}"
+        $drive.list_files(options)
+    end
+
    
 
 end

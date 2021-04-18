@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_141250) do
+ActiveRecord::Schema.define(version: 2021_04_18_145947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.string "reserved_suite"
     t.bigint "folder_id"
     t.string "status"
+    t.integer "year"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -102,20 +103,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "configs", force: :cascade do |t|
-    t.string "smtp_host"
-    t.string "smtp_user_name"
-    t.string "smtp_user_password"
-    t.string "smtp_domain"
-    t.string "smtp_address"
-    t.integer "smtp_port"
-    t.string "smtp_authentification"
-    t.boolean "smtp_enable_starttls_auto"
-    t.boolean "smtp_ssl"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "correspondent_types", force: :cascade do |t|
@@ -169,6 +156,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.text "description"
     t.bigint "folder_id"
     t.string "status"
+    t.integer "year"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -265,6 +253,24 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_folders_on_parent_id"
     t.index ["user_id"], name: "index_folders_on_user_id"
+  end
+
+  create_table "general_settings", force: :cascade do |t|
+    t.string "application_name"
+    t.string "login_screen_message"
+    t.string "home_screen_message"
+    t.string "logo"
+    t.string "wallpaper"
+    t.string "folder_prefix"
+    t.string "folder_suffix"
+    t.string "arrival_mail_reference_format"
+    t.string "departure_mail_reference_format"
+    t.string "document_reference_format"
+    t.string "internal_memo_reference_format"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_general_settings_on_user_id"
   end
 
   create_table "imputation_items", force: :cascade do |t|
@@ -473,6 +479,22 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
+  create_table "smtp_configs", force: :cascade do |t|
+    t.string "smtp_host"
+    t.string "smtp_user_name"
+    t.string "smtp_user_password"
+    t.string "smtp_domain"
+    t.string "smtp_address"
+    t.integer "smtp_port"
+    t.string "smtp_authentification"
+    t.boolean "smtp_enable_starttls_auto"
+    t.boolean "smtp_ssl"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_smtp_configs_on_user_id"
+  end
+
   create_table "supports", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -511,13 +533,37 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "task_statuses", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_task_statuses_on_user_id"
+  end
+
+  create_table "task_types", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_task_types_on_user_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "uid"
+    t.bigint "task_type_id"
+    t.bigint "task_status_id"
     t.string "title"
     t.text "description"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_status_id"], name: "index_tasks_on_task_status_id"
+    t.index ["task_type_id"], name: "index_tasks_on_task_type_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -558,11 +604,25 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -592,6 +652,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
   add_foreign_key "documents", "users"
   add_foreign_key "drive_attachments", "drive_blobs"
   add_foreign_key "folders", "users"
+  add_foreign_key "general_settings", "users"
   add_foreign_key "imputation_items", "imputations"
   add_foreign_key "imputations", "directions"
   add_foreign_key "imputations", "divisions"
@@ -613,8 +674,13 @@ ActiveRecord::Schema.define(version: 2020_10_14_141250) do
   add_foreign_key "requests", "request_types"
   add_foreign_key "requests", "users"
   add_foreign_key "services", "users"
+  add_foreign_key "smtp_configs", "users"
   add_foreign_key "supports", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "task_statuses", "users"
+  add_foreign_key "task_types", "users"
+  add_foreign_key "tasks", "task_statuses"
+  add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "tickets", "users"

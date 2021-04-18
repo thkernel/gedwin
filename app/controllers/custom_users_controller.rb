@@ -23,12 +23,12 @@ class CustomUsersController < ApplicationController
 
 		def get_divisions
 			puts "ID: #{params[:id]}"
-			@divisions = Division.where(direction_id: params[:id]).map { |division| [division.name, division.id] }.unshift('Sélectionner')
+			@divisions = Division.where(direction_id: params[:id])#.map { |division| [division.name, division.id] }.unshift('Sélectionner')
 		end
 
 		def get_services
 			puts "ID: #{params[:id]}"
-			@services = Service.where(division_id: params[:id]).map { |service| [service.name, service.id] }.unshift('Sélectionner')
+			@services = Service.where(division_id: params[:id])#.map { |service| [service.name, service.id] }.unshift('Sélectionner')
 		end
 	
 		def create
@@ -221,7 +221,7 @@ class CustomUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password,:password_confirmation, :role_id,  profile_attributes: [:first_name, :last_name, :civility, :direction_id, :division_id, :service_id])
+      params.require(:user).permit(:email, :password,:password_confirmation, :role_id,  profile_attributes: [:first_name, :last_name, :civility, :position, :direction_id, :division_id, :service_id])
     end
 
 end

@@ -66,6 +66,69 @@ module ApplicationHelper
 		Priority.find(id)
 	end
 
+	def general_setting
+		setting = GeneralSetting.first
+		if setting.present?
+			setting
+		end
+
+	end
+
+	def last_arrival_mail()
+		#Get year
+		year = Time.now.year 
+
+		last_arrival_mail = ArrivalMail.where(year: year).last
+
+		if last_arrival_mail.present? 
+      		id_str = last_arrival_mail[0].id.to_s
+      
+	      if id_str.size == 1
+	        @internal_reference = "000#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      elsif id_str.size == 2
+	        @internal_reference = "00#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      elsif id_str.size == 3
+	        @internal_reference = "0#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      elsif id_str == 4
+	        @internal_reference = "#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      end
+	    else
+	      
+	      @internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
+	    end
+
+
+	end
+
+
+	def last_departure_mail
+		#Get year
+		year = Time.now.year 
+
+		last_departure_mail = DepartureMail.where(year: year)
+
+    	if last_departure_mail.present? 
+      		id_str = last_departure_mail[0].id.to_s
+      
+	      	if id_str.size == 1
+	        	@internal_reference = "000#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      	elsif id_str.size == 2
+	        	@internal_reference = "00#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      	elsif id_str.size == 3
+	        	@internal_reference = "0#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      	elsif id_str == 4
+	        	@internal_reference = "#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	      	end
+	    else
+      
+	      	@internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
+	    	
+	    end
+
+
+
+	end
+
 	def task_status(id)
 		TaskStatus.find(id)
 	end
@@ -109,7 +172,7 @@ module ApplicationHelper
 	end
 
 	def configs?
-		configs = Config.take
+		configs = SmtpConfig.take
 
 		if configs.present? 
 			true
@@ -119,7 +182,7 @@ module ApplicationHelper
 	end
 
 	def smtp_config?
-		config = Config.take
+		config = SmtpConfig.take
 
 		if config.present? && config.smtp_user_name.present? &&  config.smtp_user_password.present? && 
 			config.smtp_address.present? && config.smtp_port

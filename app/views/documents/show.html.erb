@@ -115,7 +115,7 @@
                   <p class="mg-b-0">
                     <i class="fa fa-file-text-o tx-info mg-r-8"></i>
                     <strong class="tx-inverse tx-medium">
-                    
+                      <%= link_to file.name, download_file_path(key: file.drive_blob.key), remote: false %>
                     </strong>
                   
                     

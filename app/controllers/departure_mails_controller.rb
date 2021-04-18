@@ -32,6 +32,31 @@ class DepartureMailsController < ApplicationController
   end
 
 
+
+  def get_natures
+    @natures = Nature.all.map { |nature| [nature.name, nature.id] }#.insert(0, "Sélectionner")
+    
+    #respond_to do |format|
+     
+        #format.json { render :show, status: :created, location: @arrival_mail }
+    #end
+    #@natures = Nature.where("name ILIKE ?", "%#{params[:term]}%").map{|item| {:id=>item.id,:text => item.name}}
+
+  end
+
+  def get_supports
+    @supports = Support.all.map { |support| [support.name, support.id] } 
+  end
+  
+  def get_folders
+    @folders = Folder.all.map { |folder| [folder.name, folder.id] } 
+  end
+
+  def get_correspondents
+    @correspondents = Correspondent.all.map { |correspondent| [correspondent.correspondent_name, correspondent.id] } 
+  end
+
+
   def archive
     @departure_mail = DepartureMail.find(params[:departure_mail_id])
   end
@@ -91,24 +116,8 @@ class DepartureMailsController < ApplicationController
   # GET /departure_mails/new
   def new
 
-    last_departure_mail = DepartureMail.last(1)
-    if last_departure_mail.present? 
-      id_str = last_departure_mail[0].id.to_s
-      
-      if id_str.size == 1
-        @internal_reference = "000#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str.size == 2
-        @internal_reference = "00#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str.size == 3
-        @internal_reference = "0#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      elsif id_str == 4
-        @internal_reference = "#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
-      end
-    else
-      
-      @internal_reference = "0001|SUP|#{Time.new.month}|#{Time.new.year}"
-    end
     
+    @internal_reference = last_departure_mail
     @departure_mail = DepartureMail.new
    
     
@@ -117,7 +126,7 @@ class DepartureMailsController < ApplicationController
     
     @natures = Nature.all 
     @supports = Support.all
-    @folders = Folder.all
+    @folders = Folder.where.not(parent_id: nil)
     @correspondents = Correspondent.all
 
 
@@ -145,7 +154,12 @@ class DepartureMailsController < ApplicationController
       if @departure_mail.save
         record_activity("Créer un nouveau courrier départ (ID: #{@departure_mail.id})")
 
-        UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
+        Thread.new do
+          Rails.application.executor.wrap do
+            UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
+
+          end
+        end
 
         format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully created.' }
         format.json { render :show, status: :created, location: @departure_mail }
@@ -163,6 +177,13 @@ class DepartureMailsController < ApplicationController
       if @departure_mail.update(departure_mail_params)
         record_activity("Modifier un courrier départ (ID: #{@departure_mail.id})")
 
+        Thread.new do
+          Rails.application.executor.wrap do
+            UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
+
+          end
+        end
+        
         format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully updated.' }
         format.json { render :show, status: :ok, location: @departure_mail }
       else

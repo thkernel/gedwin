@@ -153,7 +153,16 @@
           </a><!-- br-menu-link -->
           <ul class="br-menu-sub">
             
-         
+            <% if general_setting %>
+              <li class="sub-item">
+                <%= link_to  "Générale", edit_general_setting_path(general_setting), class: "sub-link #{current? "active", edit_general_setting_path(general_setting)}" %>
+              </li>
+            <% else %>
+              <li class="sub-item">
+                <%= link_to  "Générale", new_general_setting_path, class: "sub-link #{current? "active", new_general_setting_path}" %>
+              </li>
+            <% end %>
+
             <li class="sub-item">
                 <%= link_to  "SMTP", smtp_configs_path, class: "sub-link #{current? "active", smtp_configs_path}" %>
             </li>

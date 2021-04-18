@@ -39,16 +39,7 @@ class ImputationsController < ApplicationController
     end
   end
 
-  def get_profiles
-    
-    if params[:data].present?
-      service = Service.find(params[:data])
-      puts "SERVICE: #{service.inspect}"
-      @recipients = Profile.where(service_id: service.id)
-
-      puts "RECIPIENT: #{@recipients}"
-    end
-  end
+  
   # GET /imputations/new
   def new
     @directions = Direction.all
@@ -70,21 +61,33 @@ class ImputationsController < ApplicationController
     @divisions = Division.all
     @services = Service.all
     
-   
   
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
     @recipients = User.where("role_id  IN (?)", role_ids).map {|user| user.profile}
     
   end
 
+
+#
   def get_divisions
     puts "ID: #{params[:id]}"
-    @divisions = Division.where(direction_id: params[:id]).map { |division| [division.name, division.id] }.unshift('Sélectionner')
+    @profiles = Profile.where(direction_id: params[:id])
+    @divisions = Division.where(direction_id: params[:id])#.map { |division| [division.name, division.id] }.unshift('Sélectionner')
   end
 
   def get_services
     puts "ID: #{params[:id]}"
-    @services = Service.where(division_id: params[:id]).map { |service| [service.name, service.id] }.unshift('Sélectionner')
+    @profiles = Profile.where(division_id: params[:id])
+
+    @services = Service.where(division_id: params[:id])#.map { |service| [service.name, service.id] }.unshift('Sélectionner')
+  end
+
+  def get_profiles
+    
+    
+    puts "ID: #{params[:id]}"
+    @profiles = Profile.where(service_id: params[:id])
+    
   end
 
 
@@ -114,7 +117,7 @@ class ImputationsController < ApplicationController
       if @imputation.save
         record_activity("Créer une nouvelle imputation (ID: #{@imputation.id})")
 
-         #Notificable
+        #Notificable
         NotificationsService.notificate(@imputation.recipient_id, @imputation, notification_content)
         
         # New thread to send mail
@@ -154,8 +157,6 @@ class ImputationsController < ApplicationController
   # PATCH/PUT /imputations/1.json
   def update
 
-
-   
 
     respond_to do |format|
       if @imputation.update(imputation_params)

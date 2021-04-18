@@ -62,39 +62,166 @@ $(document).on('turbolinks:load', function(){
         ajaxRefresh("#arrival_mail_folder_id", "/arrival_mails/get_folders", "GET");
 
 });
-/*
-$(document).on('turbolinks:load', function() {
-    $('#nature-modal').on('hide.bs.modal', function() {
-      
-        $('#arrival_mail_nature_id').trigger('focus');
 
-    ajaxRefresh("#arrival_mail_nature_id", "/arrival_mails/get_natures", "GET");
-    console.log("NATURE MODAL HIDE");
 
+
+
+$(document).on('turbolinks:load', function() {  
+
+  $('#nature_id').select2({
+        
+        escapeMarkup: function (markup) { return markup; },
+       
+        language: {
+            noResults: function () {
+                 return "<a data-remote='true' href='/natures/new'>+ Ajouter</a>";
+            }
+        }
     });
-  });
-  */
 
-/*
+});
+
+$(document).on('turbolinks:load', function() {  
+
+  $('#support_id').select2({
+        
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return "<a data-remote='true' href='/supports/new'>+ Ajouter</a>";
+            }
+        }
+    });
+
+});
+
+$(document).on('turbolinks:load', function() {  
+
+  $('#correspondent_id').select2({
+        
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return "<a data-remote='true' href='/correspondents/new'>+ Ajouter</a>";
+            }
+        }
+    });
+
+});
+
+
+$(document).on('turbolinks:load', function() {  
+
+  $('#folder_id').select2({
+        
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return "<a data-remote='true' href='/folders/new'>+ Ajouter</a>";
+            }
+        }
+    });
+
+});
+
+
+
+
 $(document).on('turbolinks:load', function() {
-     console.log("SEL BGIN");
-    $("#arrival_mail_nature_id").select2({
-        ajax: {
-        url: "/get_natures", //URL for searching companies
-        dataType: "json",
-        delay: 200,
-        data: function (params) {
-            return {
-            term: params.term, //params send to companies controller
-            };
-        },
-        processResults: function (data) {
-            return {
-            results: data
-            };
-        },
-        cache: true
-        },
+    $('#arrival-mail #nature-modal').on('hide.bs.modal', function() {
+      
+    ajaxGetLastRecord('select[name="arrival_mail[nature_id]"]', "/get/last_nature", "GET");
+
     });
 });
-  */
+
+$(document).on('turbolinks:load', function() {
+    $('#arrival-mail #support-modal').on('hide.bs.modal', function() {
+      
+    ajaxGetLastRecord('select[name="arrival_mail[support_id]"]', "/get/last_support", "GET");
+
+    });
+});
+
+$(document).on('turbolinks:load', function() {
+    $('#arrival-mail #correspondent-modal').on('hide.bs.modal', function() {
+      
+    ajaxGetLastRecord('select[name="arrival_mail[correspondent_id]"]', "/get/last_correspondent", "GET");
+
+    });
+});
+
+$(document).on('turbolinks:load', function() {
+    $('#arrival-mail #folder-modal').on('hide.bs.modal', function() {
+      
+    ajaxGetLastRecord('select[name="arrival_mail[folder_id]"]', "/get/last_folder", "GET");
+
+    });
+});
+
+  
+
+
+
+
+
+function ajaxGetLastRecord(target, route, verb){
+    console.log("Source: ", route);
+  
+      $.ajax({
+            type: verb,
+            headers: {
+                'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+                },
+            dataType: 'json',
+            url: route,
+            cache:true,
+            
+          
+            success: function(response) {
+                last_record_id = response.last_record.id;
+                last_record_name = getName(response.last_record);
+                all_records = response.all_records;
+
+
+                $(target).empty();
+                $(target).append('<option value="">Sélectionner</option>');
+                
+
+                // For each record
+
+                $.each(all_records, function(key, value){
+
+                    if (last_record_name === getName(value)){
+                        $(target).append('<option value="'+ key +'" selected>' + getName(value) + '</option>');
+
+                    }else{
+                        $(target).append('<option value="'+ key +'">' + getName(value) + '</option>');
+
+
+                    }
+
+                });
+
+
+            }
+      });
+ 
+};
+
+function getName(record){
+    var name = null;
+
+    if (record.organization_name !== null && record.organization_name !== "" && record.organization_name !== undefined ){
+      name = record.organization_name;
+    }
+    else if ((record.contact_last_name !== "" && record.contact_last_name !== null && record.contact_last_name !== undefined) || (record.contact_first_name !== "" && record.contact_first_name !== null && record.contact_first_name !== undefined)){
+        name = record.contact_last_name + " " + record.contact_first_name ;
+    }
+    else if (record.name){
+        name = record.name;
+    }
+
+    return name;
+
+}

@@ -1,4 +1,3 @@
-
 # Postgresql config
 development:
   adapter: postgresql
