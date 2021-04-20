@@ -4,7 +4,7 @@ class ImputationMailer < ActionMailer::Base
         
     add_template_helper EmailHelper
     #add_template_helper ApplicationHelper
-    default from: "<#{SmtpConfig.take.smtp_user_name }>" if SmtpConfig.take
+    default from: "<#{SmtpConfig.first.smtp_user_name }>" if SmtpConfig.first.present?
 
     def new_imputation_mail(user_id, imputation)
         @user = User.find(user_id)
