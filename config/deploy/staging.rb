@@ -21,7 +21,7 @@ set :port, 3040
 
  set :nginx_config_name, "geid.staging"
  set :nginx_server_name, "geid.staging"
- set :puma_workers, 1
+ set :puma_workers, 4
 
 # role-based syntax
 # ==================
