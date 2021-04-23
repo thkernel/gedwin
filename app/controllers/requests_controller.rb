@@ -21,6 +21,79 @@ class RequestsController < ApplicationController
     render layout: "dashboard"
   end
 
+  def get_kairos_data
+    data = params[:data]
+    user = KairosUser.find_by(username: data)
+    puts "USER: #{user.inspect}"
+    etudiant = KairosEtudiant.find(user.id)
+    puts "ETUDIANT: #{etudiant.inspect}"
+    inscription_etudiant = KairosInscriptionEtudiant.find_by(etudiant_id: etudiant.id)
+    
+    puts "INSCRIPTION ETUDIANT: #{inscription_etudiant.inspect}"
+
+   
+    classe = KairosClasse.find(inscription_etudiant.classe_id)
+    puts "CLASSE: #{classe.inspect}"
+
+    data = {:user => user, :etudiant => etudiant, classe: classe}
+    render :json => data
+  
+  end
+
+  def get_kairos_annee_scolaire
+    annee_scolaire = params[:annee_scolaire]
+    username = params[:username]
+
+    puts "ANNEE SCOLAIRE: #{annee_scolaire}"
+    puts "ETUDIANT ID: #{username}"
+
+    user = KairosUser.find_by(username: username)
+
+    etudiant = KairosEtudiant.find(user.id)
+    
+    puts "ETUDIANT : #{etudiant.inspect}"
+
+
+    # Programme etudiant.
+    etudiant_programmes = KairosProgrammeEtudiant.where(etudiant_id: etudiant.id)
+
+    puts "ETUDIANT PROGRAMMES: #{etudiant_programmes.inspect}"
+
+    annee_scolaire_programmes = KairosAnneeScolaireProgramme.where(annee_scolaire: annee_scolaire)
+
+    puts "ANNEE SCOLAIRE PROGRAMME: #{annee_scolaire_programmes.inspect}"
+
+    selected_etudiant_programme = nil
+
+    if etudiant_programmes.present? && annee_scolaire_programmes.present?
+      
+      annee_scolaire_programmes.each do |annee_scolaire_programme|
+        selected_etudiant_programme = etudiant_programmes.where(annee_scolaire_programme_id: annee_scolaire_programme).first
+
+        if selected_etudiant_programme.present?
+          break 
+        end
+
+      end
+
+    end
+
+    puts "SELECTED PROGRAMME: #{selected_etudiant_programme.inspect}"
+    #inscription_etudiant = KairosInscriptionEtudiant.where("annee_scolaire_programme_id = ? AND etudiant_id = ?", annee_scolaire_programme.id, etudiant_id)
+    #puts "INSCRIPTION ETUDIANT: #{inscription_etudiant.inspect}"
+
+
+    # Classe
+    classe = KairosProgramme.find(selected_etudiant_programme.programme_id)
+    
+    puts "CLASSE: #{classe.inspect}"
+    #classe = nil
+
+    data = {classe: classe}
+    render :json => data
+
+  end
+
   # GET /requests/new
   def new
     @request_types = RequestType.all

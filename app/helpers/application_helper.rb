@@ -52,7 +52,8 @@ module ApplicationHelper
 
 	def current_organization
 	
-		organization = current_user.organization
+		organization = Organization.first
+
 		if organization.present?
 			organization
 		end
@@ -162,6 +163,24 @@ module ApplicationHelper
 	def arrival_mail_total_uncompleted_task(id)
 		
 	end
+
+	def request_total_task(id)
+		request = Request.find(id)
+		total_task = 0
+		total_task = request.imputations.map {|item| item.imputation_items.count}.sum
+	end
+
+	def request_total_completed_task(id)
+		request = Request.find(id)
+		total_task = 0
+		total_task = request.imputations.map {|item| item.imputation_items.completed.count}.sum
+	end
+
+	def request_total_uncompleted_task(id)
+		
+	end
+
+
 
 	def is_account_locked?(user)
 		if user.status == 'enable'

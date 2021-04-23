@@ -1,0 +1,32 @@
+# kairos database config
+default: &default
+  encoding: utf8
+  adapter: mysql2
+  port: 3306
+
+development:
+  <<: *default
+  database: kairos_db
+  pool: 5
+  host:     localhost
+  username: root
+  password: root
+
+
+staging:
+  <<: *default
+  database: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_database_name) %>
+  pool: 5
+  host:     localhost
+  username: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_username) %>
+  password: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_password) %>
+
+production:
+  <<: *default
+  database: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_database_name) %>
+  pool: 5
+  host:     localhost
+  username: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_username) %>
+  password: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_password) %>
+
+

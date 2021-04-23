@@ -48,13 +48,18 @@
             <span class="menu-item-label">Administration</span>
           </a><!-- br-menu-link -->
           <ul class="br-menu-sub">
-            <li class="sub-item">
-               
-              <% if current_organization.present? %>
-                <%= link_to "Mon organisation", show_organization_path(current_organization.uid) , class: "sub-link #{current? "active", show_organization_path(current_organization.uid)}" %>
-              <% end %>
-							
-            </li>
+            <% if current_organization.present? %>
+              <li class="sub-item">
+                 
+                
+                  <%= link_to "Mon organisation", show_organization_path(current_organization.uid) , class: "sub-link #{current? "active", show_organization_path(current_organization.uid)}" %>
+                
+  							
+              </li>
+
+            
+
+            <% end %>
 
             <li class="sub-item">
                 <%= link_to  "Directions", directions_path, class: "sub-link #{current? "active", directions_path}" %>
