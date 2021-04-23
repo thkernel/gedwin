@@ -1,5 +1,7 @@
 APPLICATION_NAME = "GEID"
 GENDERS = [["Homme"], ["Femme"]]
+STUDENT_GENDERS = [["M"], ["F"]]
+
 REGISTER_STATUSES = [["Ouvert"], ["Fermé"]]
 REGISTER_TYPES = [["Registre arrivée"], ["Registre départ"]]
 TASK_STATUSES = [["En attente"], ["En cours"], ["Suspendu"], ["Terminé"], ["Annulé"]]

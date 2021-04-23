@@ -107,27 +107,27 @@
               <div class="card-body">
                
                 <div class="row align-items-center">
-                  <div class="col-6 tx-12">Total</div><!-- col-3 -->
-                  <div class="col-6">
+                  <div class="col-8 tx-12">Total</div><!-- col-3 -->
+                  <div class="col-4">
                     <div class="rounded-0 mg-b-0">
-                      <%= arrival_mail_total_task(@request.id) %>
+                      <%= request_total_task(@request.id) %>
                     </div><!-- progress -->
                   </div><!-- col-9 -->
                 </div><!-- row -->
                 <div class="row align-items-center mg-t-5">
-                  <div class="col-6 tx-12">Terminées</div><!-- col-3 -->
-                  <div class="col-6">
-                     <%= arrival_mail_total_completed_task(@request.id) %>
+                  <div class="col-8 tx-12">Terminées</div><!-- col-3 -->
+                  <div class="col-4">
+                     <%= request_total_completed_task(@request.id) %>
                   </div><!-- col-9 -->
                 </div><!-- row -->
                 <div class="row align-items-center mg-t-5">
-                  <div class="col-6 tx-12">Non termiées</div><!-- col-3 -->
-                  <div class="col-6">
-                    <%= arrival_mail_total_uncompleted_task(@request.id) %>
+                  <div class="col-8 tx-12">Non termiées</div><!-- col-3 -->
+                  <div class="col-4">
+                    <%= request_total_uncompleted_task(@request.id) %>
                   </div><!-- col-9 -->
                 </div><!-- row -->
               </div><!-- card-body -->
-            </div>
+        </div>
         
       </div>
     </div>

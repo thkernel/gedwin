@@ -47,8 +47,8 @@
   <div class="row">
      <div class="col-md-4">
       <div class="form-group">
-        <%= form.label :gender, "Genre", class: "required" %>
-        <%= form.select :gender , GENDERS, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %>
+        <%= form.label :gender, "Sexe", class: "required" %>
+        <%= form.select :gender , STUDENT_GENDERS, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %>
       </div>
     </div>
 
@@ -87,8 +87,8 @@
 
     <div class="col-md-4">
       <div class="form-group">
-        <%= form.label :specialty , "Spécialité", class: "required"%>
-        <%= form.text_field :specialty, class: "form-control", placeholder: "Spécialité", required: true %>
+        <%= form.label :specialty , "Spécialité"%>
+        <%= form.text_field :specialty, class: "form-control", placeholder: "Spécialité" %>
       </div>
     </div>
    

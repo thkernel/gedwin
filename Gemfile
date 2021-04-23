@@ -71,6 +71,7 @@ gem 'cancancan', '~> 3.0', '>= 3.0.1'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
 #gem 'font-awesome-sass', '~> 5.0.13'
 
+gem 'mysql2', '~> 0.5.3' #For external databases
 gem 'pg', '~> 1.1', '>= 1.1.4'
 gem 'sassc', '~> 2.0', '>= 2.0.1'
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
@@ -87,7 +88,7 @@ gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'chosen-rails', '~> 1.8', '>= 1.8.7'
 #gem 'apartment', '~> 2.2'
-gem 'chartkick', '~> 3.0', '>= 3.0.2'
+gem "chartkick", ">= 3.4.0"
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 #gem 'ckeditor', '~> 5.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'

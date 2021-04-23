@@ -86,6 +86,15 @@ Rails.application.routes.draw do
   get "setup/organization" => "organizations#setup", as: :setup_organization
 
  
+  get "/get_kairos_data" => "requests#get_kairos_data"
+  get "/get_kairos_annee_scolaire" => "requests#get_kairos_annee_scolaire"
+
+
+  # From front request.
+  get "request/get_kairos_data" => "requests#get_kairos_data"
+  get "request/get_kairos_annee_scolaire" => "requests#get_kairos_annee_scolaire"
+
+
   resources :requests do   
     get "delete"
   end

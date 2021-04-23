@@ -26,6 +26,7 @@ module Geid
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
-    
+    #For subfolders
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
   end
 end

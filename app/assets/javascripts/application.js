@@ -65,6 +65,7 @@
 //= require imputations
 //= require departure_mails
 //= require custom_users
+//= require requests
 
 
 $(document).on('turbolinks:load', function() {
