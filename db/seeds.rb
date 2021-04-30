@@ -205,11 +205,6 @@ unless Nature.all.present?
 end
 
 
-
-
-
-
-
 unless CorrespondentType.all.present?
     correspondent_types = CorrespondentType.create(
         [

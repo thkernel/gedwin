@@ -141,7 +141,12 @@ class ArrivalMailsController < ApplicationController
         record_activity("Créer un courrier arrivée (ID: #{@arrival_mail.id})")
         files = params[:arrival_mail][:files]
 
-        UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+        Thread.new do
+          Rails.application.executor.wrap do
+            UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+          end
+        end
+
         
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
 
@@ -173,7 +178,12 @@ class ArrivalMailsController < ApplicationController
         record_activity("Modifier un courrier arrivée (ID: #{@arrival_mail.id})")
         files = params[:arrival_mail][:files]
 
-        UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+        Thread.new do
+          Rails.application.executor.wrap do
+            UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+          end
+        end
+
 
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
 

@@ -2,6 +2,6 @@
 	<% if current_organization.present? && current_organization.logo.attached? %>
     	<%= image_tag current_organization.logo, alt: "Logo" %> 
     <% else %>
-    	<span><%= APPLICATION_NAME %></span
+    	<span><%= APPLICATION_NAME %></span> 
     <% end %>
 <% end %>

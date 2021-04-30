@@ -4,7 +4,7 @@
     </ul>
 
   <div class="row">
-   <div class="col-md-6">
+   <div class="col-md-12">
     <div class="form-group">
       <%= form.label :register_type, "Type de registre", class: "required" %>
       <%= form.select :register_type, REGISTER_TYPES, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%;",  required: true %> 
@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="form-group">
         <%= form.label :name, "Nom", class: "required" %>
         <%= form.text_field :name, class: "form-control", id: :register_name , placeholder: "Nom", required: true %>
@@ -40,7 +40,7 @@
 
   <% unless @register.new_record? %>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group">
           <%= form.label :status, "Statut", class: "required" %>
           <%= form.select  :status, REGISTER_STATUSES, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%",  required: true %> 

@@ -145,7 +145,7 @@ class CustomUsersController < ApplicationController
 					Rails.application.executor.wrap do
 					  # your code here
 					end
-				  end
+				end
 			  
 			else
 				format.html { render :edit }
