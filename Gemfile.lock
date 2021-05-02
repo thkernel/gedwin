@@ -5,6 +5,14 @@ GIT
     ckeditor (5.1.0)
       orm_adapter (~> 0.5.0)
 
+GIT
+  remote: https://github.com/mileszs/wicked_pdf
+  revision: bc73252dfd0d4e6ebe43762fa7d6911f9c3aaa07
+  branch: master
+  specs:
+    wicked_pdf (2.1.0)
+      activesupport
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -290,7 +298,6 @@ GEM
       json
     regexp_parser (2.1.1)
     regexp_property_values (1.0.0)
-    remotipart (1.4.4)
     representable (3.1.1)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
@@ -376,8 +383,6 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wicked_pdf (2.1.0)
-      activesupport
     will_paginate (3.3.0)
     will_paginate-bootstrap (1.0.2)
       will_paginate (>= 3.0.3)
@@ -433,7 +438,6 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rails-i18n (~> 5.1, >= 5.1.3)
   recaptcha (~> 5.5)
-  remotipart (~> 1.4, >= 1.4.2)
   sanitize (~> 5.1)
   sass-rails (~> 5.0)
   sassc (~> 2.0, >= 2.0.1)
@@ -445,9 +449,9 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
-  wicked_pdf (~> 2.1)
+  wicked_pdf!
   will_paginate-bootstrap (~> 1.0, >= 1.0.2)
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary (~> 0.12.6.5)
 
 RUBY VERSION
    ruby 2.5.0p0

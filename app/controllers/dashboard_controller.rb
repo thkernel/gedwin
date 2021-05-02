@@ -32,10 +32,7 @@ class DashboardController < ApplicationController
 
 		record_activity("Afficher le tableau de bord")
 
-		kairos_user = KairosUser.find(10933)
-		kairos_etudiant = KairosEtudiant.find(kairos_user.id)
-		puts "KAIROS USER: #{kairos_user.inspect}"
-		puts "KAIROS ETUDIANT: #{kairos_etudiant.inspect}"
+		
 		
 	end
 

@@ -81,7 +81,7 @@ gem 'bootstrap', '~> 4.3', '>= 4.3.1'
 gem 'rails-i18n', '~> 5.1', '>= 5.1.3'
 gem 'friendly_id', '~> 5.2', '>= 5.2.5'
 gem 'premailer-rails', '~> 1.10', '>= 1.10.2'
-gem 'remotipart', '~> 1.4', '>= 1.4.2'
+#gem 'remotipart', '~> 1.4', '>= 1.4.2'
 #gem 'paperclip', '~> 6.1'
 gem 'client_side_validations', '~> 14.1'
 gem 'action_mailer_auto_url_options', '~> 1.0', '>= 1.0.2'
@@ -105,8 +105,10 @@ gem 'countries', require: 'countries/global'
 gem 'acts_as_tree', '~> 2.9', '>= 2.9.1'
 gem 'faraday', '~> 1.0', '>= 1.0.1'
 
-gem 'wkhtmltopdf-binary' # Wecked PDF requirement.
-gem 'wicked_pdf', '~> 2.1' # For generate PDF.
+gem 'wkhtmltopdf-binary', '~> 0.12.6.5' # Wecked PDF requirement.
+#gem 'wicked_pdf', '~> 2.1' # For generate PDF.
+gem 'wicked_pdf', git: 'https://github.com/mileszs/wicked_pdf', branch: 'master'
+
 
 # This gem causes db:create to fail
 # You can enable it for tests as long as the db has been created

@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
   authorize_resource except: [:new_front_request]
   before_action :authenticate_user! unless :front_origin?
   before_action :front_origin?, only: [:new]
-  before_action :set_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_request, only: [:show, :edit, :update,:generate_pdf, :destroy]
  
   # GET /requests
   # GET /requests.json
@@ -19,6 +19,27 @@ class RequestsController < ApplicationController
   # GET /requests/1.json
   def show
     render layout: "dashboard"
+  end
+
+
+  #For PDF
+  def generate_pdf
+
+    puts "REQUESTS: #{@request}"
+    respond_to do |format|
+        format.html
+        format.pdf do
+            render :pdf => "request-#{@request.identification_number}-#{Time.now}", 
+            layout: 'pdf',
+            page_size: 'A4',
+            template: "requests/pdf.html.erb",
+            lowquality: true,
+            zoom: 1,
+            dpi: 75
+        end
+    end
+
+    #render layout: "pdf"
   end
 
   def get_kairos_data

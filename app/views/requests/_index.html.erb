@@ -19,10 +19,15 @@
 
 <%= link_to raw('<i class="fa fa-eye" aria-hidden="true"></i>
 '),  show_request_path(request.uid), title: "Voir", remote: false %>
+<%= link_to raw('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+      '), generate_pdf_path(request, format: :pdf), remote: false, title: "Télécharger" %>
 
 
       <%= link_to raw('<i class="fa fa-trash-o" aria-hidden="true"></i>
       '), request_delete_path(request), remote: true, title: "Supprimer", class: "delete" %>
+
+       
+
       </div>
       </td>
       </tr>

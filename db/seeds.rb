@@ -258,6 +258,14 @@ unless RequestType.all.present?
     request_types = RequestType.create(
         [
             {name: "Demande d'attestation d'admissibilité", user_id: users.first.id},
+            {name: "Demande d'authentification de bulletin", user_id: users.first.id},
+            {name: "Demande d'attestation de scolarité", user_id: users.first.id},
+            {name: "Demande de bulletin", user_id: users.first.id},
+            {name: "Demande de passation d'UV", user_id: users.first.id},
+            {name: "Demande de licence", user_id: users.first.id},
+            {name: "Demande de carte d'etudiant", user_id: users.first.id},
+            {name: "Demande d'attestation de reussite", user_id: users.first.id},
+            {name: "Demande de stage", user_id: users.first.id},
             {name: "Demande d'authentification de bulletin", user_id: users.first.id}
         ])
 else    
