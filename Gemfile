@@ -86,14 +86,14 @@ gem 'remotipart', '~> 1.4', '>= 1.4.2'
 gem 'client_side_validations', '~> 14.1'
 gem 'action_mailer_auto_url_options', '~> 1.0', '>= 1.0.2'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2'
-gem 'kaminari', '~> 1.1', '>= 1.1.1'
-gem 'chosen-rails', '~> 1.8', '>= 1.8.7'
+#gem 'kaminari', '~> 1.1', '>= 1.1.1'
+#gem 'chosen-rails', '~> 1.8', '>= 1.8.7'
 #gem 'apartment', '~> 2.2'
 gem "chartkick", ">= 3.4.0"
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 #gem 'ckeditor', '~> 5.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
-gem 'social-share-button', '~> 1.2', '>= 1.2.1'
+#gem 'social-share-button', '~> 1.2', '>= 1.2.1'
 gem 'sanitize', '~> 5.1'
 gem 'creek', '~> 2.2'
 gem 'recaptcha', '~> 5.5'
@@ -104,6 +104,10 @@ gem 'google-api-client', '~> 0.43.0'
 gem 'countries', require: 'countries/global'
 gem 'acts_as_tree', '~> 2.9', '>= 2.9.1'
 gem 'faraday', '~> 1.0', '>= 1.0.1'
+
+gem 'wkhtmltopdf-binary' # Wecked PDF requirement.
+gem 'wicked_pdf', '~> 2.1' # For generate PDF.
+
 # This gem causes db:create to fail
 # You can enable it for tests as long as the db has been created
 group :production, :staging do
