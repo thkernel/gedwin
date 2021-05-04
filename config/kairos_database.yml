@@ -15,18 +15,18 @@ development:
 
 staging:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_database_name) %>
+  database: kairos_supmanagement
   pool: 5
-  host:     localhost
-  username: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_username) %>
-  password: <%= Rails.application.credentials.dig(:mysql, :staging, :mysql_password) %>
+  host:     172.31.17.28
+  username: ged_ro@172.31.11.31
+  password: rt_B6hRV9zZMm?FW
 
 production:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_database_name) %>
+  database: kairos_supmanagement
   pool: 5
-  host:     localhost
-  username: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_username) %>
-  password: <%= Rails.application.credentials.dig(:mysql, :production, :mysql_password) %>
+  host:     172.31.17.28
+  username: ged_ro@172.31.11.31
+  password: rt_B6hRV9zZMm?FW
 
 
