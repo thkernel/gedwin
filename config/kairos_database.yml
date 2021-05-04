@@ -6,11 +6,11 @@ default: &default
 
 development:
   <<: *default
-  database: kairos_supmanagementt
+  database: kairos_db
   pool: 5
-  host:     172.31.17.28
-  username: ged_ro@172.31.11.31
-  password: rt_B6hRV9zZMm?FW
+  host:     localhost
+  username: root
+  password: root
 
 
 staging:

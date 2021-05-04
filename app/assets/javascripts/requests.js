@@ -4,15 +4,19 @@ $(document).on('turbolinks:load', function(){
         
         $("#request_identification_number").on('focusout', function() {
             
-            ajaxGetData("#request_identification_number", "get_kairos_data", "GET");
+            ajaxGetData("#request_identification_number", "/get_kairos_data", "GET");
         });
 
         $("#request_academic_year").on('focusout', function() {
             
-            ajaxGetData("#request_academic_year", "get_kairos_annee_scolaire", "GET");
+            ajaxGetData("#request_academic_year", "/get_kairos_annee_scolaire", "GET");
         });
 
+        hideOrDisplayFields();
 
+        $("#request_request_type_id").on('change', function(){
+            hideOrDisplayFields();
+        });
 
        
     //});
@@ -37,7 +41,7 @@ function ajaxGetData(source, route, verb){
             dataType: 'json',
             url: route,
             cache:false,
-            data: { data: target_value},  
+            data: { id: target_value},  
           
             success: function(response) {
                 console.log("USER: ", response.user);
@@ -89,7 +93,7 @@ function ajaxGetData(source, route, verb){
 
                
 
-               $("#request_grade").val(classe.sigle);
+               $("#request_classroom").val(classe.sigle);
                 
 
                     
@@ -100,3 +104,22 @@ function ajaxGetData(source, route, verb){
     }
     
 };
+
+
+function hideOrDisplayFields(){
+
+    request_request_type = $('#request_request_type_id').val();
+    console.log("REQUEST TYPE: ", request_request_type); 
+
+    if (request_request_type != null && request_request_type == "Oui"){
+        $(".arrival_mail_linked_mail").css("display", "block");
+        
+    }
+    else{
+        $(".license_year").css("display", "none");
+        $(".cycle").css("display", "none");
+        $(".level").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+
+    }
+}

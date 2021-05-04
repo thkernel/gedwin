@@ -2,11 +2,12 @@
     <%= link_to edit_request_path(request) do  %>
       <tr>
         <td><%= request_type(request.request_type_id).name %></td>
+        <td><%= request.identification_number %></td>
         <td><%= request.first_name %></td>
         <td><%= request.last_name %></td>
     
-        <td><%= request.academic_year %></td>
-        <td><%= request.grade %></td>
+        
+       
     
         <td><%= request.request_date.strftime("%d/%m/%Y") %></td>
         <td><%= request.status %></td>

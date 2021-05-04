@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  #resources :request_companies
+  #resources :request_subjects
   resources :general_settings
   resources :task_types
   resources :ticket_users
@@ -91,8 +93,8 @@ Rails.application.routes.draw do
 
 
   # From front request.
-  get "request/get_kairos_data" => "requests#get_kairos_data"
-  get "request/get_kairos_annee_scolaire" => "requests#get_kairos_annee_scolaire"
+  #get "/get_kairos_data" => "requests#get_kairos_data"
+  #get "/get_kairos_annee_scolaire" => "requests#get_kairos_annee_scolaire"
 
   get "requests/:id/pdf" => "requests#generate_pdf", as: :generate_pdf
 

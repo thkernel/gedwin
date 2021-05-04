@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_145947) do
+ActiveRecord::Schema.define(version: 2021_05_03_054426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -424,6 +424,24 @@ ActiveRecord::Schema.define(version: 2021_04_18_145947) do
     t.index ["user_id"], name: "index_registers_on_user_id"
   end
 
+  create_table "request_companies", force: :cascade do |t|
+    t.bigint "request_id"
+    t.string "company_name"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_request_companies_on_request_id"
+  end
+
+  create_table "request_subjects", force: :cascade do |t|
+    t.bigint "request_id"
+    t.string "subject_name"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_request_subjects_on_request_id"
+  end
+
   create_table "request_types", force: :cascade do |t|
     t.string "uid"
     t.string "name"
@@ -674,6 +692,8 @@ ActiveRecord::Schema.define(version: 2021_04_18_145947) do
   add_foreign_key "profiles", "services"
   add_foreign_key "profiles", "users"
   add_foreign_key "registers", "users"
+  add_foreign_key "request_companies", "requests"
+  add_foreign_key "request_subjects", "requests"
   add_foreign_key "request_types", "users"
   add_foreign_key "requests", "request_types"
   add_foreign_key "requests", "users"

@@ -19,6 +19,7 @@
 #  description           :text
 #  folder_id             :bigint
 #  status                :string
+#  year                  :integer
 #  user_id               :bigint
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

@@ -385,6 +385,19 @@ span.tag-item{
 }
 
 
+@media (min-width: 992px) {
+  .br-section-wrapper {
+    padding: 30px ; 
+  }
+}
+
+.br-pagebody {
+    padding: 0 0px !important;
+}
+
+
+
+
 /*
 #datatable_paginate {
     margin-left: auto !important;

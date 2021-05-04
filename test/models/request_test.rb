@@ -11,9 +11,13 @@
 #  born_date             :datetime
 #  born_place            :string
 #  academic_year         :string
-#  grade                 :string
-#  specialty             :string
+#  classroom             :string
+#  speciality            :string
+#  license_year          :string
+#  cycle                 :string
+#  level                 :string
 #  request_date          :datetime
+#  card_deliverance_date :datetime
 #  description           :text
 #  identification_number :text
 #  status                :string

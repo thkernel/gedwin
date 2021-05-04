@@ -1,11 +1,20 @@
 <%= form_with(model: request, local: true) do |form| %>
- <div class="modal-body">
-    <ul class="errors">
-    </ul>
+ 
+    <% if request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group customSelect">
         <%= form.label :request_type_id, "Type de demande", class: "required" %>
         <%= form.collection_select(:request_type_id, @request_types, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 
       </div>
@@ -71,28 +80,69 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md academic_year">
       <div class="form-group">
         <%= form.label :academic_year , "Année académique", class: "required"%>
-        <%= form.text_field :academic_year, class: "form-control", placeholder: "Année académique", required: true %>
+        <%= form.text_field :academic_year, class: "form-control", placeholder: "Année académique"%>
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md license_year">
       <div class="form-group">
-        <%= form.label :grade, "Classe", class: "required" %>
-        <%= form.text_field :grade, class: "form-control", placeholder: "Classe", required: true %>
+        <%= form.label :license_year, "Année de la licence" %>
+        <%= form.text_field :license_year, class: "form-control" %>
       </div>
     </div>
 
-    <div class="col-md-4">
+
+    <div class="col-md classroom">
       <div class="form-group">
-        <%= form.label :specialty , "Spécialité"%>
-        <%= form.text_field :specialty, class: "form-control", placeholder: "Spécialité" %>
+        <%= form.label :classroom, "Classe", class: "required" %>
+        <%= form.text_field :classroom, class: "form-control", placeholder: "Classe", required: true %>
+      </div>
+    </div>
+
+    <div class="col-md cycle">
+      <div class="form-group">
+        <%= form.label :cycle , "Cycle"%>
+        <%= form.text_field :cycle, class: "form-control", placeholder: "Cycle" %>
+      </div>
+    </div>
+
+    <div class="col-md level">
+      <div class="form-group">
+        <%= form.label :level , "Niveau"%>
+        <%= form.text_field :level, class: "form-control", placeholder: "Niveau" %>
+      </div>
+    </div>
+
+
+
+    <div class="col-md">
+      <div class="form-group">
+        <%= form.label :speciality , "Spécialité"%>
+        <%= form.text_field :speciality, class: "form-control", placeholder: "Spécialité" %>
       </div>
     </div>
    
+  </div>
+
+  <div class="row">
     
+
+    <div class="col-md card_deliverance_date">
+      <div class="form-group">
+        <%= form.label :card_deliverance_date, "Date de délivrance", class: "required" %>
+        <%= form.date_field :card_deliverance_date, class: "form-control" %>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    
+
   </div>
 
   <div class="row">
@@ -106,9 +156,11 @@
 
  
 
- </div><!-- modal body -->
-  <div class="modal-footer">
-    <%= link_to "Annuler", "#", class: "btn btn-secondary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1", data: {dismiss: "modal"} %>
-    <%= form.submit  class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1",  "data-loading-text"=>"Loading...", autocomplete: "off" %>
+ <div class="row">
+  <div class="col">
+    <div class="form-group pull-right">
+      <%= form.submit "Envoyer",  class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1",  "data-loading-text"=>"Loading...", autocomplete: "off" %>
+    </div>
   </div>
+</div>
 <% end %>

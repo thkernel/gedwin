@@ -43,7 +43,7 @@ class RequestsController < ApplicationController
   end
 
   def get_kairos_data
-    data = params[:data]
+    data = params[:id]
     user = KairosUser.find_by(username: data)
     puts "USER: #{user.inspect}"
     etudiant = KairosEtudiant.find(user.id)
