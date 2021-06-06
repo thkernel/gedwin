@@ -1,0 +1,40 @@
+<div class="content-border">
+	<div class="request-title">
+		<%= @request.request_type.name %>
+	</div>
+	<div class="request-body">
+		<div class="request-body-line">
+			Nom:  <%= @request.last_name %><br />
+		</div>
+		<div class="request-body-line">
+			Prénom: <%= @request.first_name %><br />
+		</div>
+		<div class="request-body-line">
+			Date et lieu de naissance: <%= "#{@request.born_date.strftime("%d/%m/%Y")} à #{@request.born_place}" %> <br />
+		</div>
+		<div class="request-body-line">
+			Année académique: <%= @request.academic_year %><br />
+		</div>
+		<div class="request-body-line">
+			Classe: <%= "#{@request.classroom} Spécialité: #{@request.speciality}" %> <br />
+		</div>
+		<div class="request-body-line">
+			Date de la demande: <%= @request.request_date.strftime("%d/%m/%Y") %><br />
+		</div>
+		
+	</div>
+
+</div>
+<div class="request-footer">
+	<div class="identification_number">
+		<b><u>CODE KAIROS:</u></b> <%= @request.identification_number %>
+	</div>
+
+	<div class="request-signature">
+		<br />
+		<u><b>Signature du demandeur</b></u>
+		
+
+	</div>
+
+</div>

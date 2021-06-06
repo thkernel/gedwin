@@ -227,7 +227,7 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:request_type_id, :first_name, :last_name, :gender, :born_date, :born_place, :academic_year, :grade, :specialty, :request_date, :identification_number, :description, :status)
+      params.require(:request).permit(:request_type_id, :first_name, :last_name, :gender, :born_date, :born_place, :academic_year, :classroom, :speciality, :request_date, :identification_number, :description, :companies, :subjects)
     end
 
     def front_origin?

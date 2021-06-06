@@ -149,6 +149,7 @@ class DepartureMailsController < ApplicationController
     files = params[:departure_mail][:files]
     @departure_mail = current_user.departure_mails.build(departure_mail_params)
     @departure_mail.status = "Enable"
+    @departure_mail.year = Time.now.year
 
     respond_to do |format|
       if @departure_mail.save

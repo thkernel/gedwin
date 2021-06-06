@@ -1,0 +1,57 @@
+<div class="content-border">
+	<div class="request-title">
+		<%= @request.request_type.name %>
+	</div>
+	<div class="request-body">
+		<div class="request-body-line">
+			Nom:  <%= @request.last_name %><br />
+		</div>
+		<div class="request-body-line">
+			Prénom: <%= @request.first_name %><br />
+		</div>
+		
+		
+		<div class="request-body-line">
+			Classe: <%= "#{@request.classroom} Spécialité: #{@request.speciality}" %> <br />
+		</div>
+		<div class="request-body-line">
+			Date de la demande: <%= @request.request_date.strftime("%d/%m/%Y") %><br />
+		</div>
+		<div class="request-body-line">
+			Date de délivrance: <%= @request.card_deliverance_date.strftime("%d/%m/%Y") if @request.card_deliverance_date %><br />
+		</div>
+		<div class="requestt-signature">
+		
+			<u>Signature du demandeur</u>
+		
+
+		</div>
+		
+	</div>
+
+</div>
+<div class="request-footer">
+	<div class="nota-bene">
+		<b><u>NB:</u></b> Il n'est délivré qu'une seule carte d'étudiant par cycle de formation.
+	</div>
+
+	<div class="request-signature">
+		<table>
+			<tbody>
+				<tr>
+					<td><u><b>D.P.F</b></u></td>
+					<td><u><b>D.A.F</b></u></td>
+					<td><u><b>D.G</b></u></td>
+					<td><u><b>D.I.D</b></u></td>
+					
+
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		
+		
+
+	</div>
+
+</div>

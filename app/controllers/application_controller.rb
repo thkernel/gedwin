@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 	before_action :store_user_location!, if: :storable_location?
 
 
-  protect_from_forgery with: :exception
+  	protect_from_forgery with: :exception
 	before_action :google_login, except: [:set_google_drive_token]
 	include ApplicationHelper
 
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
 	
 
-  def set_mailer_settings
+  	def set_mailer_settings
 	
       smtp_config = Config.take
 
@@ -35,8 +35,7 @@ class ApplicationController < ActionController::Base
 				#ActionMailer::Base.default_options = {from: "slatejob.official@gmail.com"}
 
 	
-
-  end
+  	end
 
 
 	def google_login

@@ -17,16 +17,30 @@ staging:
   <<: *default
   database: kairos_supmanagement
   pool: 5
-  host:     172.31.17.28
-  username: ged_ro@172.31.11.31
-  password: rt_B6hRV9zZMm?FW
+  host:     ec2-3-22-132-0.us-east-2.compute.amazonaws.com:3306
+  username: ged
+  password: Sgtdh+-456é+hbbfnd+
 
 production:
   <<: *default
   database: kairos_supmanagement
   pool: 5
-  host:     172.31.17.28
-  username: ged_ro@172.31.11.31
-  password: rt_B6hRV9zZMm?FW
+  host:     ec2-3-22-132-0.us-east-2.compute.amazonaws.com:3306
+  username: ged
+  password: Sgtdh+-456é+hbbfnd+
 
+#staging:
+  #<<: *default
+  #database: kairos_supmanagement
+  #pool: 5
+  #host:     172.31.17.28
+  #username: ged_ro@172.31.11.31
+  #password: rt_B6hRV9zZMm?FW
 
+#production:
+  #<<: *default
+  #database: kairos_supmanagement
+  #pool: 5
+  #host:     172.31.17.28
+  #username: ged_ro@172.31.11.31
+  #password: rt_B6hRV9zZMm?FW

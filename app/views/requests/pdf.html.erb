@@ -1,15 +1,40 @@
-<div class="content-border">
-	<div class="request-title">
-		<%= @request.request_type.name %>
-	</div>
-	<div class="request-body">
-		Nom:  <%= @request.last_name %><br />
-		Prénom: <%= @request.first_name %><br />
-		Date et lieu de naissance: <%= "#{@request.born_date.strftime("%d/%m/%Y")} à #{@request.born_place}" %> <br />
-		Année académique: <%= @request.academic_year %><br />
-		Classe: <%= "#{@request.grade} Spécialité: #{@request.specialty}" %> <br />
-		Date de la demande: <%= @request.request_date.strftime("%d/%m/%Y") %><br />
-		
-	</div>
 
-</div>
+<!-- Demande d'attestation d'admissibilité -->
+<% if @request.request_type.name == "Demande d'attestation d'admissibilité" %>
+	<%= render "requests/partials/demande_attestation_admissibilite" %>
+<% end %>
+
+<!-- Demande de bulletin -->
+<% if @request.request_type.name == "Demande de bulletin" %>
+	<%= render "requests/partials/demande_bulletin" %>
+<% end %>
+
+<!-- Demande de licence -->
+<% if @request.request_type.name == "Demande de licence" %>
+	<%= render "requests/partials/demande_licence" %>
+<% end %>
+
+<!-- Demande d'attestation de scolarité -->
+<% if @request.request_type.name == "Demande d'attestation de scolarité" %>
+	<%= render "requests/partials/demande_attestation_scolarite" %>
+<% end %>
+
+<!-- Demande de carte d'étudiant -->
+<% if @request.request_type.name == "Demande de carte d'étudiant" %>
+	<%= render "requests/partials/demande_carte_etudiant" %>
+<% end %>
+
+<!-- Demande d'attestation de réussite -->
+<% if @request.request_type.name == "Demande d'attestation de réussite" %>
+	<%= render "requests/partials/demande_attestation_reussite" %>
+<% end %>
+
+<!-- Demande de passation d'UV -->
+<% if @request.request_type.name == "Demande de passation d'UV" %>
+	<%= render "requests/partials/demande_passation_uv" %>
+<% end %>
+
+<!-- Demande de stage -->
+<% if @request.request_type.name == "Demande de stage" %>
+	<%= render "requests/partials/demande_stage" %>
+<% end %>

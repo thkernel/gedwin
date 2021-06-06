@@ -148,7 +148,7 @@ class ImputationsController < ApplicationController
         
         format.html { render :new}
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
-      
+        
       end
     end
   end

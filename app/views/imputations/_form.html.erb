@@ -12,25 +12,25 @@
   <% end %>
 
   <div class="row">
-    <div class="form-group col-md-6 customSelect">
+    <div class="form-group col-md-12 customSelect">
       <%= form.label :direction_id , "Direction", class: "required"%>
       <%= form.collection_select(:direction_id, @directions, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
 
     </div>
 
-    <div class="form-group col-md-6 customSelect">
+    <div class="form-group col-md-12 customSelect">
       <%= form.label :division_id , "Division"%>
       <%= form.collection_select(:division_id, @divisions, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 
 
     </div>
 
-    <div class="form-group col-md-6 customSelect">
+    <div class="form-group col-md-12 customSelect">
       <%= form.label :service_id , "Service" %>
       <%= form.collection_select(:service_id, @services, :id, :name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%") %> 
 
     </div>
 
-    <div class="form-group col-md-6 customSelect">
+    <div class="form-group col-md-12 customSelect">
       <%= form.label :recipient_id, "Destinataire", class: "required" %>
       <%= form.collection_select(:recipient_id, @recipients, :user_id, :full_name, {prompt: "Sélectionner"}, class: "form-control", style: "width: 100%", required: true) %> 
 
@@ -76,8 +76,11 @@
  
 
  
-
-  <div class="form-group pull-right">
-    <%= form.submit class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1" %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group pull-right">
+        <%= form.submit class: "btn btn-primary tx-mont tx-medium tx-11 tx-uppercase pd-y-12 pd-x-25 tx-spacing-1" %>
+      </div>
+    </div>
   </div>
 <% end %>

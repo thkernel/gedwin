@@ -75,23 +75,34 @@ module ApplicationHelper
 
 	end
 
+	def subjects_list(subjects)
+		subjects.split(";")
+	end
+	def companies_list(companies)
+		companies.split(";")
+	end
+
 	def last_arrival_mail()
 		#Get year
 		year = Time.now.year 
 
 		last_arrival_mail = ArrivalMail.where(year: year).last
 
+		puts "LAST ARRIVAL MAIL: #{last_arrival_mail.inspect} "
+
 		if last_arrival_mail.present? 
-      		id_str = last_arrival_mail[0].id.to_s
+      		id = last_arrival_mail.id
+      		id_str = id.to_s
+      		puts "A: #{id}"
       
 	      if id_str.size == 1
-	        @internal_reference = "000#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        @internal_reference = "000#{last_arrival_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      elsif id_str.size == 2
-	        @internal_reference = "00#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        @internal_reference = "00#{last_arrival_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      elsif id_str.size == 3
-	        @internal_reference = "0#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        @internal_reference = "0#{last_arrival_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      elsif id_str == 4
-	        @internal_reference = "#{last_arrival_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        @internal_reference = "#{last_arrival_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      end
 	    else
 	      
@@ -106,19 +117,19 @@ module ApplicationHelper
 		#Get year
 		year = Time.now.year 
 
-		last_departure_mail = DepartureMail.where(year: year)
+		last_departure_mail = DepartureMail.where(year: year).last
 
     	if last_departure_mail.present? 
-      		id_str = last_departure_mail[0].id.to_s
+      		id_str = last_departure_mail.id.to_s
       
 	      	if id_str.size == 1
-	        	@internal_reference = "000#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        	@internal_reference = "000#{last_departure_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      	elsif id_str.size == 2
-	        	@internal_reference = "00#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        	@internal_reference = "00#{last_departure_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      	elsif id_str.size == 3
-	        	@internal_reference = "0#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        	@internal_reference = "0#{last_departure_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      	elsif id_str == 4
-	        	@internal_reference = "#{last_departure_mail[0].id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
+	        	@internal_reference = "#{last_departure_mail.id+1}|SUP|#{Time.new.month}|#{Time.new.year}"
 	      	end
 	    else
       

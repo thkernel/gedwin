@@ -471,6 +471,8 @@ ActiveRecord::Schema.define(version: 2021_05_03_054426) do
     t.datetime "card_deliverance_date"
     t.text "description"
     t.text "identification_number"
+    t.string "companies"
+    t.string "subjects"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false

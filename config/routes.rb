@@ -96,7 +96,7 @@ Rails.application.routes.draw do
   #get "/get_kairos_data" => "requests#get_kairos_data"
   #get "/get_kairos_annee_scolaire" => "requests#get_kairos_annee_scolaire"
 
-  get "requests/:id/pdf" => "requests#generate_pdf", as: :generate_pdf
+  get "requests/:uid/pdf" => "requests#generate_pdf", as: :generate_pdf
 
   resources :requests do   
     get "delete"

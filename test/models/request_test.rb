@@ -20,6 +20,8 @@
 #  card_deliverance_date :datetime
 #  description           :text
 #  identification_number :text
+#  companies             :string
+#  subjects              :string
 #  status                :string
 #  user_id               :bigint
 #  created_at            :datetime         not null

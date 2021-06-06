@@ -89,9 +89,6 @@ function ajaxGetData(source, route, verb){
                 console.log("DATA: ", response.classe);
                 classe = response.classe;
                 //etudiant = response.etudiant;
-               
-
-               
 
                $("#request_classroom").val(classe.sigle);
                 
@@ -108,18 +105,61 @@ function ajaxGetData(source, route, verb){
 
 function hideOrDisplayFields(){
 
-    request_request_type = $('#request_request_type_id').val();
+    //request_request_type_id = $('#request_request_type_id').val();
+    request_request_type = $('#request_request_type_id option:selected').html();
     console.log("REQUEST TYPE: ", request_request_type); 
 
-    if (request_request_type != null && request_request_type == "Oui"){
-        $(".arrival_mail_linked_mail").css("display", "block");
+    if (request_request_type != null && request_request_type == "Demande de licence"){
+        $(".license_year").css("display", "block");
+        $(".cycle").css("display", "block");
+
+        $(".classroom").css("display", "none");
+        $(".level").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+
         
+    }else if (request_request_type != null && request_request_type == "Demande de passation d'UV"){
+        
+        $(".subjects").css("display", "block");
+        $(".classroom").css("display", "block");
+        
+        
+        $(".cycle").css("display", "none");
+        $(".level").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+        $(".companies").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+        $(".license_year").css("display", "none");
+
+    }else if (request_request_type != null && request_request_type == "Demande de stage"){
+        
+        $(".companies").css("display", "block");
+        $(".classroom").css("display", "block");
+        
+        $(".cycle").css("display", "none");
+        $(".subjects").css("display", "none");
+        $(".level").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+        $(".license_year").css("display", "none");
+
+    }else if (request_request_type != null && request_request_type == "Demande de bulletin"){
+        
+        $(".classroom").css("display", "block");
+        
+        $(".license_year").css("display", "none");
+        $(".cycle").css("display", "none");
+        $(".level").css("display", "none");
+        $(".card_deliverance_date").css("display", "none");
+        $(".subjects").css("display", "none");
+        $(".companies").css("display", "none");
     }
     else{
         $(".license_year").css("display", "none");
         $(".cycle").css("display", "none");
         $(".level").css("display", "none");
         $(".card_deliverance_date").css("display", "none");
+        $(".subjects").css("display", "none");
+        $(".companies").css("display", "none");
 
     }
 }

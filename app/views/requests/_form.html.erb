@@ -98,7 +98,7 @@
     <div class="col-md classroom">
       <div class="form-group">
         <%= form.label :classroom, "Classe", class: "required" %>
-        <%= form.text_field :classroom, class: "form-control", placeholder: "Classe", required: true %>
+        <%= form.text_field :classroom, class: "form-control", placeholder: "Classe" %>
       </div>
     </div>
 
@@ -141,7 +141,19 @@
   </div>
 
   <div class="row">
-    
+    <div class="col-md-12 subjects">
+      <div class="form-group">
+        <%= form.label :subjects, "Matières (Veuillez séparer les noms des matières par ';')" %>
+        <%= form.text_field :subjects, class: "form-control", placeholder: "Liste des matières" %>
+      </div>
+    </div>
+
+    <div class="col-md-12 companies">
+      <div class="form-group">
+        <%= form.label :companies, "Entreprises (Veuillez séparer les noms des entreprises par ';')" %>
+        <%= form.text_field :companies, class: "form-control", placeholder: "Liste des entreprises" %>
+      </div>
+    </div>
 
   </div>
 

@@ -135,6 +135,7 @@ class ArrivalMailsController < ApplicationController
 
     @arrival_mail = current_user.arrival_mails.build(arrival_mail_params)
     @arrival_mail.status = "Enable"
+    @arrival_mail.year = Time.now.year
     
     respond_to do |format|
       if @arrival_mail.save

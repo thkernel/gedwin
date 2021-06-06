@@ -263,10 +263,10 @@ unless RequestType.all.present?
             {name: "Demande de bulletin", user_id: users.first.id},
             {name: "Demande de passation d'UV", user_id: users.first.id},
             {name: "Demande de licence", user_id: users.first.id},
-            {name: "Demande de carte d'etudiant", user_id: users.first.id},
-            {name: "Demande d'attestation de reussite", user_id: users.first.id},
+            {name: "Demande de carte d'étudiant", user_id: users.first.id},
+            {name: "Demande d'attestation de réussite", user_id: users.first.id},
             {name: "Demande de stage", user_id: users.first.id},
-            {name: "Demande d'authentification de bulletin", user_id: users.first.id}
+            {name: "Demande de fiche de master", user_id: users.first.id}
         ])
 else    
     request_types =  RequestType.all

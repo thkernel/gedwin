@@ -62,8 +62,11 @@ class RegistersController < ApplicationController
   # PATCH/PUT /registers/1.json
   def update
     
-    Register.where(register_type: @register.register_type).update_all(status: REGISTER_STATUSES[1][0])
-    @register.status = @register.register_type
+    other_registers = Register.where(register_type: @register.register_type)
+    other_registers = other_registers.where.not(id: @register.id)
+
+    other_registers.update_all(status: REGISTER_STATUSES[1][0])
+    #@register.status = @register.register_type
 
     respond_to do |format|
       if @register.update(register_params)

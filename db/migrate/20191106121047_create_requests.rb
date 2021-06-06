@@ -18,6 +18,8 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.datetime :card_deliverance_date
       t.text :description
       t.text :identification_number
+      t.string :companies
+      t.string :subjects
       t.string :status
       t.references :user, foreign_key: true
 
