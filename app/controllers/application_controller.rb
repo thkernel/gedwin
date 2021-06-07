@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 	
-    protect_from_forgery with: :exception, prepend: true
+    protect_from_forgery with: :exception#, prepend: true
 	before_action :store_user_location!, if: :storable_location?
 
 
