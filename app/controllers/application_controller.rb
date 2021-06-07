@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
-	include ActivityLogsConcern
-
+	
+    protect_from_forgery with: :exception, prepend: true
 	before_action :store_user_location!, if: :storable_location?
 
 
-  	protect_from_forgery with: :exception, prepend: true
+  	
 	before_action :google_login, except: [:set_google_drive_token]
+	include ActivityLogsConcern
 	include ApplicationHelper
 
 	rescue_from CanCan::AccessDenied do |exception|  
