@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     get "delete"
     
   end
-  #post "imputations/new"
+  post "imputations/new"
   #get "imputations/new", controller: "imputations", action: :new
   #post "imputations/new", controller: "imputations", action: :create
 

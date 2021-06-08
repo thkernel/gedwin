@@ -277,7 +277,7 @@ unless Folder.all.present?
     folders = Folder.create(
         [
             {name: "FACTURES", user_id: users.first.id},
-            {name: "LETTRRES", user_id: users.first.id}
+            {name: "LETTRES", user_id: users.first.id}
         ])
 else    
     folders =  Folder.all
@@ -289,14 +289,118 @@ end
 unless Feature.all.present?
     features = Feature.create([
         {
-            name: "Utilisateurs" 
+            name: "Courrier d'arrivée" 
             
         },
         {
-            name: "Paramètres"
+            name: "Courrier départ" 
+            
         },
         {
-            name: "Configurations" 
+            name: "Imputation" 
+            
+        },
+        {
+            name: "Rôle" 
+            
+        },
+        {
+            name: "Division" 
+            
+        },
+        {
+            name: "Logs" 
+            
+        },
+        {
+            name: "Correspondant" 
+            
+        },
+        {
+            name: "Type de correspondant" 
+            
+        },
+        {
+            name: "Service" 
+            
+        },
+        {
+            name: "Configuration SMTP" 
+            
+        },
+
+        {
+            name: "Registre" 
+            
+        },
+        {
+            name: "Nature" 
+            
+        },
+        {
+            name: "Support" 
+            
+        },
+        {
+            name: "Dossier" 
+            
+        },
+        {
+            name: "Direction" 
+            
+        },
+        {
+            name: "Demande" 
+            
+        },
+        {
+            name: "Type de demande" 
+            
+        },
+        {
+            name: "Ticket" 
+            
+        },
+        {
+            name: "Document" 
+            
+        },
+        {
+            name: "Commantaire" 
+            
+        },
+        {
+            name: "Organisation" 
+            
+        },
+        {
+            name: "Type d'organisation" 
+            
+        },
+        {
+            name: "Type de tâche"   
+        },
+        {
+            name: "Status des tâches" 
+            
+        },
+        {
+            name: "Type de tâche" 
+            
+        },
+        {
+            name: "Permission" 
+            
+        },
+        {
+            name: "Utilisateur" 
+            
+        },
+        {
+            name: "Paramètre"
+        },
+        {
+            name: "Configuration" 
         }
     
     ])

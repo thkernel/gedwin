@@ -1,4 +1,5 @@
 class GeneralSettingsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_general_setting, only: [:show, :edit, :update, :destroy]
   layout "dashboard"

@@ -1,4 +1,5 @@
 class TaskStatusesController < ApplicationController
+  authorize_resource
   before_action :set_task_status, only: [:show, :edit, :update, :destroy]
 
   # GET /task_statuses

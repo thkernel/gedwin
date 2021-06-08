@@ -1,8 +1,9 @@
 class ActivityLogsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_activity_log, only: [:show, :edit, :update, :destroy]
   layout "dashboard"
-
+  authorize_resource
   # GET /activity_logs
   # GET /activity_logs.json
   def index

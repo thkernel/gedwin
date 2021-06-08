@@ -1,4 +1,5 @@
 class DivisionsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
   before_action :set_division, only: [:show, :edit, :update, :destroy]

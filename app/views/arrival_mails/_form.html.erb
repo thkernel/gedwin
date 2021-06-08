@@ -1,5 +1,18 @@
 <%= form_with(model: arrival_mail, local: true) do |form| %>
- 
+    <% if arrival_mail.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+
+      <ul>
+      <% arrival_mail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
     <!-- Courrier infos fieldset -->
     <fieldset>
       <legend>Courrier</legend>

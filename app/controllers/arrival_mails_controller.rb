@@ -1,5 +1,5 @@
 class ArrivalMailsController < ApplicationController
-
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_arrival_mail, only: [:show, :edit, :update, :destroy, :to_archive]
   layout "dashboard"

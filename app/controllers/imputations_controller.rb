@@ -51,7 +51,14 @@ class ImputationsController < ApplicationController
     role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
     @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
     puts "RECIPIENTS: #{@recipients}"
+
+    if imputation_params
+      create 
+      return 
+    end
+
     @imputation = Imputation.new
+    render :new
 
   end
 
@@ -71,13 +78,21 @@ class ImputationsController < ApplicationController
 #
   def get_divisions
     puts "ID: #{params[:id]}"
-    @profiles = Profile.where(direction_id: params[:id])
+
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    recipients = User.where("role_id  IN (?)", role_ids)#.map {|user| user.profile}
+    
+    @profiles = recipients.where(direction_id: params[:id])
     @divisions = Division.where(direction_id: params[:id])#.map { |division| [division.name, division.id] }.unshift('Sélectionner')
   end
 
   def get_services
     puts "ID: #{params[:id]}"
-    @profiles = Profile.where(division_id: params[:id])
+
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    recipients = User.where("role_id  IN (?)", role_ids)#.map {|user| user.profile}
+    
+    @profiles = recipients.where(division_id: params[:id])
 
     @services = Service.where(division_id: params[:id])#.map { |service| [service.name, service.id] }.unshift('Sélectionner')
   end
@@ -86,7 +101,10 @@ class ImputationsController < ApplicationController
     
     
     puts "ID: #{params[:id]}"
-    @profiles = Profile.where(service_id: params[:id])
+    role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+    recipients = User.where("role_id  IN (?)", role_ids)#.map {|user| user.profile}
+    
+    @profiles = recipients.where(service_id: params[:id])
     
   end
 
@@ -100,6 +118,8 @@ class ImputationsController < ApplicationController
 
     elsif flash[:rtype].present? && flash[:rtype] == "Request"
       resource = Request.find(flash[:request]["id"])
+    elsif flash[:rtype].present? && flash[:rtype] == "Document"
+      resource = Document.find(flash[:document]["id"])
     else
       return
     end
@@ -108,9 +128,12 @@ class ImputationsController < ApplicationController
 
     #Imputable
     @imputation.imputable = resource
+
+    puts "RESOURCE: #{resource.inspect}"
+    puts "IMPUTATION: #{@imputation.inspect}"
     #ImputationsService.imputable(resource)
     
-    notification_content = "Un courrier ou demande vous a été imputé."
+    notification_content = "Un courrier, demande ou document vous a été imputé."
    
 
     respond_to do |format|
@@ -133,6 +156,8 @@ class ImputationsController < ApplicationController
 
         elsif flash[:rtype].present? && flash[:rtype] == "Request"
           @imputations = resource.imputations
+        elsif flash[:rtype].present? && flash[:rtype] == "Document"
+          @imputations = resource.imputations
         end
         
         format.html { redirect_to imputations_path(uid: flash[:rtype].constantize.find(@imputation.imputable_id).uid, rtype: flash[:rtype]), notice: 'Imputation was successfully created.' }
@@ -146,6 +171,7 @@ class ImputationsController < ApplicationController
         role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
         @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
         
+
         format.html { render :new}
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
         
@@ -229,7 +255,11 @@ class ImputationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def imputation_params
-      params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :priority, :status, :_destroy])
+      if params[:imputation].nil? || params[:imputation].empty?
+       false
+      else
+        params.require(:imputation).permit(:direction_id, :division_id, :service_id, :recipient_id,  imputation_items_attributes: [:id,  :title, :due_date,  :description, :priority, :status, :_destroy])
+      end
     end
 
    

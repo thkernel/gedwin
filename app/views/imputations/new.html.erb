@@ -10,7 +10,15 @@
     <hr />
     </div>
 
-      <%= render 'form', imputation: @imputation %>
+    	<% if @arrival_mail.present? %>
+      		<%= render 'imputations/partials/arrival_mail_imputation_form', imputation: @imputation %>
+
+      	<% elsif @request.present? %>
+      		<%= render 'imputations/partials/request_imputation_form', imputation: @imputation %>
+
+      	<% elsif @document.present? %>
+      		<%= render 'imputations/partials/document_imputation_form', imputation: @imputation %>
+      	<% end %>
 
 </div>
   </div>

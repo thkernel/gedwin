@@ -1,4 +1,5 @@
 class DirectionsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
   before_action :set_direction, only: [:show, :edit, :update, :destroy]
