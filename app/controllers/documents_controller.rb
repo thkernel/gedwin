@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  authorize_resource
+  #authorize_resource
   before_action :authenticate_user!
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   layout "dashboard"
@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   def new
-    @folders = Folder.all
+    @folders = Folder.where.not(parent_id: nil)
     @supports = Support.all 
     @natures = Nature.all
    

@@ -59,9 +59,9 @@ class ImputationItemsController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
 
-    if @imputation_item.task_status_id == TaskStatus.find_by(name: "En cours").id
+    if @imputation_item.status == "En cours"
       @imputation_item.start_date = Time.now
-    elsif @imputation_item.task_status_id == TaskStatus.find_by(name: "Terminé").id
+    elsif @imputation_item.status == "Terminée"
       @imputation_item.completed_date = Time.now
       unless @imputation_item.start_date.present?
         
@@ -74,7 +74,7 @@ class ImputationItemsController < ApplicationController
         #@imputation_items = ImputationItem.where(imputation_id: @imputation_item.imputation_id)
         @imputation = Imputation.find(@imputation_item.imputation_id)
 
-        format.html { redirect_to @imputation_item, notice: 'Task was successfully updated.' }
+        format.html { redirect_to show_imputation_path(@imputation.uid), notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @imputation_item }
         format.js
       else

@@ -26,7 +26,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <%= form.label :external_reference, "Réf. externe" %>
+            <%= form.label :external_reference, "Réf. externe", class: "required" %>
             <%= form.text_field :external_reference,  class: "form-control" , placeholder: "Réf. externe"%>
           </div>
         </div>
@@ -183,7 +183,7 @@
           </div>
 
           <div class="form-group">
-            <%= form.label :attachments, "Pièces-jointes" %>
+            <%= form.label :attachments, "Pièces-jointes", class: "required" %>
             <%= form.file_field :files, id: :arrival_mail_attachments_number , class: "form-control", placeholder: "Pièces-jointes", multiple: true, direct_upload: true %>
           </div>
         </div>

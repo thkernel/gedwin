@@ -1,5 +1,5 @@
 class DepartureMailsController < ApplicationController
-  authorize_resource
+  #authorize_resource
   before_action :authenticate_user!
   layout "dashboard"
   

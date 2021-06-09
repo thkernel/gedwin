@@ -289,111 +289,133 @@ end
 unless Feature.all.present?
     features = Feature.create([
         {
-            name: "Courrier d'arrivée" 
+            name: "Courrier d'arrivée",
+            subject_class: "ArrivalMail"
             
         },
         {
-            name: "Courrier départ" 
+            name: "Courrier départ" ,
+            subject_class: "DepartureMail"
             
         },
         {
-            name: "Imputation" 
+            name: "Imputation",
+            subject_class: "Imputation"
             
         },
         {
-            name: "Rôle" 
+            name: "Rôle",
+            subject_class: "Role"
             
         },
         {
-            name: "Division" 
+            name: "Division",
+            subject_class: "Division" 
             
         },
         {
-            name: "Logs" 
+            name: "Logs",
+            subject_class: "ActivityLog"
             
         },
         {
-            name: "Correspondant" 
+            name: "Correspondant",
+            subject_class: "Correspondent"
             
         },
         {
-            name: "Type de correspondant" 
+            name: "Type de correspondant",
+            subject_class: "CorrespondentType" 
             
         },
         {
-            name: "Service" 
+            name: "Service",
+            subject_class: "Service"
             
         },
         {
-            name: "Configuration SMTP" 
+            name: "Configuration SMTP",
+            subject_class: "SmtpConfig" 
             
         },
 
         {
-            name: "Registre" 
+            name: "Registre",
+            subject_class: "Register"
             
         },
         {
-            name: "Nature" 
+            name: "Nature",
+            subject_class: "Nature" 
             
         },
         {
-            name: "Support" 
+            name: "Support",
+            subject_class: "Support" 
             
         },
         {
-            name: "Dossier" 
+            name: "Dossier",
+            subject_class: "Folder" 
             
         },
         {
-            name: "Direction" 
+            name: "Direction",
+            subject_class: "Direction" 
             
         },
         {
-            name: "Demande" 
+            name: "Demande",
+            subject_class: "Request" 
             
         },
         {
-            name: "Type de demande" 
+            name: "Type de demande",
+            subject_class: "RequestType"
             
         },
         {
-            name: "Ticket" 
+            name: "Ticket",
+            subject_class: "Ticket" 
             
         },
         {
-            name: "Document" 
+            name: "Document",
+            subject_class: "Document" 
             
         },
         {
-            name: "Commantaire" 
+            name: "Commantaire",
+            subject_class: "Comment" 
             
         },
         {
-            name: "Organisation" 
+            name: "Organisation",
+            subject_class: "Organization" 
             
         },
         {
-            name: "Type d'organisation" 
+            name: "Type d'organisation",
+            subject_class: "OrganizationType" 
             
         },
         {
-            name: "Type de tâche"   
+            name: "Type de tâche",
+            subject_class: "TaskType"   
         },
         {
-            name: "Status des tâches" 
+            name: "Status des tâches",
+            subject_class: "TastStatus" 
             
         },
         {
-            name: "Type de tâche" 
+            name: "Permission",
+            subject_class: "Permission" 
             
         },
         {
-            name: "Permission" 
-            
-        },
-        {
-            name: "Utilisateur" 
+            name: "Utilisateur",
+            subject_class: "User" 
             
         },
         {

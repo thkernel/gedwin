@@ -5,6 +5,10 @@ require './lib/shared_utils/utils'
 require './lib/outin_storage/outin_storage'
 #require './lib/shared_utils/google_drive_client'
 require './lib/google_drive/google_drive'
+require './lib/tasks/arrival_mails/arrival_mails_delay_check'
+require './lib/tasks/tasks/tasks_delay_check'
+require './lib/tasks/tickets/tickets_delay_check'
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

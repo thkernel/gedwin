@@ -108,20 +108,22 @@
             <span class="menu-item-label">Paramètres</span>
           </a><!-- br-menu-link -->
           <ul class="br-menu-sub">
+
+            <li class="sub-item">
+                <%= link_to  "Rôles", roles_path, class: "sub-link #{current? "active", roles_path}" %>
+            </li>
+            
+            <li class="sub-item">
+                <%= link_to  "Droits d'accès", permissions_path, class: "sub-link #{current? "active", permissions_path}" %>
+            </li>
             
             <li class="sub-item">
                 <%= link_to  "Utilisateurs", all_users_path, class: "sub-link #{current? "active", all_users_path}" %>
             </li>
 
             
-            <li class="sub-item">
-                <%= link_to  "Rôles", roles_path, class: "sub-link #{current? "active", roles_path}" %>
-            </li>
-
            
-            <li class="sub-item">
-                <%= link_to  "Droits d'accès", permissions_path, class: "sub-link #{current? "active", permissions_path}" %>
-            </li>
+            
 
             <li class="sub-item">
                 <%= link_to  "Registres", registers_path, class: "sub-link #{current? "active", registers_path}" %>

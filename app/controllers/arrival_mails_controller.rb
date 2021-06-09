@@ -1,5 +1,5 @@
 class ArrivalMailsController < ApplicationController
-  authorize_resource
+  #authorize_resource
   before_action :authenticate_user!
   before_action :set_arrival_mail, only: [:show, :edit, :update, :destroy, :to_archive]
   layout "dashboard"
@@ -15,6 +15,7 @@ class ArrivalMailsController < ApplicationController
 
     #@arrival_mails = ArrivalMail.where.not(status: "Archived")
     record_activity("Afficher la liste des courriers arrivées")
+            
 
   end
 
@@ -135,6 +136,11 @@ class ArrivalMailsController < ApplicationController
 
     @arrival_mail = current_user.arrival_mails.build(arrival_mail_params)
     @arrival_mail.status = "Enable"
+
+    if @arrival_mail.response_date.present?
+      @arrival_mail.status = "Répondu"
+    end
+    
     @arrival_mail.year = Time.now.year
     
     respond_to do |format|
@@ -174,6 +180,10 @@ class ArrivalMailsController < ApplicationController
   # PATCH/PUT /arrival_mails/1
   # PATCH/PUT /arrival_mails/1.json
   def update
+    if @arrival_mail.response_date.present?
+      @arrival_mail.status = "Répondu"
+    end
+
     respond_to do |format|
       if @arrival_mail.update(arrival_mail_params)
         record_activity("Modifier un courrier arrivée (ID: #{@arrival_mail.id})")

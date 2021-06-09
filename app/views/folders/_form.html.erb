@@ -9,7 +9,7 @@
     <%= form.text_field :name, id: :folder_name, class: "form-control", placeholder: "Nom", required: true %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group customSelect">
      <%= form.label :parent_id, "Dossier parent" %>
     <%= form.collection_select :parent_id, @folders, :id, :name, {prompt: "Sélectionner"} , class: "form-control", style: "width: 100%;" %>
   </div>

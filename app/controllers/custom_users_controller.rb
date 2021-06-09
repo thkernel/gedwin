@@ -1,9 +1,9 @@
 class CustomUsersController < ApplicationController
-	authorize_resource
+	#authorize_resource
 		before_action :authenticate_user!
 		layout "dashboard"
 
-    before_action :set_user, only: [:show, :edit, :update, :destroy] # probably want to keep using this
+        before_action :set_user, only: [:show, :edit, :update, :destroy] # probably want to keep using this
     
     
 
