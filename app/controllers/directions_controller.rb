@@ -36,7 +36,7 @@ class DirectionsController < ApplicationController
         record_activity("Créer une direction (ID: #{@direction.id})")
 
         @directions = Direction.all
-        format.html { redirect_to @direction, notice: 'Direction was successfully created.' }
+        format.html { redirect_to @direction, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @direction }
         format.js
       else
@@ -55,7 +55,7 @@ class DirectionsController < ApplicationController
         record_activity("Modifier une direction (ID: #{@direction.id})")
 
         @directions = Direction.all
-        format.html { redirect_to @direction, notice: 'Direction was successfully updated.' }
+        format.html { redirect_to @direction, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @direction }
         format.js
       else
@@ -78,7 +78,7 @@ class DirectionsController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer une direction (ID: #{@direction.id})")
 
-      format.html { redirect_to directions_url, notice: 'Direction was successfully destroyed.' }
+      format.html { redirect_to directions_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

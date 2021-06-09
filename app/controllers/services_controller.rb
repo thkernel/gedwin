@@ -39,7 +39,7 @@ class ServicesController < ApplicationController
         record_activity("Créer un service (ID: #{@service.id})")
 
         @services = Service.all
-        format.html { redirect_to @service, notice: 'Service was successfully created.' }
+        format.html { redirect_to @service, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @service }
         format.js
       else
@@ -64,7 +64,7 @@ class ServicesController < ApplicationController
         record_activity("Modifier un service (ID: #{@service.id})")
 
         @services = Service.all
-        format.html { redirect_to @service, notice: 'Service was successfully updated.' }
+        format.html { redirect_to @service, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @service }
         format.js
       else
@@ -83,7 +83,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer un service (ID: #{@service.id})")
 
-      format.html { redirect_to services_url, notice: 'Service was successfully destroyed.' }
+      format.html { redirect_to services_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
       format.js
     end

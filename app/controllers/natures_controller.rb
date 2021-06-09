@@ -48,7 +48,7 @@ class NaturesController < ApplicationController
 
         @natures = Nature.all
 
-        format.html { redirect_to @nature, notice: 'Nature was successfully created.' }
+        format.html { redirect_to @nature, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @nature }
         format.js
       else
@@ -68,7 +68,7 @@ class NaturesController < ApplicationController
 
         @natures = Nature.all
 
-        format.html { redirect_to @nature, notice: 'Nature was successfully updated.' }
+        format.html { redirect_to @nature, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @nature }
         format.js
       else
@@ -93,7 +93,7 @@ class NaturesController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer une nature (ID: #{@nature.id})")
 
-      format.html { redirect_to natures_url, notice: 'Nature was successfully destroyed.' }
+      format.html { redirect_to natures_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
       format.js
     end

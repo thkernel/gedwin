@@ -8,10 +8,10 @@ class DashboardController < ApplicationController
 	def index
 
 		
-		@total_arrival_mails = current_user.arrival_mails.count
-		@total_departure_mails = current_user.departure_mails.count
-		@total_requests = current_user.requests.count
-		@total_documents = current_user.documents.count
+		@total_arrival_mails = ArrivalMail.count
+		@total_departure_mails = DepartureMail.count
+		@total_requests = Request.count
+		@total_documents = Document.count
 
 		#@current_user_arrival_mails = current_user.arrival_mails.take(5)
 		
@@ -19,8 +19,14 @@ class DashboardController < ApplicationController
 		#last_imputations = last_imputations.select {|imputation| imputation.imputation_items.present?}
 		@last_tasks = last_imputations.map {|imputation| imputation.imputation_items}.flatten
 		
-		@last_requests = current_user.requests
-		@last_arrival_mails = current_user.arrival_mails
+		if current_user.superuser? || current_user.admin?
+			@last_requests = Request.all
+			@last_arrival_mails = ArrivalMail.all
+		else
+			@last_requests = current_user.requests
+			@last_arrival_mails = current_user.arrival_mails
+		end
+		
 
 		
 		overdue_imputations = Imputation.where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)

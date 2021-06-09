@@ -43,7 +43,7 @@ class CorrespondentsController < ApplicationController
     respond_to do |format|
       if @correspondent.save
         @correspondents = Correspondent.all
-        format.html { redirect_to @correspondent, notice: 'Correspondent was successfully created.' }
+        format.html { redirect_to @correspondent, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @correspondent }
         format.js
       else
@@ -60,7 +60,7 @@ class CorrespondentsController < ApplicationController
     respond_to do |format|
       if @correspondent.update(correspondent_params)
         @correspondents = Correspondent.all
-        format.html { redirect_to @correspondent, notice: 'Correspondent was successfully updated.' }
+        format.html { redirect_to @correspondent, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @correspondent }
         format.js
       else
@@ -82,7 +82,7 @@ class CorrespondentsController < ApplicationController
     @correspondent.destroy
     @correspondents = Correspondent.all
     respond_to do |format|
-      format.html { redirect_to correspondents_url, notice: 'Correspondent was successfully destroyed.' }
+      format.html { redirect_to correspondents_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
       format.js
     end

@@ -38,7 +38,7 @@ class DivisionsController < ApplicationController
         record_activity("Créer une division (ID: #{@division.id})")
 
         @divisions = Division.all
-        format.html { redirect_to @division, notice: 'Division was successfully created.' }
+        format.html { redirect_to @division, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @division }
         format.js
       else
@@ -57,7 +57,7 @@ class DivisionsController < ApplicationController
         record_activity("Modifier une division (ID: #{@division.id})")
 
         @divisions = Division.all
-        format.html { redirect_to @division, notice: 'Division was successfully updated.' }
+        format.html { redirect_to @division, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @division }
         format.js
       else
@@ -79,7 +79,7 @@ class DivisionsController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer une division (ID: #{@division.id})")
 
-      format.html { redirect_to divisions_url, notice: 'Division was successfully destroyed.' }
+      format.html { redirect_to divisions_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

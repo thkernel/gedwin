@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  authorize_resource except: [:new_front_request]
+  #authorize_resource except: [:new_front_request]
   before_action :authenticate_user! unless :front_origin?
   before_action :front_origin?, only: [:new]
   before_action :set_request, only: [:show, :edit, :update,:generate_pdf, :destroy]
@@ -150,7 +150,7 @@ class RequestsController < ApplicationController
 
           @current_user_requests = current_user.requests
 
-          format.html { redirect_to requests_path, notice: 'Request was successfully created.' }
+          format.html { redirect_to requests_path, notice: 'Enregistrer avec succès.' }
           format.json { render :show, status: :created, location: @request }
           format.js
         else
@@ -166,7 +166,7 @@ class RequestsController < ApplicationController
         if  @request.save
           record_activity("Créer une nouvelle démande (ID: #{@request.id})")
 
-          format.html { redirect_to front_request_success_path, notice: 'Request was successfully created.' }
+          format.html { redirect_to front_request_success_path, notice: 'Envoyer avec succès.' }
           format.json { render :show, status: :created, location: @request }
           
         else
@@ -187,7 +187,7 @@ class RequestsController < ApplicationController
         @current_user_requests = current_user.requests
         record_activity("Modifier une démande (ID: #{@request.id})")
 
-        format.html { redirect_to requests_path, notice: 'Request was successfully updated.' }
+        format.html { redirect_to requests_path, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @request }
         format.js
       else
@@ -210,7 +210,7 @@ class RequestsController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer une démande (ID: #{@request.id})")
 
-      format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
+      format.html { redirect_to requests_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

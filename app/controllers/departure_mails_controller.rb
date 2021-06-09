@@ -162,7 +162,7 @@ class DepartureMailsController < ApplicationController
           end
         end
 
-        format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully created.' }
+        format.html { redirect_to departure_mails_path, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @departure_mail }
       else
         format.html { render :new }
@@ -185,7 +185,7 @@ class DepartureMailsController < ApplicationController
           end
         end
         
-        format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully updated.' }
+        format.html { redirect_to departure_mails_path, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @departure_mail }
       else
         format.html { render :edit }
@@ -206,7 +206,7 @@ class DepartureMailsController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer un courrier départ (ID: #{@departure_mail.id})")
 
-      format.html { redirect_to departure_mails_path, notice: 'Departure mail was successfully destroyed.' }
+      format.html { redirect_to departure_mails_path, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

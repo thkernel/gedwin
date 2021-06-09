@@ -36,7 +36,7 @@ class RequestTypesController < ApplicationController
         record_activity("Créer un type de démande (ID: #{@request_type.id})")
 
         @request_types = RequestType.all
-        format.html { redirect_to @request_type, notice: 'Request type was successfully created.' }
+        format.html { redirect_to @request_type, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @request_type }
         format.js
       else
@@ -55,7 +55,7 @@ class RequestTypesController < ApplicationController
         record_activity("Modifier un type de démande (ID: #{@request_type.id})")
 
         @request_types = RequestType.all
-        format.html { redirect_to @request_type, notice: 'Request type was successfully updated.' }
+        format.html { redirect_to @request_type, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @request_type }
         format.js
       else
@@ -78,7 +78,7 @@ class RequestTypesController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer un type de démande (ID: #{@request_type.id})")
 
-      format.html { redirect_to request_types_url, notice: 'Request type was successfully destroyed.' }
+      format.html { redirect_to request_types_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

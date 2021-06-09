@@ -52,7 +52,7 @@ class TicketsController < ApplicationController
         record_activity("Créer un ticket (ID: #{@ticket.id})")
 
         @tickets = Ticket.all
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
+        format.html { redirect_to @ticket, notice: 'Créer avec succès.' }
         format.json { render :show, status: :created, location: @ticket }
         format.js
       else
@@ -78,7 +78,7 @@ class TicketsController < ApplicationController
         record_activity("Modifier un ticket (ID: #{@ticket.id})")
 
         @tickets = Ticket.all
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
+        format.html { redirect_to @ticket, notice: 'Modifier avec succès.' }
         format.json { render :show, status: :ok, location: @ticket }
         format.js
       else
@@ -102,7 +102,7 @@ class TicketsController < ApplicationController
     respond_to do |format|
       record_activity("Supprimer un ticket (ID: #{@ticket.id})")
 
-      format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
+      format.html { redirect_to tickets_url, notice: 'Supprimer avec succès.' }
       format.json { head :no_content }
     end
   end

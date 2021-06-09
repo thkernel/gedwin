@@ -42,7 +42,7 @@ class CustomUsersController < ApplicationController
 					@users = User.where.not(id: current_user.id)
 					record_activity("Créer un nouvel utilisateur (ID: #{@user.id})")
 
-					format.html { redirect_to all_users_path, notice: 'User was successfully created.' }
+					format.html { redirect_to all_users_path, notice: 'Enregistrer avec succès.' }
 					format.json { render :show, status: :created, location: @contributor }
 					format.js
 		
@@ -193,7 +193,7 @@ class CustomUsersController < ApplicationController
 				@users = User.where.not(id: current_user.id)
         record_activity("Modifier un utilisateur (ID: #{@user.id})")
 
-				format.html { redirect_to all_users_path, notice: 'User was successfully updated.' }
+				format.html { redirect_to all_users_path, notice: 'Modifier avec succès.' }
 				format.json { render :show, status: :ok, location: @user }
 				format.js
 			
