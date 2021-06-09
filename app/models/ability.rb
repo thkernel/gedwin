@@ -10,13 +10,9 @@ class Ability
     if user.superuser? || user.admin?
       can :manage, :all
     else
-      puts "USER FEATURES: #{user.role.permissions.inspect}"
       user.role.permissions.each do |permission|
         permission.permission_items.each do |permission_item|
-          puts "PERMISSIONS: #{permission_item.action_name.to_sym}"
-
-          puts "FEATURES: #{Feature.find(permission_item.permission.feature_id).subject_class}"
-          can permission_item.action_name.to_sym, Feature.find(permission_item.permission.feature_id).subject_class
+          can permission_item.action_name.to_sym, Feature.find(permission_item.permission.feature_id).subject_class.constantize
         end
       end
        #:read, :all

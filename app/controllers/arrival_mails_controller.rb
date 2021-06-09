@@ -1,5 +1,5 @@
 class ArrivalMailsController < ApplicationController
-  #authorize_resource
+  authorize_resource
   before_action :authenticate_user!
   before_action :set_arrival_mail, only: [:show, :edit, :update, :destroy, :to_archive]
   layout "dashboard"
@@ -8,7 +8,7 @@ class ArrivalMailsController < ApplicationController
   # GET /arrival_mails
   # GET /arrival_mails.json
   def index
-
+    
     @current_user_arrival_mails = current_user.arrival_mails
     @imputations = Imputation.where(imputable_type: "ArrivalMail").where("recipient_id = ? OR user_id = ?", current_user.id, current_user.id)
 

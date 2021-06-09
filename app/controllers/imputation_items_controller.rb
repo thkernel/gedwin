@@ -37,7 +37,7 @@ class ImputationItemsController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @imputation_item = current_user.tasks.build(task_params)
+    @imputation_item = current_user.tasks.build(imputation_item_params)
     @imputation_item.imputation_id = @@imputation.id
 
     respond_to do |format|
@@ -59,22 +59,22 @@ class ImputationItemsController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
 
-    if @imputation_item.status == "En cours"
-      @imputation_item.start_date = Time.now
-    elsif @imputation_item.status == "Terminée"
-      @imputation_item.completed_date = Time.now
-      unless @imputation_item.start_date.present?
-        
-        @imputation_item.start_date = Time.now
+
+    if imputation_item_params[:status] == "En cours"
+      @imputation_item.start_date = Time.now.strftime("%d/%m/%Y")
+    elsif imputation_item_params[:status] == "Terminée"
+      @imputation_item.completed_date = Time.now.strftime("%d/%m/%Y")
+      unless imputation_item_params[:start_date].nil?
+        @imputation_item.start_date = Time.now.strftime("%d/%m/%Y")
       end
     end
 
     respond_to do |format|
-      if @imputation_item.update(task_params)
+      if @imputation_item.update(imputation_item_params)
         #@imputation_items = ImputationItem.where(imputation_id: @imputation_item.imputation_id)
         @imputation = Imputation.find(@imputation_item.imputation_id)
 
-        format.html { redirect_to show_imputation_path(@imputation.uid), notice: 'Task was successfully updated.' }
+        format.html { redirect_to show_imputation_path(@imputation.uid), notice: 'Statut modifié avec succès.' }
         format.json { render :show, status: :ok, location: @imputation_item }
         format.js
       else
@@ -87,7 +87,7 @@ class ImputationItemsController < ApplicationController
 
 
   def delete
-    @imputation_item = ImputationItem.find(params[:task_id])
+    @imputation_item = ImputationItem.find(params[:imputation_item_id])
   end
 
 
@@ -120,7 +120,7 @@ class ImputationItemsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def task_params
-      params.require(:imputation_item).permit(:title, :description, :start_date, :end_date, :task_status_id, :task_type_id, :closing_date)
+    def imputation_item_params
+      params.require(:imputation_item).permit(:title, :description,:due_date, :status)
     end
 end
