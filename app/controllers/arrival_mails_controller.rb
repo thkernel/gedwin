@@ -146,13 +146,15 @@ class ArrivalMailsController < ApplicationController
     respond_to do |format|
       if @arrival_mail.save
         record_activity("Créer un courrier arrivée (ID: #{@arrival_mail.id})")
-        files = params[:arrival_mail][:files]
+        #For google drive
+        #files = params[:arrival_mail][:files]
 
-        Thread.new do
-          Rails.application.executor.wrap do
-            UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
-          end
-        end
+        #Thread.new do
+          #Rails.application.executor.wrap do
+            #UploadFileService.upload(files, @arrival_mail,  parent_id: Folder.find(@arrival_mail.folder_id).google_drive_file_id)
+          #end
+        #end
+        #end google drive
 
         
         @arrival_mails = ArrivalMail.where.not(status: "Archived")
@@ -244,6 +246,6 @@ class ArrivalMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def arrival_mail_params
-      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id)
+      params.require(:arrival_mail).permit(:register_id, :internal_reference, :external_reference, :departure_date, :receipt_date, :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id, :file)
     end
 end

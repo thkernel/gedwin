@@ -33,6 +33,6 @@ class DepartureMail < ApplicationRecord
   belongs_to :folder, optional: true
   has_many :drive_attachments, as: :attachable,  dependent: :destroy
 
-  has_many_attached :files
+  has_one_attached :file
 
 end

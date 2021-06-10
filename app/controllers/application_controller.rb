@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   	
 	before_action :google_login, except: [:set_google_drive_token]
+	before_action :set_mailer_settings
+	
 	include ActivityLogsConcern
 	include ApplicationHelper
 
@@ -18,24 +20,25 @@ class ApplicationController < ActionController::Base
 
   	def set_mailer_settings
 	
-      smtp_config = Config.take
+      smtp_config = SmtpConfig.take
 
 			if smtp_config.present?
 				ActionMailer::Base.smtp_settings.merge!({
+					:host => smtp_config.smtp_host ,
 					:address => smtp_config.smtp_address , 
 					:port => smtp_config.smtp_port,
 					:domain => smtp_config.smtp_domain,
 					:authentication => smtp_config.smtp_authentification,
-					:user_name => smtp_config.user_name,
-					:password => smtp_config.user_password,
-          :enable_starttls_auto => smtp_config.enable_starttls_auto,
+					:user_name => smtp_config.smtp_user_name,
+					:password => smtp_config.smtp_user_password,
+          :enable_starttls_auto => smtp_config.smtp_enable_starttls_auto,
           :ssl => smtp_config.smtp_ssl
 				})
 				
 			end
 				#ActionMailer::Base.default_options = {from: "slatejob.official@gmail.com"}
-
-	
+		puts "SMTP CONF: #{smtp_config.inspect}"
+		puts "SMTP BASE: #{ActionMailer::Base.smtp_settings.inspect}"
   	end
 
 

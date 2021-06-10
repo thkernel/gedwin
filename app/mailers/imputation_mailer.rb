@@ -10,7 +10,6 @@ class ImputationMailer < ActionMailer::Base
         @user = User.find(user_id)
         @imputation = imputation
         
-        
         @url  = Rails.env.production? ? Rails.application.credentials.dig(:email, :production, :host) : Rails.application.credentials.dig(:email, :development, :host)
         mail(to: @user.email, subject: "Nouvelle imputation")
     end

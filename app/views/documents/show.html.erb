@@ -108,21 +108,39 @@
             
           </div><!-- card-header -->
          
-            
+            <!-- for google drive 
             <ul class="list-group">
-              <% @document.drive_attachments.each do |file| %>
+               @document.drive_attachments.each do |file| 
                 <li class="list-group-item rounded-top-0">
                   <p class="mg-b-0">
                     <i class="fa fa-file-text-o tx-info mg-r-8"></i>
                     <strong class="tx-inverse tx-medium">
-                      <%= link_to file.name, download_file_path(key: file.drive_blob.key), remote: false %>
+                       link_to file.name, download_file_path(key: file.drive_blob.key), remote: false 
+                    </strong>
+                  
+                    
+                  </p>
+                </li>
+               end 
+
+              
+            </ul>
+          -->
+
+            <ul class="list-group">
+               <% if @document.file.attached? %>
+                <li class="list-group-item rounded-top-0">
+                  <p class="mg-b-0">
+                    <i class="fa fa-file-text-o tx-info mg-r-8"></i>
+                    <strong class="tx-inverse tx-medium">
+                      <%= link_to @document.file.blob.filename, rails_blob_path(@document.file.blob, disposition: 'attachment') %>
                     </strong>
                   
                     
                   </p>
                 </li>
               <% end %>
-              <!-- add more here -->
+              
             </ul>
           
         </div>

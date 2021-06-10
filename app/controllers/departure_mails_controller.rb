@@ -155,12 +155,13 @@ class DepartureMailsController < ApplicationController
       if @departure_mail.save
         record_activity("Créer un nouveau courrier départ (ID: #{@departure_mail.id})")
 
-        Thread.new do
-          Rails.application.executor.wrap do
-            UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
+        #For google drive
+        #Thread.new do
+          #Rails.application.executor.wrap do
+            #UploadFileService.upload(files, @departure_mail,  parent_id: Folder.find(@departure_mail.folder_id).google_drive_file_id)
 
-          end
-        end
+          #end
+        #end
 
         format.html { redirect_to departure_mails_path, notice: 'Enregistrer avec succès.' }
         format.json { render :show, status: :created, location: @departure_mail }
@@ -219,6 +220,6 @@ class DepartureMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def departure_mail_params
-      params.require(:departure_mail).permit(:register_id, :internal_reference,  :departure_date,  :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id)
+      params.require(:departure_mail).permit(:register_id, :internal_reference,  :departure_date,  :linked_to_mail, :reference_linked_mail, :to_answer,  :response_limit_time, :response_date, :support_id, :nature_id, :correspondent_id, :object, :description, :folder_id, :file)
     end
 end

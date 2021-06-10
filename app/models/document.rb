@@ -30,7 +30,7 @@ class Document < ApplicationRecord
 
   acts_as_taggable_on :tags
 
-  #has_many_attached :files
+  has_one_attached :file
 
   # Validations.
   validates :name, presence: true
