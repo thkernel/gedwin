@@ -194,6 +194,15 @@ class ImputationsController < ApplicationController
         format.json { render :show, status: :ok, location: @imputation }
         
       else
+
+        @directions = Direction.all
+        @divisions = Division.all
+        @services = Service.all
+        
+        role_ids = Role.where("name NOT IN (?)", ["superuser"]).map {|role| role.id}
+        @recipients = User.where("role_id IN (?)", role_ids).map {|user| user.profile }
+        
+        
         format.html { render :edit }
         format.json { render json: @imputation.errors, status: :unprocessable_entity }
         
