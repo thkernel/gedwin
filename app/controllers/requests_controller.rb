@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  authorize_resource except: [:new_front_request]
+  authorize_resource except: [:new_front_request, :generate_pdf, :get_kairos_data, :get_kairos_annee_scolaire]
 
   before_action :authenticate_user! unless :front_origin?
   before_action :front_origin?, only: [:new]

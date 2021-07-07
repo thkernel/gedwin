@@ -20,7 +20,7 @@
                   <i class="fa fa-building-o" aria-hidden="true"></i>
 
 									<strong>Service: </strong> 
-									<span><%= service(@imputation.service_id).name %></span>
+									<span><%= service(@imputation.service_id).name if @imputation.service_id %></span>
 								</li>
 								<li class="detail-city">
                   <i class="fa fa-user" aria-hidden="true"></i>
@@ -56,6 +56,7 @@
                 
                     <th class="pd-y-5">Date</th>
                     <th class="pd-y-5">Titre</th>
+                    <th class="pd-y-5">Description</th>
                     <th class="pd-y-5">Date d'échéance</th>
                      <th class="pd-y-5">Date début</th>
                     <th class="pd-y-5">Date fin</th>

@@ -18,7 +18,15 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = SmtpConfig.take.present? ? "#{SmtpConfig.take.smtp_user_name}" : ""
+  if ActiveRecord::Base.connection.table_exists? :smtp_configs
+    if SmtpConfig.first.present?
+      config.mailer_sender = SmtpConfig.first.smtp_user_name
+    else
+      config.mailer_sender
+    end
+  end
+
+  puts "MAILER SENDER: #{config.mailer_sender}"
   #config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.

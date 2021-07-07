@@ -104,6 +104,7 @@ gem 'google-api-client', '~> 0.43.0'
 gem 'countries', require: 'countries/global'
 gem 'acts_as_tree', '~> 2.9', '>= 2.9.1'
 gem 'faraday', '~> 1.0', '>= 1.0.1'
+gem 'whenever', '~> 1.0'
 
 gem 'wkhtmltopdf-binary', '~> 0.12.6.5' # Wecked PDF requirement.
 #gem 'wicked_pdf', '~> 2.1' # For generate PDF.
